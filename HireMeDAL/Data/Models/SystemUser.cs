@@ -38,6 +38,8 @@ namespace HireMeDAL
 
         public int PlanId { get; set; }
 
+        [ForeignKey("PlanId")]
+        public virtual Plan? Plan { get; set; }
         public int CategoryId { get; set; }
 
         public virtual LookupValue? LookupValue { get; set; }

@@ -17,6 +17,10 @@ namespace HireMeDAL
 
         public string FreelancerReview { get; set; }
 
+        public int ClientStars { get; set; }
+
+        public int FreelancerStars { get; set; }
+
         public int ProjectId { get; set; }
         [ForeignKey("ProjectId")]
         public virtual Project? Project { get; set; }

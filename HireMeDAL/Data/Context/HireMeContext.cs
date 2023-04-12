@@ -29,7 +29,7 @@ namespace HireMeDAL
         public DbSet<Milestone> milestones { get; set; }
         public DbSet<ProjectPostApplicant> projectPostApplicants { get; set; }
 
-
+        public DbSet<Plan> plans { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -45,10 +45,10 @@ namespace HireMeDAL
                 .WithMany(s => s.SystemUsers)
                 .HasForeignKey(s => s.PaymentMethodId);
 
-            builder.Entity<SystemUser>()
-                .HasOne(s => s.LookupValue)
-                .WithMany(s => s.SystemUsers)
-                .HasForeignKey(s => s.PlanId);
+            //builder.Entity<SystemUser>()
+            //    .HasOne(s => s.LookupValue)
+            //    .WithMany(s => s.SystemUsers)
+            //    .HasForeignKey(s => s.PlanId);
 
 
 

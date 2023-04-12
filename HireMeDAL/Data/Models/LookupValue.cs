@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace HireMeDAL
 {
     public class LookupValue
     {
-
+        [Key]
         public int ValueId { get; set; }
 
         public string ValueName { get; set; }

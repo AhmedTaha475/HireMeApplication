@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HireMeDAL
 {
@@ -16,6 +17,7 @@ namespace HireMeDAL
         public string FreelancerId { get; set; }
 
         [ForeignKey("FreelancerId")]
+        //[BindNever]
         public virtual Freelancer? Freelancer { get; set; }
 
         public virtual HashSet<Project> Projects { get; set; } = new HashSet<Project>();

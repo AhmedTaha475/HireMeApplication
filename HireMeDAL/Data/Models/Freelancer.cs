@@ -13,7 +13,7 @@ namespace HireMeDAL
         //Might Be Adjusted
         
         public int Rank { get; set; }
-
+        
         public string JobTitle { get; set; }
 
         public int Bids { get; set; }

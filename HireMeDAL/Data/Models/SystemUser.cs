@@ -33,11 +33,11 @@ namespace HireMeDAL
 
         public decimal Balance { get; set; }
 
-        [ForeignKey("LookupValue")]
+
         public int PaymentMethodId { get; set; }
-        [ForeignKey("LookupValue")]
+
         public int PlanId { get; set; }
-        [ForeignKey("LookupValue")]
+
         public int CategoryId { get; set; }
 
         public virtual LookupValue? LookupValue { get; set; }

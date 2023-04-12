@@ -18,14 +18,12 @@ namespace HireMeDAL
 
         public decimal BiddingPrice { get; set; }
 
-        [Key]
         public int PP_ID { get; set; }
 
 
         [ForeignKey("PP_ID")]
         public virtual ProjectPost? ProjectPost { get; set; }
 
-        [Key]
         public string FreelancerId { get; set; }
 
         [ForeignKey("FreelancerId")]

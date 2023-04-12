@@ -13,6 +13,7 @@ namespace HireMeDAL
         [Key]
         public int TransactionId { get; set; }
 
+        //[Column(TypeName ="datetime")]
         public DateTime DateOfTransaction { get; set; }
 
         public decimal Amount { get; set; }

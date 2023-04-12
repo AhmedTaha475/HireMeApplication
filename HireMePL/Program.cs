@@ -36,7 +36,7 @@ namespace HireMePL
             #endregion
 
             #region AddIdentity
-            builder.Services.AddIdentity<SystemUser, IdentityRole>().AddEntityFrameworkStores<HireMeContext>();
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<HireMeContext>();
             #endregion
 
             #region Add Authentication

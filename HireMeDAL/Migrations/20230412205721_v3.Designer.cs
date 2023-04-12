@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HireMeDAL.Migrations
 {
     [DbContext(typeof(HireMeContext))]
-    [Migration("20230412153653_v1")]
-    partial class v1
+    [Migration("20230412205721_v3")]
+    partial class v3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -88,6 +88,27 @@ namespace HireMeDAL.Migrations
                     b.HasIndex("ProjectPostId");
 
                     b.ToTable("milestones");
+                });
+
+            modelBuilder.Entity("HireMeDAL.Plan", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("plans");
                 });
 
             modelBuilder.Entity("HireMeDAL.Portfolio", b =>
@@ -542,6 +563,8 @@ namespace HireMeDAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.HasIndex("PaymentMethodId");
+
                     b.HasIndex("PlanId");
 
                     b.HasDiscriminator().HasValue("SystemUser");
@@ -773,11 +796,19 @@ namespace HireMeDAL.Migrations
                 {
                     b.HasOne("HireMeDAL.LookupValue", "LookupValue")
                         .WithMany("SystemUsers")
+                        .HasForeignKey("PaymentMethodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HireMeDAL.Plan", "Plan")
+                        .WithMany("SystemUsers")
                         .HasForeignKey("PlanId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("LookupValue");
+
+                    b.Navigation("Plan");
                 });
 
             modelBuilder.Entity("HireMeDAL.Freelancer", b =>
@@ -798,6 +829,11 @@ namespace HireMeDAL.Migrations
 
                     b.Navigation("ProjectPosts");
 
+                    b.Navigation("SystemUsers");
+                });
+
+            modelBuilder.Entity("HireMeDAL.Plan", b =>
+                {
                     b.Navigation("SystemUsers");
                 });
 

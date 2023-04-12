@@ -1,4 +1,5 @@
 ﻿using FluentNHibernate.Conventions.Inspections;
+using HireMeDAL.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -25,8 +26,6 @@ namespace HireMeDAL
 
         public decimal MoneyEarned { get; set; }
 
-        public string Comment { get; set; }
-
         public int PortfolioId { get; set; }
 
         [ForeignKey("PortfolioId")]
@@ -37,9 +36,14 @@ namespace HireMeDAL
         [ForeignKey("ClientId")]
         public virtual Client? Client { get; set; }
 
-        public virtual HashSet<ProjectImage> ProjectImages { get; set; } = new HashSet<ProjectImage>();
-        public virtual HashSet<ProjectReview> ProjectReviews { get; set; } = new HashSet<ProjectReview>();
 
+        public int PR_Id { get; set; }
+
+        [ForeignKey("PR_Id")]
+        public virtual ProjectReview? ProjectReview { get; set; }
+
+        public virtual HashSet<ProjectImage> ProjectImages { get; set; } = new HashSet<ProjectImage>();
+        public virtual  HashSet<ProjectComment>? ProjectComments { get; set; }= new HashSet<ProjectComment>();
 
 
     }

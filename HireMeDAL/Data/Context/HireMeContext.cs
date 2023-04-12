@@ -65,9 +65,8 @@ namespace HireMeDAL
              .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Project>()
-             .HasMany(p=>p.ProjectReviews)
+             .HasOne(p=>p.ProjectReview)
              .WithOne(p => p.Project)
-             .HasForeignKey(p => p.ProjectId)
              .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<ProjectPost>()

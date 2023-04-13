@@ -10,10 +10,10 @@ namespace HireMeBLL
 {
     public interface IPortfolioManager
     {
-        IEnumerable<PortfolioReadDto> GetAll();
-        PortfolioReadDto GetById(int id); 
-        void DeleteByI(int id);
-        void AddPortfolio(Portfolio portfolio); 
+       public IEnumerable<PortfolioReadDto> GetAll();
+        public PortfolioReadDto GetById(int id);
+        public void DeleteByI(int id);
+        public void AddPortfolio(Portfolio portfolio); 
 
     }
 }

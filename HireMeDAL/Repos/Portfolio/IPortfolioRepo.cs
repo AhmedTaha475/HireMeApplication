@@ -10,6 +10,10 @@ namespace HireMeDAL
     public interface IPortfolioRepo
     {
         IEnumerable<Portfolio> GetAll();
-        int saveChanges(); 
+        Portfolio GetById(int id);
+         void AddPortfolio (Portfolio portfolio);
+         void DeletePortfolio(int id); 
+        void saveChanges(); 
+
     }
 }

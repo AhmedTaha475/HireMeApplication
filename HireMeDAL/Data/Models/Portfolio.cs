@@ -14,7 +14,7 @@ namespace HireMeDAL
         [Key]
         public int PortId { get; set; }
 
-        public string FreelancerId { get; set; } = string.Empty; 
+        public string FreelancerId { get; set; } = string.Empty; ///
 
         [ForeignKey("FreelancerId")]
         //[BindNever]

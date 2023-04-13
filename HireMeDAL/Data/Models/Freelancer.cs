@@ -31,7 +31,7 @@ namespace HireMeDAL
         [ForeignKey("PortfolioId")]
         public virtual Portfolio? Portfolio { get; set; }
 
-        public virtual HashSet<ProjectPostApplicantRepo> ProjectPostApplicants { get; set; } = new HashSet<ProjectPostApplicantRepo>();
+        public virtual HashSet<ProjectPostApplicant> ProjectPostApplicants { get; set; } = new HashSet<ProjectPostApplicant>();
 
 
     }

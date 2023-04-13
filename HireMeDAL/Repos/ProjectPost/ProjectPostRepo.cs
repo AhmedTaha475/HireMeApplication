@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
@@ -41,6 +42,11 @@ namespace HireMeDAL
             return _hireMeContext.projectPosts.Find(id) ?? null;
         }
 
+        public ProjectPost GetProjectPostWithApplicantsById(int id)
+        {
+            return _hireMeContext.projectPosts.Include(p=> p.ProjectPostApplicants).FirstOrDefault(p=>p.Pp_Id == id) ?? null;
+        }
+
         public int SaveChanges()
         {
             return _hireMeContext.SaveChanges();
@@ -56,12 +62,8 @@ namespace HireMeDAL
                 currentProjectPost.ProjectPostApplicants = projectPost.ProjectPostApplicants;
                 currentProjectPost.PostTitle = projectPost.PostTitle;
                 currentProjectPost.ClientId = projectPost.ClientId;
-                currentProjectPost.Client =projectPost.Client;
-                currentProjectPost.LookupValue = projectPost.LookupValue;
                 currentProjectPost.CategoryId = projectPost.CategoryId;
-                currentProjectPost.Pp_Id = projectPost.Pp_Id;
                 currentProjectPost.Milestones = projectPost.Milestones;
-                currentProjectPost.ProjectPostApplicants = projectPost.ProjectPostApplicants;
                 SaveChanges();
             }
         }

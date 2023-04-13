@@ -27,13 +27,13 @@ namespace HireMeDAL
         public DbSet<ProjectReview> projectReviews { get; set; }
         public DbSet<ProjectPost> projectPosts { get; set; }
         public DbSet<Milestone> milestones { get; set; }
-        public DbSet<ProjectPostApplicantRepo> projectPostApplicants { get; set; }
+        public DbSet<ProjectPostApplicant> projectPostApplicants { get; set; }
 
         public DbSet<Plan> plans { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<ProjectPostApplicantRepo>().HasKey(pp => new { pp.PP_ID, pp.FreelancerId });
+            builder.Entity<ProjectPostApplicant>().HasKey(pp => new { pp.PP_ID, pp.FreelancerId });
 
             builder.Entity<SystemUser>()
                 .HasOne(s => s.LookupValue)

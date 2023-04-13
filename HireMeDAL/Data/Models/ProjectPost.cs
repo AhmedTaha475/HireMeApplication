@@ -32,7 +32,7 @@ namespace HireMeDAL
 
 
         public virtual HashSet<Milestone> Milestones { get; set; } = new HashSet<Milestone>();
-        public virtual HashSet<ProjectPostApplicantRepo> ProjectPostApplicants { get; set; } = new HashSet<ProjectPostApplicantRepo>();
+        public virtual HashSet<ProjectPostApplicant> ProjectPostApplicants { get; set; } = new HashSet<ProjectPostApplicant>();
 
 
 

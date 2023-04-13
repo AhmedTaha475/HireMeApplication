@@ -11,6 +11,7 @@ namespace HireMeDAL
     {
         List<ProjectPost> GetALl();
         ProjectPost GetProjectPostById(int id);
+        ProjectPost GetProjectPostWithApplicantsById(int id);
 
         void CreateProjectPost(ProjectPost projectPost);
 

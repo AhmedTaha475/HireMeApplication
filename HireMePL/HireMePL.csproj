@@ -20,11 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\HireMeBLL\HireMeBLL.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HireMeBLL\HireMeBLL.csproj" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

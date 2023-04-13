@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HireMeDAL.Migrations
 {
     [DbContext(typeof(HireMeContext))]
-    [Migration("20230412213257_v1")]
-    partial class v1
+    [Migration("20230413141752_AsmaaProjectsMigration")]
+    partial class AsmaaProjectsMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,18 +33,25 @@ namespace HireMeDAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ClientId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Comment")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ClientId");
+
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("ProjectComment");
+                    b.ToTable("projectComments");
                 });
 
             modelBuilder.Entity("HireMeDAL.LookupTable", b =>
@@ -170,10 +177,11 @@ namespace HireMeDAL.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<decimal>("MoneyEarned")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("money");
 
                     b.Property<int>("PR_Id")
                         .HasColumnType("int");
@@ -186,7 +194,8 @@ namespace HireMeDAL.Migrations
 
                     b.Property<string>("ProjectTitle")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<bool>("SystemProject")
                         .HasColumnType("bit");
@@ -289,14 +298,16 @@ namespace HireMeDAL.Migrations
 
                     b.Property<string>("ClientReview")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<int>("ClientStars")
                         .HasColumnType("int");
 
                     b.Property<string>("FreelancerReview")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<int>("FreelancerStars")
                         .HasColumnType("int");
@@ -649,11 +660,19 @@ namespace HireMeDAL.Migrations
 
             modelBuilder.Entity("HireMeDAL.Data.Models.ProjectComment", b =>
                 {
+                    b.HasOne("HireMeDAL.Client", "Client")
+                        .WithMany("ProjectComments")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("HireMeDAL.Project", "Project")
                         .WithMany("ProjectComments")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Client");
 
                     b.Navigation("Project");
                 });
@@ -904,6 +923,8 @@ namespace HireMeDAL.Migrations
 
             modelBuilder.Entity("HireMeDAL.Client", b =>
                 {
+                    b.Navigation("ProjectComments");
+
                     b.Navigation("ProjectPosts");
 
                     b.Navigation("Projects");

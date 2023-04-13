@@ -12,9 +12,9 @@ namespace HireMeDAL
     {
         [Key]
         public int PR_Id { get; set; }
-
+        [MaxLength(300)]
         public string ClientReview { get; set; }
-
+        [MaxLength(300)]
         public string FreelancerReview { get; set; }
 
         public int ClientStars { get; set; }

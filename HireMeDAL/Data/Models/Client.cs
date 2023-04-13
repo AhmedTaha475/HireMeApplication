@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HireMeDAL.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ namespace HireMeDAL
 
         public virtual HashSet<Project> Projects { get; set; } = new HashSet<Project>();
         public virtual HashSet<ProjectPost> ProjectPosts { get; set; } = new HashSet<ProjectPost>();
+        public virtual HashSet<ProjectComment> ProjectComments { get; set; }= new HashSet<ProjectComment>();
 
     }
 

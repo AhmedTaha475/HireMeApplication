@@ -1,6 +1,8 @@
 ﻿namespace HireMeDAL.Repos.ProjectsReview
 {
-    internal interface IProjectsReviewRepo
+    public interface IProjectsReviewRepo
     {
+        public bool Add(ProjectReview review);
+        public List<ProjectReview> GetAllByProjectId(int projectId);
     }
 }

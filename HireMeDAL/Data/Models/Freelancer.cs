@@ -14,15 +14,15 @@ namespace HireMeDAL
         
         public int Rank { get; set; }
         
-        public string JobTitle { get; set; }
+        public string ?JobTitle { get; set; }
 
         public int Bids { get; set; }
 
-        public string  Description { get; set; }
+        public string ? Description { get; set; }
 
         public decimal TotalMoneyEarned { get; set; }
 
-        public byte[] CV { get; set; }
+        public byte[] ?CV { get; set; }
 
         public decimal AverageRate { get; set; }
 

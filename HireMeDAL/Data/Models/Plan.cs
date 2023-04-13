@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,14 +10,29 @@ namespace HireMeDAL
 {
     public class Plan
     {
+        public Plan()
+        {
+         
+        }
+        public Plan(int id, string name, decimal price, string description, int bids)
+        {
+            this.id = id;
+            Name = name;
+            Price = price;
+            Description = description;
+            Bids = bids;
+        }
+
         [Key]
         public int id { get; set; }
+        [Required]
+        public string Name { get; set; } = string.Empty; 
 
-        public string Name { get; set; }
-
-        public string Description { get; set; }
-
+        public string Description { get; set; } = string.Empty;
+        [Required]
+        [Column(TypeName ="decimal(10,2)")]
         public decimal Price { get; set; }
+        [Required]
 
         public int Bids { get; set; }
 

@@ -23,4 +23,8 @@
     <ProjectReference Include="..\HireMeBLL\HireMeBLL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>

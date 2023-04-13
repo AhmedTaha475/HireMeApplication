@@ -11,6 +11,6 @@ namespace HireMeBLL
         void CreateProjectPost(CreateProjectPostDto createProjectPostDto, string clientId);
         void UpdateProjectPost(int projectPostId, UpdateProjectPostDto updateProjectPostDto, string clientId);
         void DeleteProjectPost(int projectPostId);
-        ProjectPostApplicantDetailsDto GetProjectPostWithApplicantsById(int projectId);
+        ProjectPostWithApplicantsDetailsDto GetProjectPostWithApplicantsById(int projectId);
     }
 }

@@ -75,6 +75,5 @@ namespace HireMeBLL
                 _projectPostRepo.UpdateProjectPost(projectPostId, projectPost);
             }
         }
-
     }
 }

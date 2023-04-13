@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HireMeBLL
 {
-    public record ProjectPostDetailsDto
+    public record ProjectPostWithApplicantsDetailsDto
     {
         [Required]
         public string PostTitle { get; set; } = string.Empty;
@@ -19,6 +19,6 @@ namespace HireMeBLL
         [Required]
         public int CategoryId { get; set; }
         [Required]
-        public List<ProjectPostApplicant> ProjectPostApplicants { get; set; }
+        public List<ProjectPostApplicantDetailsDto> ProjectPostApplicants { get; set; }
     }
 }

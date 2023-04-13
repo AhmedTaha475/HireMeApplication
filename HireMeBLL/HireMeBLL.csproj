@@ -6,12 +6,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Dtos\Milestone\" />
-    <Folder Include="Dtos\ProjectPostApplicant\" />
-    <Folder Include="Dtos\ProjectPost\" />
-    <Folder Include="Managers\" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\HireMeDAL\HireMeDAL.csproj" />

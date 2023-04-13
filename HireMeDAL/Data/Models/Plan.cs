@@ -19,6 +19,7 @@ namespace HireMeDAL
         [Required]
         [Column(TypeName ="decimal(10,2)")]
         public decimal Price { get; set; }
+        [Required]
 
         public int Bids { get; set; }
 

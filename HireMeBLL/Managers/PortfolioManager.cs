@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HireMeDAL.Data.Models; 
 
 namespace HireMeBLL
 {
@@ -23,6 +24,16 @@ namespace HireMeBLL
         {
             var portfolioDto = new Portfolio(portfolio.PortId, portfolio.FreelancerId); 
             _portfolioRepo.AddPortfolio(portfolioDto); 
+        }
+
+        public void AddPortfolio(Portfolio portfolio)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteByI(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public void DeleteById(int id)

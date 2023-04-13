@@ -8,9 +8,20 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HireMeDAL
+
 {
+   
     public class Portfolio
     {
+        public Portfolio()
+        {
+
+        }
+        public Portfolio(int portId, string freelancerId)
+        {
+            PortId = portId;
+            FreelancerId = freelancerId;
+        }
         [Key]
         public int PortId { get; set; }
 
@@ -21,9 +32,6 @@ namespace HireMeDAL
         public virtual Freelancer? Freelancer { get; set; }
 
         public virtual HashSet<Project> Projects { get; set; } = new HashSet<Project>();
-        public Portfolio(int portId , string freelancerId) {
-            PortId = portId;
-            FreelancerId = freelancerId; 
-        }  
+       
     }
 }

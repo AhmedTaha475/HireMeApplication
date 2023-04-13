@@ -10,6 +10,10 @@ namespace HireMeDAL
 {
     public class Plan
     {
+        public Plan()
+        {
+         
+        }
         public Plan(int id, string name, decimal price, string description, int bids)
         {
             this.id = id;

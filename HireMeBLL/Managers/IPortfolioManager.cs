@@ -12,7 +12,7 @@ namespace HireMeBLL
     {
        public IEnumerable<PortfolioReadDto> GetAll();
         public PortfolioReadDto GetById(int id);
-        public void DeleteByI(int id);
+        public void DeleteById(int id);
         public void AddPortfolio(Portfolio portfolio); 
 
     }

@@ -9,11 +9,11 @@ namespace HireMeDAL
 {
     public interface IPortfolioRepo
     {
-        IEnumerable<Portfolio> GetAll();
-        Portfolio GetById(int id);
-         void AddPortfolio (Portfolio portfolio);
-         void DeletePortfolio(int id); 
-        void saveChanges(); 
+        public IEnumerable<Portfolio> GetAll();
+        public Portfolio GetById(int id);
+        public void AddPortfolio (Portfolio portfolio);
+        public void DeletePortfolio(int id);
+        public void saveChanges(); 
 
     }
 }

@@ -21,6 +21,9 @@ namespace HireMeDAL
         public virtual Freelancer? Freelancer { get; set; }
 
         public virtual HashSet<Project> Projects { get; set; } = new HashSet<Project>();
-
+        public Portfolio(int portId , string freelancerId) {
+            PortId = portId;
+            FreelancerId = freelancerId; 
+        }  
     }
 }

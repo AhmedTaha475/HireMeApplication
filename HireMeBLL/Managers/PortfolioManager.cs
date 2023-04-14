@@ -27,9 +27,6 @@ namespace HireMeBLL
         }
 
 
-
-
-
         public void DeleteById(int id)
         {
             _portfolioRepo.DeletePortfolio(id); 

@@ -1,4 +1,6 @@
+
 using HireMeDAL;
+using HireMeDAL.Repos;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -11,6 +13,10 @@ namespace HireMePL
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+           
+            builder.Services.AddScoped<ISystemUserRepo, SystemUserRepo>();
+            builder.Services.AddScoped<IFreelancerRepo, FreelancerRepo>();
+            builder.Services.AddScoped<IClientRepo, ClientRepo>();
 
             #region defaults
             builder.Services.AddControllers();

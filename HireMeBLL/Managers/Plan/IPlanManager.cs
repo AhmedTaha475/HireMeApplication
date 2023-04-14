@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HireMeBLL
 {
-    internal interface IPlanManager
+    public interface IPlanManager
     {
         public IEnumerable<PlanReadDto> GetAll();
         public PlanReadDto GetById(int id);

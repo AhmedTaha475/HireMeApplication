@@ -1,12 +1,51 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HireMeBLL;
+using HireMeBLL.Dtos.Portfolio;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
-namespace HireMePL.Controllers
+namespace HireMePL
 {
-    public class PortfolioController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class PortfolioController : ControllerBase
     {
-        public IActionResult Index()
+        private readonly IPortfolioManager _portfolioManger;
+        public PortfolioController(IPortfolioManager portfolioManager)
         {
-            return View();
+            _portfolioManger = portfolioManager;
         }
+        [HttpGet]
+        public ActionResult<List<PortfolioReadDto>> GetAll()
+        {
+            return _portfolioManger.GetAll().ToList();
+        }
+        [HttpGet]
+        [Route("{id}")]
+        public ActionResult<PortfolioReadDto> GetAllById(int id)
+        {
+            PortfolioReadDto? portfolio = _portfolioManger.GetById(id);
+            if(portfolio is null)
+            {
+                return NotFound(); 
+            }
+            return portfolio; 
+        }
+        [HttpPost]
+        public ActionResult AddPortfolio(PortfolioReadDto portfolio)
+        {
+           _portfolioManger.AddPortfolio(portfolio);
+            return NoContent(); 
+        }
+        [HttpDelete("{id}")]
+        public ActionResult DeletePortfolio (int id)
+        {
+            PortfolioReadDto? portfolio = _portfolioManger.GetById(id);
+            if (portfolio is null)
+            {
+                return NotFound();
+            }
+           return NoContent(); 
+        }
+
     }
 }

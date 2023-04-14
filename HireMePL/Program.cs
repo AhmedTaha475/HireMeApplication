@@ -1,4 +1,5 @@
 
+using HireMeBLL;
 using HireMeDAL;
 using HireMeDAL.Repos;
 using Microsoft.AspNetCore.Identity;
@@ -15,6 +16,7 @@ namespace HireMePL
             var builder = WebApplication.CreateBuilder(args);
            
             builder.Services.AddScoped<ISystemUserRepo, SystemUserRepo>();
+            builder.Services.AddScoped<ISystemUserManager, SystemUserManager>();
             builder.Services.AddScoped<IFreelancerRepo, FreelancerRepo>();
             builder.Services.AddScoped<IClientRepo, ClientRepo>();
 

@@ -37,9 +37,9 @@ namespace HireMeDAL
         public decimal ?Balance { get; set; }
 
 
-        public int PaymentMethodId { get; set; }
+        public int ?PaymentMethodId { get; set; }
 
-        public int PlanId { get; set; }
+        public int ?PlanId { get; set; }
 
         [ForeignKey("PlanId")]
         public virtual Plan? Plan { get; set; }

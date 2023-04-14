@@ -1,5 +1,6 @@
 ﻿using HireMeBLL.Dtos;
 using HireMeDAL;
+using HireMeDAL.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,16 @@ namespace HireMeBLL
 
             var result =await systemUserRepo.CreateSystemUser(user,suser.Password);
             return result;
+        }
+
+        public async Task<Token> Login(LoginDto credential)
+        {
+            var result= await systemUserRepo.Login(credential.UserName, credential.Password);
+            if(result!=null)
+            {
+                return result;
+            }
+            return null;
         }
     }
 }

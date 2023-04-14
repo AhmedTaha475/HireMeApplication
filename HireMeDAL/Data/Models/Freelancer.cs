@@ -37,5 +37,9 @@ namespace HireMeDAL
         {
             throw new NotImplementedException();
         }
+        public int PR_Id { get; set; }
+        [ForeignKey("PR_Id")]
+        public virtual ProjectReview? ProjectReview { get; set; }
+
     }
 }

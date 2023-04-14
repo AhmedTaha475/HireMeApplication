@@ -1,6 +1,11 @@
 
+using HireMeBLL.Managers.ProjectsManager;
 using HireMeDAL;
 using HireMeDAL.Repos;
+using HireMeDAL.Repos.Projects;
+using HireMeDAL.Repos.ProjectsComments;
+using HireMeDAL.Repos.ProjectsImages;
+using HireMeDAL.Repos.ProjectsReview;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -17,6 +22,16 @@ namespace HireMePL
             builder.Services.AddScoped<ISystemUserRepo, SystemUserRepo>();
             builder.Services.AddScoped<IFreelancerRepo, FreelancerRepo>();
             builder.Services.AddScoped<IClientRepo, ClientRepo>();
+            builder.Services.AddScoped<IProjectsRepo, ProjectsRepo>();
+            builder.Services.AddScoped<IProjectsReviewRepo, ProjectsReviewRepo>();
+            builder.Services.AddScoped<IProjectImagesRepo, ProjectImagesRepo>();
+            builder.Services.AddScoped<IProjectCommentsRepo, ProjectCommentsRepo>();
+            builder.Services.AddScoped<IProjectsManager, ProjectsManager>();
+
+
+
+
+
 
             #region defaults
             builder.Services.AddControllers();

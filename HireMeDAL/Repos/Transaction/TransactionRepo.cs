@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HireMeDAL
 {
-    internal class TransactionRepo : ITransactionRepo
+    public class TransactionRepo : ITransactionRepo
     {
         public HireMeContext Context { get; }
         public TransactionRepo(HireMeContext context)

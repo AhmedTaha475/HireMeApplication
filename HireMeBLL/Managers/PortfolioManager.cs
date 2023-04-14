@@ -26,6 +26,7 @@ namespace HireMeBLL
             _portfolioRepo.AddPortfolio(portfolioDto); 
         }
 
+
         public void DeleteById(int id)
         {
             _portfolioRepo.DeletePortfolio(id); 

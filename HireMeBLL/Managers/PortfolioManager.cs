@@ -26,15 +26,9 @@ namespace HireMeBLL
             _portfolioRepo.AddPortfolio(portfolioDto); 
         }
 
-        public void AddPortfolio(Portfolio portfolio)
-        {
-            throw new NotImplementedException();
-        }
 
-        public void DeleteByI(int id)
-        {
-            throw new NotImplementedException();
-        }
+
+
 
         public void DeleteById(int id)
         {

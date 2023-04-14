@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HireMeDAL.Validators;
 
 namespace HireMeDAL
 {
@@ -13,11 +14,16 @@ namespace HireMeDAL
         [Key]
         public int TransactionId { get; set; }
 
-        //[Column(TypeName ="datetime")]
+        [Required]
+        [Column(TypeName = "datetime")]
         public DateTime DateOfTransaction { get; set; }
 
+        [Required]
+        [Column(TypeName ="decimal(10,2)")]
+        [DateInPast]
         public decimal Amount { get; set; }
 
+        [StringLength(150,MinimumLength =2)]
         public string Description { get; set; }
 
         public string SystemUserId { get; set; }

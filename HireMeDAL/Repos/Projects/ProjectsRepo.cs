@@ -47,7 +47,8 @@ namespace HireMeDAL.Repos.Projects
                 .Include(p => p.Client)
                 .ToList();
         }
-
+        //GetallByPortfolioId
+        
         public Project? GetById(int id)
         {
             Project? project = context.projects

@@ -33,5 +33,15 @@ namespace HireMeBLL.Managers.ProjectsManager
                else return false;
            
         }
+
+        public bool DeleteProject(int id)
+        {
+            return projectsRepo.Delete(id);             
+        }
+
+        public bool UpdateByProjectId(UpdateProjectByIdDto updateProjectByIdDto)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

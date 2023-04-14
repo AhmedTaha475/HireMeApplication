@@ -26,6 +26,22 @@ namespace HireMePL.Controllers
                 );
           else return BadRequest();
         }
+        [HttpDelete]
+        public ActionResult DeleteProject(int id)
+        {
+            try
+            {
+               if(! projectsManager.DeleteProject(id))
+                    return NotFound();
+               else return NoContent();
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }
+        }
+
         [HttpGet]
         public ActionResult<ProjectDetailsReadDto> GetById()
         {

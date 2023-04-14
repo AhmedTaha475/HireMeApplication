@@ -569,10 +569,10 @@ namespace HireMeDAL.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PaymentMethodId")
+                    b.Property<int?>("PaymentMethodId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PlanId")
+                    b.Property<int?>("PlanId")
                         .HasColumnType("int");
 
                     b.Property<string>("SSN")
@@ -819,15 +819,11 @@ namespace HireMeDAL.Migrations
                 {
                     b.HasOne("HireMeDAL.LookupValue", "LookupValue")
                         .WithMany("SystemUsers")
-                        .HasForeignKey("PaymentMethodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PaymentMethodId");
 
                     b.HasOne("HireMeDAL.Plan", "Plan")
                         .WithMany("SystemUsers")
-                        .HasForeignKey("PlanId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PlanId");
 
                     b.Navigation("LookupValue");
 

@@ -112,6 +112,7 @@ namespace HireMeDAL
             var user = await usermanager.FindByNameAsync(UserName);
             if (user == null)
             {
+            
                 return null;
             }
 

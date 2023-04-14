@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HireMeBLL.Dtos
+namespace HireMeBLL
 {
     public class SystemUserDto
     {
@@ -32,5 +32,11 @@ namespace HireMeBLL.Dtos
 
         public decimal? Balance { get; set; }
 
+    }
+    public class LoginDto
+    {
+        public string UserName { get; set; }
+
+        public String Password { get; set; }
     }
 }

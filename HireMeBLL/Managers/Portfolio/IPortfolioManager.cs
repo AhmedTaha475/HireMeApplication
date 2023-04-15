@@ -1,4 +1,4 @@
-﻿using HireMeBLL.Dtos;
+﻿using HireMeBLL.Dtos.Portfolio;
 using HireMeDAL;
 using System;
 using System.Collections.Generic;
@@ -10,10 +10,10 @@ namespace HireMeBLL
 {
     public interface IPortfolioManager
     {
-       public IEnumerable<PortfolioReadDto> GetAll();
+        public IEnumerable<PortfolioReadDto> GetAll();
         public PortfolioReadDto GetById(int id);
         public void DeleteById(int id);
-        public void AddPortfolio(PortfolioReadDto portfolio); 
+        public void AddPortfolio(PortfolioReadDto portfolio);
 
     }
 }

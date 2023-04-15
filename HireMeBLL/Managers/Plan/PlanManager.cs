@@ -1,12 +1,15 @@
-﻿using HireMeBLL.Dtos;
+﻿//using HireMeBLL.Dtos.Plan;
 using HireMeDAL;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HireMeBLL.Managers
+
+namespace HireMeBLL
 {
     public class PlanManager : IPlanManager
     {
@@ -16,39 +19,39 @@ namespace HireMeBLL.Managers
         public PlanManager(IPlanRepo planRepo)
 
         {
-        _planRepo= planRepo;
+            _planRepo = planRepo;
         }
 
         public void AddPlan(PlanReadDto plan)
         {
-            var planDto = new Plan(plan.id , plan.Name , plan.Price , plan.Description , plan.Bids);
-           _planRepo.AddPlan(planDto);
+            var planDto = new Plan() {id=plan.id, Name= plan.Name, Price= plan.Price, Description= plan.Description, Bids= plan.Bids };
+            _planRepo.AddPlan(planDto);
         }
 
-      
+
 
         public void DeleteById(int id)
         {
-           _planRepo.DeletePlan(id);
+            _planRepo.DeletePlan(id);
         }
 
         public IEnumerable<PlanReadDto> GetAll()
         {
             var planFromDb = _planRepo.GetAll();
             return planFromDb.Select(
-                p => new PlanReadDto(p.id , p.Name ,p.Description ,p.Price ,p.Bids));
+                p => new PlanReadDto() { id= p.id,Name=p.Name,Description= p.Description,Price= p.Price,Bids= p.Bids});
         }
 
         public PlanReadDto GetById(int id)
         {
             var planFromDb = _planRepo.GetById(id);
-            return new PlanReadDto(planFromDb.id , planFromDb.Name , planFromDb.Description, planFromDb.Price, planFromDb.Bids);
+            return new PlanReadDto() { id = planFromDb.id, Name = planFromDb.Name, Price = planFromDb.Price, Description = planFromDb.Description, Bids = planFromDb.Bids };
         }
         public void UpdatePlan(PlanReadDto plan)
         {
-            var planDto = new Plan(plan.id, plan.Name, plan.Price, plan.Description, plan.Bids);
+            var planDto = new Plan() { id = plan.id, Name = plan.Name, Price = plan.Price, Description = plan.Description, Bids = plan.Bids };
             _planRepo.UpdatePlan(planDto);
-    
+
         }
     }
 }

@@ -13,15 +13,7 @@ namespace HireMeDAL
    
     public class Portfolio
     {
-        public Portfolio()
-        {
-
-        }
-        public Portfolio(int portId, string freelancerId)
-        {
-            PortId = portId;
-            FreelancerId = freelancerId;
-        }
+      
         [Key]
         public int PortId { get; set; }
 

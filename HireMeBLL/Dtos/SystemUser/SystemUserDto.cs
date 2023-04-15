@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HireMeBLL.Dtos
+namespace HireMeBLL
 {
     public class SystemUserDto
     {
         public string? FirstName { get; set; }
 
         public string? LastName { get; set; }
-        public string? Password { get; set; }
         public string? Email { get; set; }
+        public string? Password { get; set; }
         public string? UserName { get; set; }
-        public string ?PhoneNumber{ get; set; }
-        
+        public string? PhoneNumber { get; set; }
+
         public string? Country { get; set; }
 
         public string? City { get; set; }
@@ -28,8 +28,15 @@ namespace HireMeBLL.Dtos
 
         public string? SSN { get; set; }
         public int PaymentMethodId { get; set; }
+        public int PlanId { get; set; }
 
         public decimal? Balance { get; set; }
 
+    }
+    public class LoginDto
+    {
+        public string UserName { get; set; }
+
+        public String Password { get; set; }
     }
 }

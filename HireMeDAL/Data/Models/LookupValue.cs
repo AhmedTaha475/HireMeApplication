@@ -12,7 +12,8 @@ namespace HireMeDAL
     {
         [Key]
         public int ValueId { get; set; }
-
+        [Required]
+        [StringLength(15,MinimumLength =2)]
         public string ValueName { get; set; }
 
         public int LookupId { get; set; }

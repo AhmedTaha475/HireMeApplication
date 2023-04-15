@@ -9,6 +9,7 @@ namespace HireMePL.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(policy: "Client")]
     public class ProjectPostsController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
@@ -20,7 +21,6 @@ namespace HireMePL.Controllers
             this._projectPostManager = projectPostManager;
         }
         [HttpPost]
-        [Authorize(policy:"Client")]
         public async Task<ActionResult> CreateProjectPost(CreateProjectPostDto createProjectPostDto)
         {
             Client user = (Client)await _userManager.GetUserAsync(User);
@@ -28,7 +28,6 @@ namespace HireMePL.Controllers
             return Ok();
         }
         [HttpPost]
-        [Authorize(policy: "Client")]
         public async Task<ActionResult> UpdateProjectPost(int projectPostId,UpdateProjectPostDto updateProjectPostDto)
         {
             Client user = (Client)await _userManager.GetUserAsync(User);
@@ -37,7 +36,6 @@ namespace HireMePL.Controllers
         }
         [HttpDelete]
         [Route("{id}")]
-        [Authorize(policy: "Client")]
         public async Task<ActionResult> DeleteProjectPost(int projectPostId)
         {
             try
@@ -54,7 +52,7 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("{id}")]
-
+        [AllowAnonymous]
         public ActionResult<ProjectPostWithApplicantsDetailsDto> GetProjectPostWithApplicantsById(int id)
         {
 

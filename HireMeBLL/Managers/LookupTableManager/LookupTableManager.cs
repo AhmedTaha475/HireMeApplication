@@ -18,6 +18,26 @@ namespace HireMeBLL
             this.lookupTableRepo = lookupTableRepo;
             this.lookupValuesRepo = lookupValuesRepo;
         }
+
+        public void CreateNewLookupTable(LookupTableDto lookupTableDto)
+        {
+            LookupTable lookuptoDb = new LookupTable() { 
+            LookupName = lookupTableDto.LookupName
+            };
+
+            lookupTableRepo.CreateNewLookup(lookuptoDb);
+        }
+
+        public void DeleteLookupTableById(int id)
+        {
+            lookupTableRepo.DeleteLookupById(id);
+        }
+
+        public void DeleteLookupTableByName(string name)
+        {
+            lookupTableRepo.DeleteLookupByName(name);
+        }
+
         public IEnumerable<LookupTableDto> GetAllLookupTables()
         {
             var lookuptablesDb = lookupTableRepo.GetAllLookups();
@@ -39,5 +59,18 @@ namespace HireMeBLL
 
             return new LookupTableDto() { LookupId = lookupTablefromDb.LookupId, LookupName = lookupTablefromDb.LookupName , lookupValuesdto = lookupvaluesfromdto.ToList() };
         }
+
+        public LookupTableDto GetLookupTableByName(string name)
+        {
+            var lookuptablefromDb = lookupTableRepo.GetLookupByName(name);
+            var lookuptablevaluesdtoname= lookupValuesRepo.GetLookupValuesByLookupName(name)
+                .Select(l=>new LookupValueDTO() { LookupId=l.LookupId , ValueId=l.ValueId , ValueName = l.ValueName});
+
+            return new LookupTableDto() { LookupId = lookuptablefromDb.LookupId, LookupName = lookuptablefromDb.LookupName, lookupValuesdto = lookuptablevaluesdtoname.ToList() };
+
+           
+        }
+
+
     }
 }

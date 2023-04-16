@@ -86,7 +86,6 @@ namespace HireMePL.Controllers
 
         [HttpPost]
         [Route("UpdateLookupValueById/{id}")]
-
         public ActionResult UpdateLookupValueById(LookupValueDTO lookupValueDTO , int id )
         {
             if (!ModelState.IsValid)

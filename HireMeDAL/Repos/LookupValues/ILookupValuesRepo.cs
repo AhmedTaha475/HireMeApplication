@@ -12,6 +12,8 @@ namespace HireMeDAL
         public IEnumerable<LookupValue>  GetLookupValuesByLookupId( int id );
         public IEnumerable<LookupValue>  GetLookupValuesByLookupName( string name );
 
+        public LookupValue GetLookupValueById(int id);
+
         #endregion
 
         #region Create Cruds in Lookup Values Rep (Interface)

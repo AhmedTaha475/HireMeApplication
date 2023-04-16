@@ -70,7 +70,6 @@ namespace HireMeBLL
             if (lookupvaluefromdb != null && lookupvaluefromdb.LookupId == id) ;
             {
                 lookupvaluefromdb.ValueName = lookupValue.ValueName;
-
                 lookupValuesRepo.UpdateLookupValueById(lookupvaluefromdb, id);
             }
         }
@@ -88,9 +87,6 @@ namespace HireMeBLL
        
 
         #endregion
-
-
-
 
     }
 }

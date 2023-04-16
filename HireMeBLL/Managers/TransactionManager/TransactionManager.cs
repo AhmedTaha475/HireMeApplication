@@ -63,11 +63,6 @@ namespace HireMeBLL
         }
 
         #endregion
-
-
-
-
-
        
     }
 }

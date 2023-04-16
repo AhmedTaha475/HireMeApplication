@@ -33,9 +33,5 @@ namespace HireMeDAL
 
         public virtual HashSet<ProjectPostApplicant> ProjectPostApplicants { get; set; } = new HashSet<ProjectPostApplicant>();
 
-        public static implicit operator Freelancer(string v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

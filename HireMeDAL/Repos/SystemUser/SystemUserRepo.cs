@@ -126,7 +126,7 @@ namespace HireMeDAL
             }
 
             var UpdatedClaimList = await usermanager.GetClaimsAsync(user);
-            var secretKeyString = _configuration.GetSection("SecretKey").ToString();
+            var secretKeyString = _configuration["SecretKey"].ToString();
             var secretKeyInBytes = Encoding.ASCII.GetBytes(secretKeyString);
             var secretKey = new SymmetricSecurityKey(secretKeyInBytes);
 

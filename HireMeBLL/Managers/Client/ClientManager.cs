@@ -27,6 +27,9 @@ namespace HireMeBLL
                 LastName=clientData.Lastname,
                 Email = clientData.Email,
                 UserName = clientData.UserName,
+                Balance=0,
+                TotalMoneySpent=0,
+
             };
           var CreateResult= await _clientRepo.CreateClient(client, clientData.Password);
 
@@ -77,7 +80,7 @@ namespace HireMeBLL
 
         public async Task<bool> UpdateClient(UpdateClientDto clientDto)
         {
-
+            //need to separate the update of those 3 
             var client = new Client()
             {
                 Id = clientDto.Id,
@@ -91,8 +94,8 @@ namespace HireMeBLL
                 SSN = clientDto.SSN,
                 Balance= clientDto.Balance,
                 TotalMoneySpent = clientDto.TotalMoneySpent,
-                PaymentMethodId = clientDto.PaymentMethodId,
                 PlanId= clientDto.PlanId,
+                PaymentMethodId = clientDto.PaymentMethodId,
                 CategoryId= clientDto.CategoryId,
                 Email=clientDto.email,
                 UserName=clientDto.Username

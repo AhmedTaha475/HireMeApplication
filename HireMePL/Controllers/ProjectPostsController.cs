@@ -1,3 +1,4 @@
+
 ﻿using HireMeBLL;
 using HireMeDAL;
 using Microsoft.AspNetCore.Authorization;
@@ -65,4 +66,5 @@ namespace HireMePL.Controllers
         }
     }
 }
+
 

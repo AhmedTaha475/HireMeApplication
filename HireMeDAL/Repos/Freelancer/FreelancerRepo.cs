@@ -50,7 +50,7 @@ namespace HireMeDAL
             //3-make cliame for user
             var Claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, suser.UserName),
+                new Claim(ClaimTypes.NameIdentifier, suser.Id),
                 new Claim (ClaimTypes.Role,"Freelancer")
 
             };
@@ -60,43 +60,43 @@ namespace HireMeDAL
         }
 
 
-        public async Task<Token> Login(string UserName, String Password)
-        {
-            var user = await Usermanager.FindByNameAsync(UserName);
-            if (user == null)
-            {
-                return null;
-            }
+        //public async Task<Token> Login(string UserName, String Password)
+        //{
+        //    var user = await Usermanager.FindByNameAsync(UserName);
+        //    if (user == null)
+        //    {
+        //        return null;
+        //    }
 
-            var isAuthenitcated = await Usermanager.CheckPasswordAsync(user, Password);
-            if (!isAuthenitcated)
-            {
-                return null;
-            }
+        //    var isAuthenitcated = await Usermanager.CheckPasswordAsync(user, Password);
+        //    if (!isAuthenitcated)
+        //    {
+        //        return null;
+        //    }
 
-            var claimsList = await Usermanager.GetClaimsAsync(user);
+        //    var claimsList = await Usermanager.GetClaimsAsync(user);
 
-            var secretKeyString = configuration.GetSection("SecretKey").ToString();
-            var secretKeyInBytes = Encoding.ASCII.GetBytes(secretKeyString);
-            var secretKey = new SymmetricSecurityKey(secretKeyInBytes);
+        //    var secretKeyString = configuration.GetSection("SecretKey").ToString();
+        //    var secretKeyInBytes = Encoding.ASCII.GetBytes(secretKeyString);
+        //    var secretKey = new SymmetricSecurityKey(secretKeyInBytes);
 
-            //Combination SecretKey, HashingAlgorithm
-            var siginingCreedentials = new SigningCredentials(secretKey,
-                SecurityAlgorithms.HmacSha256Signature);
+        //    //Combination SecretKey, HashingAlgorithm
+        //    var siginingCreedentials = new SigningCredentials(secretKey,
+        //        SecurityAlgorithms.HmacSha256Signature);
 
-            var expiry = DateTime.Now.AddDays(1);
+        //    var expiry = DateTime.Now.AddDays(1);
 
-            var token = new JwtSecurityToken(
-                claims: claimsList,
-                expires: expiry,
-                signingCredentials: siginingCreedentials);
+        //    var token = new JwtSecurityToken(
+        //        claims: claimsList,
+        //        expires: expiry,
+        //        signingCredentials: siginingCreedentials);
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenString = tokenHandler.WriteToken(token);
+        //    var tokenHandler = new JwtSecurityTokenHandler();
+        //    var tokenString = tokenHandler.WriteToken(token);
 
-            return new Token() { token = tokenString, Expiry = expiry, Role = "Freelancer" };
+        //    return new Token() { token = tokenString, Expiry = expiry, Role = "Freelancer" };
 
-        }
+        //}
         public List<Freelancer> GetAllFrelancer()
         {
             return context.freelancers.ToList();

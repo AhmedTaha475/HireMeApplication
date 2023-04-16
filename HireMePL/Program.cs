@@ -19,6 +19,7 @@ namespace HireMePL
             builder.Services.AddScoped<ISystemUserManager, SystemUserManager>();
             builder.Services.AddScoped<IFreelancerRepo, FreelancerRepo>();
             builder.Services.AddScoped<IClientRepo, ClientRepo>();
+            builder.Services.AddScoped<IClientManager, ClientManager>();
 
             #region defaults
             builder.Services.AddControllers();

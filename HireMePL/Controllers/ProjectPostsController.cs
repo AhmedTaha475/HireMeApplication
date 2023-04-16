@@ -28,6 +28,7 @@ namespace HireMePL.Controllers
             return Ok();
         }
         [HttpPost]
+        [Route("Test")]
         public async Task<ActionResult> UpdateProjectPost(int projectPostId,UpdateProjectPostDto updateProjectPostDto)
         {
             Client user = (Client)await _userManager.GetUserAsync(User);

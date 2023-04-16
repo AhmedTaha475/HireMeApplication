@@ -9,37 +9,50 @@ namespace HireMeDAL
 {
     public class LookupValuesRepo : ILookupValuesRepo
     {
+        #region Constructor && All Injection Requires for Repo Lookup Values Class 
         public LookupValuesRepo( HireMeContext context)
         {
             Context = context;
         }
 
         public HireMeContext Context { get; }
+        #endregion
 
-        public void CreateLookupValue(LookupValue lookvalue)
-        {
-           Context.lookupValues.Add(lookvalue);
-            saveChanges();
-        }
+        #region All Get Cruds for Repo Lookup Values Class
 
         // ====== this function get all lookup values of specific lookup with its id ===== //
         public IEnumerable<LookupValue> GetLookupValuesByLookupId(int id)
         {
             var lookvalue = Context.lookupValues.Where(l => l.LookupId == id).ToList();
-            return lookvalue;   
+            return lookvalue;
 
         }
 
         // ====== this function get all lookup values of specific lookup with its name ===== //
         public IEnumerable<LookupValue> GetLookupValuesByLookupName(string name)
         {
-            var lookvalue = Context.lookupValues.Where(l=>l.LookupTable.LookupName.ToLower() == name.ToLower()).ToList();           
+            var lookvalue = Context.lookupValues.Where(l => l.LookupTable.LookupName.ToLower() == name.ToLower()).ToList();
             return lookvalue;
 
         }
 
+        #endregion
+
+        #region All Create Cruds for Repo Lookup Values Class
+
+        // ====== this function create new lookup value ===== //
+        public void CreateLookupValue(LookupValue lookvalue)
+        {
+            Context.lookupValues.Add(lookvalue);
+            saveChanges();
+        }
+
+        #endregion
+
+        #region All Update Cruds for Repo Lookup Values Class
+
         // ====== this function update lookup values of specific lookup  ===== //
-        public void UpdateLookupValueById(LookupValue lookvalue, int id , string name)
+        public void UpdateLookupValueById(LookupValue lookvalue, int id, string name)
         {
             var updlookvalue = Context.lookupValues.FirstOrDefault(l => l.ValueName == name && l.LookupId == id);
             if (updlookvalue != null)
@@ -49,11 +62,27 @@ namespace HireMeDAL
 
             }
         }
+
         // ===== this function save all operations in contet ---> to data base ====== //
         public void saveChanges()
         {
             Context.SaveChanges();
-           
+
         }
+
+        #endregion
+
+        #region All Delete Cruds for Repo Lookup Values Class
+        // ==== this function to delete lookup value by Id ==== //
+        public void DeleteLookupValueById(int id)
+        {
+            LookupValue? lookupdel = Context.lookupValues.Find(id);
+            if (lookupdel != null)
+                Context.lookupValues.Remove(lookupdel);
+            Context.SaveChanges();
+        }
+
+        #endregion
+
     }
 }

@@ -22,6 +22,7 @@ namespace HireMePL.Controllers
             this._userManager = userManager;
             this._projectPostManager = projectPostManager;
         }
+
         [HttpPost]
         public async Task<ActionResult> CreateProjectPost(CreateProjectPostDto createProjectPostDto)
         {

@@ -13,13 +13,14 @@ namespace HireMeBLL
     {
         [Required]
         [Column(TypeName = "datetime")]
+        // in need to put validator here         
         public DateTime DateOfTransaction { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(10,2)")]        
         public decimal Amount { get; set; }
 
-        [StringLength(150, MinimumLength = 2)]
+        [StringLength(150, MinimumLength = 2,ErrorMessage =" the max number of chars are 150 char ! Dont Exceed them .. ")]
         public string Description { get; set; } = string.Empty;
 
         public TransactionReadDto( DateTime dateTime , decimal amount , string description)

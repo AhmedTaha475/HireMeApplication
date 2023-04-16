@@ -10,4 +10,8 @@
     <ProjectReference Include="..\HireMeDAL\HireMeDAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Managers\Freelancer\" />
+  </ItemGroup>
+
 </Project>

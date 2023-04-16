@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HireMeDAL.Migrations
 {
     /// <inheritdoc />
-    public partial class m1 : Migration
+    public partial class v1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -167,14 +167,12 @@ namespace HireMeDAL.Migrations
                         name: "FK_AspNetUsers_lookupValues_PaymentMethodId",
                         column: x => x.PaymentMethodId,
                         principalTable: "lookupValues",
-                        principalColumn: "ValueId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ValueId");
                     table.ForeignKey(
                         name: "FK_AspNetUsers_plans_PlanId",
                         column: x => x.PlanId,
                         principalTable: "plans",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
@@ -316,9 +314,9 @@ namespace HireMeDAL.Migrations
                 {
                     TransactionId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DateOfTransaction = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateOfTransaction = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     SystemUserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>

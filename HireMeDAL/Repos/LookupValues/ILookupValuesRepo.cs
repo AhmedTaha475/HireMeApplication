@@ -9,11 +9,11 @@ namespace HireMeDAL
     public interface ILookupValuesRepo
     {
         
-        public IEnumerable<LookupValue>  GetLookupValuesById( int id );
-        public IEnumerable<LookupValue>  GetLookupValuesById( string name );
+        public IEnumerable<LookupValue> GetLookupValuesByLookupId( int id );
+        public IEnumerable<LookupValue> GetLookupValuesByLookupName( string name );
 
         public void CreateLookupValue(LookupValue lookvalue);
-        public void UpdateLookupValueById(LookupValue lookvalue, int id);
+        public void UpdateLookupValueById(LookupValue lookvalue, int id,string name);
 
         public void saveChanges();
 

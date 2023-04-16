@@ -10,7 +10,7 @@ namespace HireMeDAL.Data.Models
     {
         public string token { get; set; }
         public DateTime Expiry { get; set; }
-        public string Role { get; set;}
+        public List<string> Roles { get; set;}
 
     }
 }

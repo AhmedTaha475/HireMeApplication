@@ -11,13 +11,13 @@ namespace HireMePL.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class HamadasController : ControllerBase
+    public class AdminsController : ControllerBase
     {
         private readonly ISystemUserManager systemUserManager;
         private readonly UserManager<IdentityUser> usermanager;
         private readonly RoleManager<IdentityRole> roleManager;
 
-        public HamadasController(ISystemUserManager SystemUserManager, UserManager<IdentityUser> usermanager, IConfiguration configuration, RoleManager<IdentityRole> RoleManager)
+        public AdminsController(ISystemUserManager SystemUserManager, UserManager<IdentityUser> usermanager, IConfiguration configuration, RoleManager<IdentityRole> RoleManager)
         {
             systemUserManager = SystemUserManager;
             this.usermanager = usermanager;

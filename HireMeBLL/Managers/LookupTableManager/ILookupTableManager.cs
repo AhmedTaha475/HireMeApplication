@@ -19,6 +19,7 @@ namespace HireMeBLL
         #region Create Crud( Manager Interface )
         public void CreateNewLookupTable(LookupTableDto lookupTableDto);
 
+
         #endregion
 
         #region Update Crud( Manager Interface )

@@ -10,7 +10,6 @@ namespace HireMeBLL
 {
     public interface ISystemUserManager
     {
-        public Task<bool> CreateSystemUser(SystemUserDto suser);
-        public Task<Token> Login(LoginDto credential);
+        public Task<TokenDto> Login(LoginDto credential);
     }
 }

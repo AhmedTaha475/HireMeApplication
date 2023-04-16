@@ -8,9 +8,14 @@ namespace HireMeDAL
 {
     public interface ILookupValuesRepo
     {
+
         #region Get Cruds in Lookup Values Repo(Interface)
-        public IEnumerable<LookupValue>  GetLookupValuesByLookupId( int id );
-        public IEnumerable<LookupValue>  GetLookupValuesByLookupName( string name );
+       
+
+        
+        public IEnumerable<LookupValue> GetLookupValuesByLookupId( int id );
+        public IEnumerable<LookupValue> GetLookupValuesByLookupName( string name );
+
 
         public LookupValue GetLookupValueById(int id);
 
@@ -18,6 +23,7 @@ namespace HireMeDAL
 
         #region Create Cruds in Lookup Values Rep (Interface)
         public void CreateLookupValue(LookupValue lookvalue);
+
 
         #endregion
 

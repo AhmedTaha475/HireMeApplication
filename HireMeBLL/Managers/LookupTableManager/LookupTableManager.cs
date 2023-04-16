@@ -74,6 +74,7 @@ namespace HireMeBLL
        
         #region All  Update Cruds for  LookupTables for Lookup Table Manager 
 
+
         // ===== Update LookupTable By Id ===== //
         public void UpdateLookupTableById(LookupTableDto lookupTableDto, int id)
         {
@@ -113,5 +114,6 @@ namespace HireMeBLL
             lookupTableRepo.DeleteLookupByName(name);
         }
         #endregion
+
     }
 }

@@ -30,7 +30,7 @@ namespace HireMeDAL
             this.configuration = configuration;
             roleManager = RoleManager;
         }
-        public async Task<bool> CreateFrelancer(Freelancer suser,string password)
+        public async Task<bool> CreateFreelancer(Freelancer suser,string password)
         {
             //2-Hash Pasword and create user
             var hashpassword = await Usermanager.CreateAsync(suser, password);
@@ -43,14 +43,14 @@ namespace HireMeDAL
             var Role = roleManager.Roles.FirstOrDefault(r => r.Name == "Freelancer");
             if (Role == null)
             {
-                await roleManager.CreateAsync(new IdentityRole() { Name = "Freelancer", Id = "rrrkfkebhjsehsb" });
+                await roleManager.CreateAsync(new IdentityRole() { Name = "Freelancer", Id = Guid.NewGuid().ToString() });
             }
             var addedUser = await Usermanager.FindByEmailAsync(suser.Email);
             await Usermanager.AddToRoleAsync(addedUser, "Freelancer");
             //3-make cliame for user
             var Claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, suser.UserName),
+                new Claim(ClaimTypes.NameIdentifier, suser.Id),
                 new Claim (ClaimTypes.Role,"Freelancer")
 
             };
@@ -59,62 +59,60 @@ namespace HireMeDAL
             return true;
         }
 
-
-        public async Task<Token> Login(string UserName, String Password)
-        {
-            var user = await Usermanager.FindByNameAsync(UserName);
-            if (user == null)
-            {
-                return null;
-            }
-
-            var isAuthenitcated = await Usermanager.CheckPasswordAsync(user, Password);
-            if (!isAuthenitcated)
-            {
-                return null;
-            }
-
-            var claimsList = await Usermanager.GetClaimsAsync(user);
-
-            var secretKeyString = configuration.GetSection("SecretKey").ToString();
-            var secretKeyInBytes = Encoding.ASCII.GetBytes(secretKeyString);
-            var secretKey = new SymmetricSecurityKey(secretKeyInBytes);
-
-            //Combination SecretKey, HashingAlgorithm
-            var siginingCreedentials = new SigningCredentials(secretKey,
-                SecurityAlgorithms.HmacSha256Signature);
-
-            var expiry = DateTime.Now.AddDays(1);
-
-            var token = new JwtSecurityToken(
-                claims: claimsList,
-                expires: expiry,
-                signingCredentials: siginingCreedentials);
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenString = tokenHandler.WriteToken(token);
-
-            return new Token() { token = tokenString, Expiry = expiry, Role = "Freelancer" };
-
-        }
-        public List<Freelancer> GetAllFrelancer()
+        public List<Freelancer> GetAllFreelancer()
         {
             return context.freelancers.ToList();
         }
 
-        public async Task<Freelancer> GetFrelancerById(string id)
+        public async Task<Freelancer> GetFreelancerById(string id)
         {
             return (Freelancer)await Usermanager.FindByIdAsync(id);
         }
 
 
-        public bool UpdateFrelancer(Freelancer user)
+        public async Task<bool> UpdateFreelancer(Freelancer user)
         {
             try
             {
-                context.Entry(user).State = EntityState.Modified;
-                context.SaveChanges();
-                return true;
+                //context.Entry(user).State = EntityState.Modified;
+                //context.SaveChanges();
+                var updateFreelancer = (Freelancer)await Usermanager.FindByIdAsync(user.Id);
+                if (updateFreelancer != null)
+                {
+                    updateFreelancer.Id = user.Id;
+                    updateFreelancer.FirstName = user.FirstName;
+                    updateFreelancer.LastName = user.LastName;
+                    updateFreelancer.Country = user.Country;
+                    updateFreelancer.City = user.City;
+                    updateFreelancer.Street = user.Street;
+                    updateFreelancer.Image = user.Image;
+                    updateFreelancer.Age = user.Age;
+                    updateFreelancer.SSN = user.SSN;
+                    updateFreelancer.Balance = user.Balance;
+                    updateFreelancer.PaymentMethodId = user.PaymentMethodId;
+                    updateFreelancer.PlanId = user.PlanId;
+                    updateFreelancer.CategoryId = user.CategoryId;
+                    updateFreelancer.Email = user.Email;
+                    updateFreelancer.UserName = user.UserName;
+                    updateFreelancer.Rank= user.Rank;
+                    updateFreelancer.JobTitle = user.JobTitle;
+                    updateFreelancer.Bids = user.Bids;
+                    updateFreelancer.Description = user.Description;
+                    updateFreelancer.TotalMoneyEarned= user.TotalMoneyEarned;
+                    updateFreelancer.CV = user.CV;
+                    updateFreelancer.AverageRate = user.AverageRate;
+                    updateFreelancer.PortfolioId = user.PortfolioId;
+                }
+                var result = await Usermanager.UpdateAsync(updateFreelancer);
+                if (result.Succeeded)
+                {
+                    return true;
+
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch
             {
@@ -122,12 +120,12 @@ namespace HireMeDAL
             }
         }
 
-        public async Task<bool> DeleteFrelancer(int id)
+        public async Task<bool> DeleteFreelancer(string id)
         {
-            var deleteduser = context.systemUsers.Find(id);
-            if (deleteduser != null)
+            var deletedUser = await Usermanager.FindByIdAsync(id);
+            if (deletedUser != null)
             {
-                var deleteresult = await Usermanager.DeleteAsync(deleteduser);
+                var deleteresult = await Usermanager.DeleteAsync(deletedUser);
                 if (deleteresult.Succeeded)
                 {
                     return true;

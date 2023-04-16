@@ -1,4 +1,5 @@
-﻿using FluentNHibernate.Conventions.Inspections;
+﻿using Azure;
+using FluentNHibernate.Conventions.Inspections;
 using HireMeDAL.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -7,11 +8,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Numerics;
+using System.Runtime.Intrinsics.X86;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using static NHibernate.Engine.Query.CallableParser;
 
 namespace HireMeDAL
 {
@@ -20,8 +25,7 @@ namespace HireMeDAL
         private readonly HireMeContext context;
         private readonly IConfiguration configuration;
         private readonly RoleManager<IdentityRole> roleManager;
-
-        public UserManager<IdentityUser> Usermanager { get; }
+        private readonly UserManager<IdentityUser> Usermanager;
 
         public ClientRepo(HireMeContext context, UserManager<IdentityUser> usermanager, IConfiguration configuration, RoleManager<IdentityRole> RoleManager)
         {
@@ -104,7 +108,7 @@ namespace HireMeDAL
             var Role = roleManager.Roles.FirstOrDefault(r => r.Name == "Client");
             if (Role == null)
             {
-                await roleManager.CreateAsync(new IdentityRole() { Name = "Client", Id = "esenfrrrkfkebhjsehsb" });
+                await roleManager.CreateAsync(new IdentityRole() { Name = "Client", Id =Guid.NewGuid().ToString()});
             }
             var addedUser = await Usermanager.FindByEmailAsync(suser.Email);
             await Usermanager.AddToRoleAsync(addedUser, "Client");
@@ -112,57 +116,23 @@ namespace HireMeDAL
             //3-make cliame for user
             var Claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, addedUser.UserName),
+                new Claim(ClaimTypes.NameIdentifier, addedUser.Id),
                 new Claim (ClaimTypes.Role,"Client")
 
             };
+
             //4-attach this claim for tis user
             await Usermanager.AddClaimsAsync(addedUser, Claims);
             return true;
         }
-        public async Task<Token> Login(string UserName, String Password)
+
+        public async Task<bool> DeleteClient(string id)
         {
-            var user = await Usermanager.FindByNameAsync(UserName);
-            if (user == null)
+            //var deleteduser = context.systemUsers.Find(id);
+            var deletedUser = await Usermanager.FindByIdAsync(id);
+            if (deletedUser !=null)
             {
-                return null;
-            }
-
-            var isAuthenitcated = await Usermanager.CheckPasswordAsync(user, Password);
-            if (!isAuthenitcated)
-            {
-                return null;
-            }
-
-            var claimsList = await Usermanager.GetClaimsAsync(user);
-
-            var secretKeyString = configuration.GetSection("SecretKey").ToString();
-            var secretKeyInBytes = Encoding.ASCII.GetBytes(secretKeyString);
-            var secretKey = new SymmetricSecurityKey(secretKeyInBytes);
-
-            //Combination SecretKey, HashingAlgorithm
-            var siginingCreedentials = new SigningCredentials(secretKey,
-                SecurityAlgorithms.HmacSha256Signature);
-
-            var expiry = DateTime.Now.AddDays(1);
-
-            var token = new JwtSecurityToken(
-                claims: claimsList,
-                expires: expiry,
-                signingCredentials: siginingCreedentials);
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenString = tokenHandler.WriteToken(token);
-
-            return new Token() { token = tokenString, Expiry = expiry ,Role="Client"};
-
-        }
-        public async Task<bool> DeleteClient(int id)
-        {
-            var deleteduser = context.systemUsers.Find(id);
-            if (deleteduser != null)
-            {
-                var deleteresult = await Usermanager.DeleteAsync(deleteduser);
+                var deleteresult = await Usermanager.DeleteAsync(deletedUser);
                 if (deleteresult.Succeeded)
                 {
                     return true;
@@ -181,13 +151,42 @@ namespace HireMeDAL
             return (Client)await Usermanager.FindByIdAsync(id);
         }
 
-        public bool UpdateClient(Client user)
+        public async Task<bool> UpdateClient(Client clientDto)
         {
             try
             {
-                context.Entry(user).State = EntityState.Modified;
-                context.SaveChanges();
+                //context.Entry(user).State = EntityState.Modified;
+                //context.SaveChanges();
+                var updatedClient = (Client)await Usermanager.FindByIdAsync(clientDto.Id);
+                if (updatedClient != null)
+                {
+                    updatedClient.Id = clientDto.Id;
+                    updatedClient.FirstName = clientDto.FirstName;
+                    updatedClient.LastName = clientDto.LastName;
+                    updatedClient.Country = clientDto.Country;
+                    updatedClient.City = clientDto.City;
+                    updatedClient.Street = clientDto.Street;
+                    updatedClient.Image = clientDto.Image;
+                    updatedClient.Age = clientDto.Age;
+                    updatedClient.SSN = clientDto.SSN;
+                    updatedClient.Balance = clientDto.Balance;
+                    updatedClient.TotalMoneySpent = clientDto.TotalMoneySpent;
+                    updatedClient.PaymentMethodId = clientDto.PaymentMethodId;
+                    updatedClient.PlanId = clientDto.PlanId;
+                    updatedClient.CategoryId = clientDto.CategoryId;
+                    updatedClient.Email = clientDto.Email;
+                    updatedClient.UserName=clientDto.UserName;
+                }
+                var result=  await Usermanager.UpdateAsync(updatedClient);
+                if (result.Succeeded)
+                {
                 return true;
+
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch
             {

@@ -1,5 +1,4 @@
 
-
 ﻿using HireMeBLL;
 using HireMeDAL;
 using Microsoft.AspNetCore.Authorization;
@@ -22,20 +21,19 @@ namespace HireMePL.Controllers
             this._userManager = userManager;
             this._projectPostManager = projectPostManager;
         }
-
         [HttpPost]
         public async Task<ActionResult> CreateProjectPost(CreateProjectPostDto createProjectPostDto)
         {
             Client user = (Client)await _userManager.GetUserAsync(User);
-            _projectPostManager.CreateProjectPost(createProjectPostDto, user.Id);
+            _projectPostManager.CreateProjectPost(createProjectPostDto,user.Id);
             return Ok();
         }
         [HttpPost]
-        [Route("{id}")]
-        public async Task<ActionResult> UpdateProjectPost(int projectPostId, UpdateProjectPostDto updateProjectPostDto)
+        [Route("Test")]
+        public async Task<ActionResult> UpdateProjectPost(int projectPostId,UpdateProjectPostDto updateProjectPostDto)
         {
             Client user = (Client)await _userManager.GetUserAsync(User);
-            _projectPostManager.UpdateProjectPost(projectPostId, updateProjectPostDto, user.Id);
+            _projectPostManager.UpdateProjectPost(projectPostId,updateProjectPostDto, user.Id);
             return Ok();
         }
         [HttpDelete]
@@ -68,4 +66,5 @@ namespace HireMePL.Controllers
         }
     }
 }
+
 

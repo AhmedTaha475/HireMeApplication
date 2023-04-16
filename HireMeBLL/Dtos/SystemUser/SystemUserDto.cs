@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,10 +34,5 @@ namespace HireMeBLL
         public decimal? Balance { get; set; }
 
     }
-    public class LoginDto
-    {
-        public string UserName { get; set; }
 
-        public String Password { get; set; }
-    }
 }

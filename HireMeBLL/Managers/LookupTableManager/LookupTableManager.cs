@@ -71,6 +71,9 @@ namespace HireMeBLL
            
         }
 
-
+        public void UpdateLookupTableById(LookupTableDto lookupTableDto, int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

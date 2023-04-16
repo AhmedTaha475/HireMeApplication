@@ -84,6 +84,31 @@ namespace HireMePL.Controllers
         }
         #endregion
 
+        [HttpPost]
+        [Route("UpdateLookupValueById/{id}")]
+
+        public ActionResult UpdateLookupValueById(LookupValueDTO lookupValueDTO , int id )
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                lookupValueManager.UpdateLookupValueById(lookupValueDTO , id);
+                return Ok(new { message = $" lookup table with Id = {id} is updated successfully !!" });
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+
+            }
+
+
+
+        }
+
+
         #endregion
     }
 }

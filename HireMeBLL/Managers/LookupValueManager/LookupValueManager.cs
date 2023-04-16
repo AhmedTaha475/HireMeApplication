@@ -64,6 +64,16 @@ namespace HireMeBLL
         #endregion
 
         #region All Update Cruds in Lookup Value Manager Class
+        public void UpdateLookupValueById(LookupValueDTO lookupValue, int id)
+        {
+            var lookupvaluefromdb = lookupValuesRepo.GetLookupValueById(id);
+            if (lookupvaluefromdb != null && lookupvaluefromdb.LookupId == id) ;
+            {
+                lookupvaluefromdb.ValueName = lookupValue.ValueName;
+
+                lookupValuesRepo.UpdateLookupValueById(lookupvaluefromdb, id);
+            }
+        }
 
         #endregion
 
@@ -74,6 +84,8 @@ namespace HireMeBLL
         {
             lookupValuesRepo.DeleteLookupValueById(id);
         }
+
+       
 
         #endregion
 

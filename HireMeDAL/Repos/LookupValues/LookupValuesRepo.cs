@@ -36,6 +36,13 @@ namespace HireMeDAL
 
         }
 
+        // ==== thsis function to get lookup value by its id ===== // 
+        public LookupValue GetLookupValueById(int id)
+        {
+            var lookupValue = Context.lookupValues.FirstOrDefault(l => l.LookupId == id);
+            return lookupValue; 
+        }
+
         #endregion
 
         #region All Create Cruds for Repo Lookup Values Class
@@ -52,9 +59,9 @@ namespace HireMeDAL
         #region All Update Cruds for Repo Lookup Values Class
 
         // ====== this function update lookup values of specific lookup  ===== //
-        public void UpdateLookupValueById(LookupValue lookvalue, int id, string name)
+        public void UpdateLookupValueById(LookupValue lookvalue, int id)
         {
-            var updlookvalue = Context.lookupValues.FirstOrDefault(l => l.ValueName == name && l.LookupId == id);
+            var updlookvalue = Context.lookupValues.FirstOrDefault(l => l.ValueId == id);
             if (updlookvalue != null)
             {
                 updlookvalue.ValueName = lookvalue.ValueName;
@@ -81,6 +88,8 @@ namespace HireMeDAL
                 Context.lookupValues.Remove(lookupdel);
             Context.SaveChanges();
         }
+
+       
 
         #endregion
 

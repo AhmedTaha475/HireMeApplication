@@ -81,6 +81,7 @@ namespace HireMeBLL
             if(lookuptablefromdb !=null && lookuptablefromdb.LookupId ==id )
             {
                 lookuptablefromdb.LookupName = lookupTableDto.LookupName;
+                lookupTableRepo.UpdateLookupById(lookuptablefromdb, id);
             }
         }
 
@@ -91,6 +92,7 @@ namespace HireMeBLL
             if (lookuptablefromdb != null && lookuptablefromdb.LookupName== name)
             {
                 lookuptablefromdb.LookupName = lookupTableDto.LookupName;
+                lookupTableRepo.UpdateLookupByName(lookuptablefromdb, name);
             }
 
         }

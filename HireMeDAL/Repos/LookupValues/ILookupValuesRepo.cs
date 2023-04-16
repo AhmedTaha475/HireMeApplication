@@ -20,7 +20,7 @@ namespace HireMeDAL
         #endregion
 
         #region Update Cruds in Lookup Values Repo (Interface)
-        public void UpdateLookupValueById(LookupValue lookvalue, int id , string name);
+        public void UpdateLookupValueById(LookupValue lookvalue, int id );
 
         #endregion
 

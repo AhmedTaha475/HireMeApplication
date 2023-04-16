@@ -23,21 +23,21 @@ namespace HireMePL.Controllers
             this._projectPostManager = projectPostManager;
         }
 
-        //[HttpPost]
-        //public async Task<ActionResult> CreateProjectPost(CreateProjectPostDto createProjectPostDto)
-        //{
-        //    Client user = (Client)await _userManager.GetUserAsync(User);
-        //    _projectPostManager.CreateProjectPost(createProjectPostDto,user.Id);
-        //    return Ok();
-        //}
-        //[HttpPost]
-        //[Route("{id}")]
-        //public async Task<ActionResult> UpdateProjectPost(int projectPostId,UpdateProjectPostDto updateProjectPostDto)
-        //{
-        //    Client user = (Client)await _userManager.GetUserAsync(User);
-        //    _projectPostManager.UpdateProjectPost(projectPostId,updateProjectPostDto, user.Id);
-        //    return Ok();
-        //}
+        [HttpPost]
+        public async Task<ActionResult> CreateProjectPost(CreateProjectPostDto createProjectPostDto)
+        {
+            Client user = (Client)await _userManager.GetUserAsync(User);
+            _projectPostManager.CreateProjectPost(createProjectPostDto, user.Id);
+            return Ok();
+        }
+        [HttpPost]
+        [Route("{id}")]
+        public async Task<ActionResult> UpdateProjectPost(int projectPostId, UpdateProjectPostDto updateProjectPostDto)
+        {
+            Client user = (Client)await _userManager.GetUserAsync(User);
+            _projectPostManager.UpdateProjectPost(projectPostId, updateProjectPostDto, user.Id);
+            return Ok();
+        }
         [HttpDelete]
         [Route("{id}")]
         public async Task<ActionResult> DeleteProjectPost(int projectPostId)

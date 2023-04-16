@@ -15,6 +15,7 @@ namespace HireMeDAL
         public void CreateLookupValue(LookupValue lookvalue);
         public void UpdateLookupValueById(LookupValue lookvalue, int id,string name);
 
+
         public void saveChanges();
 
     }

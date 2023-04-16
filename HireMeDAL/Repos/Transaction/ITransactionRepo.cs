@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HireMeDAL.Repos
 {
-    internal interface ITransactionRepo
+    public interface ITransactionRepo
     {
 
         public IEnumerable<Transaction> GetAllTranscations(string userid);

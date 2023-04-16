@@ -21,7 +21,6 @@ namespace HireMePL.Controllers
             this._projectPostManager = projectPostManager;
         }
         [HttpPost]
-        [Route("TestRoute")]
         public async Task<ActionResult> CreateProjectPost(CreateProjectPostDto createProjectPostDto)
         {
             Client user = (Client)await _userManager.GetUserAsync(User);
@@ -65,3 +64,4 @@ namespace HireMePL.Controllers
         }
     }
 }
+

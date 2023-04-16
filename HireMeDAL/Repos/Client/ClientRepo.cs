@@ -1,4 +1,5 @@
-﻿using FluentNHibernate.Conventions.Inspections;
+﻿using Azure;
+using FluentNHibernate.Conventions.Inspections;
 using HireMeDAL.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -7,11 +8,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Numerics;
+using System.Runtime.Intrinsics.X86;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using static NHibernate.Engine.Query.CallableParser;
 
 namespace HireMeDAL
 {
@@ -121,12 +126,13 @@ namespace HireMeDAL
             return true;
         }
 
-        public async Task<bool> DeleteClient(int id)
+        public async Task<bool> DeleteClient(string id)
         {
-            var deleteduser = context.systemUsers.Find(id);
-            if (deleteduser != null)
+            //var deleteduser = context.systemUsers.Find(id);
+            var deletedUser = await Usermanager.FindByIdAsync(id);
+            if (deletedUser !=null)
             {
-                var deleteresult = await Usermanager.DeleteAsync(deleteduser);
+                var deleteresult = await Usermanager.DeleteAsync(deletedUser);
                 if (deleteresult.Succeeded)
                 {
                     return true;
@@ -145,13 +151,42 @@ namespace HireMeDAL
             return (Client)await Usermanager.FindByIdAsync(id);
         }
 
-        public bool UpdateClient(Client user)
+        public async Task<bool> UpdateClient(Client clientDto)
         {
             try
             {
-                context.Entry(user).State = EntityState.Modified;
-                context.SaveChanges();
+                //context.Entry(user).State = EntityState.Modified;
+                //context.SaveChanges();
+                var updatedClient = (Client)await Usermanager.FindByIdAsync(clientDto.Id);
+                if (updatedClient != null)
+                {
+                    updatedClient.Id = clientDto.Id;
+                    updatedClient.FirstName = clientDto.FirstName;
+                    updatedClient.LastName = clientDto.LastName;
+                    updatedClient.Country = clientDto.Country;
+                    updatedClient.City = clientDto.City;
+                    updatedClient.Street = clientDto.Street;
+                    updatedClient.Image = clientDto.Image;
+                    updatedClient.Age = clientDto.Age;
+                    updatedClient.SSN = clientDto.SSN;
+                    updatedClient.Balance = clientDto.Balance;
+                    updatedClient.TotalMoneySpent = clientDto.TotalMoneySpent;
+                    updatedClient.PaymentMethodId = clientDto.PaymentMethodId;
+                    updatedClient.PlanId = clientDto.PlanId;
+                    updatedClient.CategoryId = clientDto.CategoryId;
+                    updatedClient.Email = clientDto.Email;
+                    updatedClient.UserName=clientDto.UserName;
+                }
+                var result=  await Usermanager.UpdateAsync(updatedClient);
+                if (result.Succeeded)
+                {
                 return true;
+
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch
             {

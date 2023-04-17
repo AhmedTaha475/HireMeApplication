@@ -14,7 +14,6 @@ namespace HireMeDAL
         public Task<bool> UpdateFreelancer(Freelancer user);
         Task<bool> DeleteFreelancer(string id);
 
-        Task<bool> UpdateFreelancer
 
     }
 }

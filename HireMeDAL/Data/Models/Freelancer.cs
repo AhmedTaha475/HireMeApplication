@@ -35,5 +35,6 @@ namespace HireMeDAL
         public virtual HashSet<ProjectReview> ProjectReviews { get; set; } = new HashSet<ProjectReview>();
 
 
+
     }
 }

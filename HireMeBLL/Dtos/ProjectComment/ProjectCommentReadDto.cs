@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HireMeBLL.Dtos.ProjectComment
+namespace HireMeBLL
 {
-    public record ProjectCommentReadDto ( string Comment ,ClientChildReadDto clientChild );
+    public record ProjectCommentReadDto ( string Comment ,UserChildReadDto clientChild );
 }

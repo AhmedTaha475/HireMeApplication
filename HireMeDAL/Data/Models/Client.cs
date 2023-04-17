@@ -14,6 +14,7 @@ namespace HireMeDAL
         public virtual HashSet<ProjectComment> ProjectComments { get; set; } = new HashSet<ProjectComment>();
         public virtual HashSet<Project> Projects { get; set; } = new HashSet<Project>();
         public virtual HashSet<ProjectPost> ProjectPosts { get; set; } = new HashSet<ProjectPost>();
+        public virtual HashSet<ProjectReview> ProjectReviews { get; set; } = new HashSet<ProjectReview>();
 
     }
 

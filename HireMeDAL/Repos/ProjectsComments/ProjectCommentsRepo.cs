@@ -1,11 +1,12 @@
 ﻿using HireMeDAL.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HireMeDAL.Repos.ProjectsComments
+namespace HireMeDAL
 {
     public class ProjectCommentsRepo : IProjectCommentsRepo
     {
@@ -43,7 +44,8 @@ namespace HireMeDAL.Repos.ProjectsComments
 
         public List<ProjectComment> GetAllByProjectId(int projectId)
         {
-            return context.projectComments.Where(c=>c.ProjectId == projectId).ToList();
+            return context.projectComments.Include(p=>p.Client).
+                Where(c=>c.ProjectId == projectId).ToList();
         }
 
         public bool Update(ProjectComment comment, int id)

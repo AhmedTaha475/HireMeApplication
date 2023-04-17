@@ -1,13 +1,13 @@
-﻿using HireMeDAL.Data.Models;
-using HireMeBLL.Dtos.ProjectComment;
-using HireMeDAL.Repos.ProjectsComments;
+﻿using HireMeBLL;
+using HireMeBLL.Managers.ProjectComment;
+using HireMeDAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HireMeBLL.Managers.ProjectComment
+namespace HireMeBLL
 {
     public class ProjectCommentManager : IProjectCommentManager
     {
@@ -25,17 +25,18 @@ namespace HireMeBLL.Managers.ProjectComment
 
         public List<ProjectCommentReadDto> GetAllCommentsWithClientByProjectId(int Projectid)
         {
-            List<HireMeDAL.Data.Models.ProjectComment> projectComments = projectCommentsRepo.GetAllByProjectId(Projectid);
+            List<ProjectComment> projectComments = projectCommentsRepo.GetAllByProjectId(Projectid);
             return projectComments.Select(c => new ProjectCommentReadDto( Comment : c.Comment,
-           new ClientChildReadDto() { FName = c.Client.FirstName , LName = c.Client.LastName,img = c.Client.Image,Id=c.Client.Id}
+           new UserChildReadDto() { FName = c.Client.FirstName , LName = c.Client.LastName,img = c.Client.Image,Id=c.Client.Id}
                 )).ToList();
         }
 
         public bool PostComment(CreateProjectCommentDto commentDto)
         {
-            if (projectCommentsRepo.Add(new HireMeDAL.Data.Models.ProjectComment()
+            if (projectCommentsRepo.Add(new ProjectComment()
             {
                 Comment = commentDto.Comment,
+                ProjectId = commentDto.ProjectId,
                 ClientId = commentDto.ClientId,
            }))
                 return true;
@@ -44,7 +45,7 @@ namespace HireMeBLL.Managers.ProjectComment
 
         public bool UpdateComment(UpdateCommentDto updateCommentDto)
         {
-           return projectCommentsRepo.Update(new HireMeDAL.Data.Models.ProjectComment()
+           return projectCommentsRepo.Update(new ProjectComment()
             {
                 Comment = updateCommentDto.Comment,
             }, updateCommentDto.CommentId);

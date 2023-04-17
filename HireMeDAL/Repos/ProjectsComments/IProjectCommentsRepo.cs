@@ -1,8 +1,7 @@
 ﻿using HireMeDAL.Data.Models;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
-namespace HireMeDAL.Repos.ProjectsComments
-{
+namespace HireMeDAL { 
     public interface IProjectCommentsRepo
     {
         public List<ProjectComment> GetAllByProjectId(int projectId);

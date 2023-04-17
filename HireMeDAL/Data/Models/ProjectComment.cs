@@ -6,8 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HireMeDAL.Data.Models
-{
+namespace HireMeDAL { 
     public class ProjectComment
     {
 

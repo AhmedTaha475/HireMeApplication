@@ -1,4 +1,4 @@
-﻿using HireMeBLL.Dtos.ProjectComment;
+﻿using HireMeBLL;
 using HireMeBLL.Managers.ProjectComment;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +19,10 @@ namespace HireMePL.Controllers
         [HttpPost]
         public ActionResult PostComment(CreateProjectCommentDto commentDto)
         {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             if (!projectCommentManager.PostComment(commentDto))
                 return BadRequest();
            return Ok();
@@ -46,6 +50,7 @@ namespace HireMePL.Controllers
            
         }
         [HttpGet]
+        [Route("{id}")]
         public ActionResult<List<ProjectCommentReadDto>> GetAllCommentsForProject(int ProjectId)
         {
            return projectCommentManager.GetAllCommentsWithClientByProjectId(ProjectId);

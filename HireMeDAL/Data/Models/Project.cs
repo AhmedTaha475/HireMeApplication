@@ -15,15 +15,15 @@ namespace HireMeDAL
     {
         [Key]
         public int ProjectID { get; set; }
-
-        public string Description { get; set; }
-
+        [MaxLength(300), Required]
+        public string Description { get; set; }=string.Empty;
+        [Required]
         public DateTime ProjectDate { get; set; }
-
-        public string ProjectTitle { get; set; }
-
+        [MaxLength(20, ErrorMessage = "Project title must be less than 20 charachters"), Required]
+        public string ProjectTitle { get; set; } = string.Empty;
+        [Required]
         public bool SystemProject { get; set; }
-
+        [Column(TypeName = "money"), Required]
         public decimal MoneyEarned { get; set; }
 
         public int PortfolioId { get; set; }
@@ -31,7 +31,7 @@ namespace HireMeDAL
         [ForeignKey("PortfolioId")]
         public virtual Portfolio? Portfolio { get; set; }
 
-        public string ClientId { get; set; }
+        public string? ClientId { get; set; }
 
         [ForeignKey("ClientId")]
         public virtual Client? Client { get; set; }
@@ -43,7 +43,7 @@ namespace HireMeDAL
         public virtual ProjectReview? ProjectReview { get; set; }
 
         public virtual HashSet<ProjectImage> ProjectImages { get; set; } = new HashSet<ProjectImage>();
-        public virtual  HashSet<ProjectComment>? ProjectComments { get; set; }= new HashSet<ProjectComment>();
+        public virtual  HashSet<ProjectComment> ProjectComments { get; set; }= new HashSet<ProjectComment>();
 
 
     }

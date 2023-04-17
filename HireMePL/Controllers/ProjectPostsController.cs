@@ -22,6 +22,10 @@ namespace HireMePL.Controllers
             this._projectPostManager = projectPostManager;
         }
         [HttpPost]
+
+        [Authorize(policy:"Client")]
+   
+
         public async Task<ActionResult> CreateProjectPost(CreateProjectPostDto createProjectPostDto)
         {
             Client user = (Client)await _userManager.GetUserAsync(User);

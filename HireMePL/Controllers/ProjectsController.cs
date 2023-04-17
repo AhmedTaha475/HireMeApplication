@@ -43,13 +43,13 @@ namespace HireMePL.Controllers
         }
 
         [HttpGet]
-        [Route("Project")]
+        [Route("Project/{id}")]
         public ActionResult<ProjectDetailsReadDto> GetById(int P_Id)
         {
-            throw new NotImplementedException();
+            return projectsManager.GetById(P_Id);
         }
         [HttpGet]
-        [Route("Projects")]
+        [Route("Projects/{id}")]
         public ActionResult<List<ProjectDetailsReadDto>> GetByPortfolioId(int Pf_Id)
         {
             return projectsManager.GetAllProjectsByPortfolioId(Pf_Id);

@@ -97,6 +97,14 @@ namespace HireMeDAL
         #endregion
         public async Task<bool> CreateClient(Client suser,string password)
         {
+
+            var CheckForEmail=await Usermanager.FindByEmailAsync(suser.Email);
+            var CheckForUserName=await Usermanager.FindByNameAsync(suser.UserName);
+            if(CheckForEmail!=null || CheckForUserName != null) 
+            {
+                return false;
+            }
+
             //2-Hash Pasword and create user
             var hashpassword = await Usermanager.CreateAsync(suser, password);
             if (!hashpassword.Succeeded)

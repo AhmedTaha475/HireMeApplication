@@ -61,6 +61,7 @@ namespace HireMeDAL
         {
 
             var AdminResult = (SystemUser)await usermanager.FindByEmailAsync(adminEmail);
+            
             if(AdminResult!=null) 
             {
                 var PasswordResult=await usermanager.CheckPasswordAsync(AdminResult,adminPassword);

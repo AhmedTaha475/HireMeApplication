@@ -106,9 +106,10 @@ namespace HireMeDAL
               .HasForeignKey(c => c.ClientId)
               .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<Freelancer>()
-                .HasOne(p => p.ProjectReview)
-                .WithOne(r => r.Freelancer)
+            builder.Entity<ProjectReview>()
+                .HasOne(p => p.Freelancer)
+                .WithMany(r => r.ProjectReviews)
+                .HasForeignKey(r=>r.FreeLancerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);

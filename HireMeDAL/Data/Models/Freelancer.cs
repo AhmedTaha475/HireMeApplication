@@ -32,7 +32,8 @@ namespace HireMeDAL
         public virtual Portfolio? Portfolio { get; set; }
 
         public virtual HashSet<ProjectPostApplicant> ProjectPostApplicants { get; set; } = new HashSet<ProjectPostApplicant>();
-       
+        public virtual HashSet<ProjectReview> ProjectReviews { get; set; } = new HashSet<ProjectReview>();
+
 
     }
 }

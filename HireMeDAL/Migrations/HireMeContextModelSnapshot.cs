@@ -22,28 +22,6 @@ namespace HireMeDAL.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("HireMeDAL.Data.Models.ProjectComment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProjectId");
-
-                    b.ToTable("ProjectComment");
-                });
-
             modelBuilder.Entity("HireMeDAL.LookupTable", b =>
                 {
                     b.Property<int>("LookupId")
@@ -164,15 +142,15 @@ namespace HireMeDAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ClientId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<decimal>("MoneyEarned")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("money");
 
                     b.Property<int>("PR_Id")
                         .HasColumnType("int");
@@ -185,7 +163,8 @@ namespace HireMeDAL.Migrations
 
                     b.Property<string>("ProjectTitle")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<bool>("SystemProject")
                         .HasColumnType("bit");
@@ -197,6 +176,35 @@ namespace HireMeDAL.Migrations
                     b.HasIndex("PortfolioId");
 
                     b.ToTable("projects");
+                });
+
+            modelBuilder.Entity("HireMeDAL.ProjectComment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClientId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("projectComments");
                 });
 
             modelBuilder.Entity("HireMeDAL.ProjectImage", b =>
@@ -286,16 +294,26 @@ namespace HireMeDAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PR_Id"));
 
+                    b.Property<string>("ClientId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("ClientReview")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<int>("ClientStars")
                         .HasColumnType("int");
 
+                    b.Property<string>("FreeLancerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("FreelancerReview")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<int>("FreelancerStars")
                         .HasColumnType("int");
@@ -304,6 +322,10 @@ namespace HireMeDAL.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("PR_Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("FreeLancerId");
 
                     b.ToTable("projectReviews");
                 });
@@ -637,17 +659,6 @@ namespace HireMeDAL.Migrations
                     b.HasDiscriminator().HasValue("Freelancer");
                 });
 
-            modelBuilder.Entity("HireMeDAL.Data.Models.ProjectComment", b =>
-                {
-                    b.HasOne("HireMeDAL.Project", "Project")
-                        .WithMany("ProjectComments")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Project");
-                });
-
             modelBuilder.Entity("HireMeDAL.LookupValue", b =>
                 {
                     b.HasOne("HireMeDAL.LookupTable", "LookupTable")
@@ -684,9 +695,7 @@ namespace HireMeDAL.Migrations
                 {
                     b.HasOne("HireMeDAL.Client", "Client")
                         .WithMany("Projects")
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClientId");
 
                     b.HasOne("HireMeDAL.Portfolio", "Portfolio")
                         .WithMany("Projects")
@@ -705,6 +714,25 @@ namespace HireMeDAL.Migrations
                     b.Navigation("Portfolio");
 
                     b.Navigation("ProjectReview");
+                });
+
+            modelBuilder.Entity("HireMeDAL.ProjectComment", b =>
+                {
+                    b.HasOne("HireMeDAL.Client", "Client")
+                        .WithMany("ProjectComments")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HireMeDAL.Project", "Project")
+                        .WithMany("ProjectComments")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("HireMeDAL.ProjectImage", b =>
@@ -754,6 +782,25 @@ namespace HireMeDAL.Migrations
                     b.Navigation("Freelancer");
 
                     b.Navigation("ProjectPost");
+                });
+
+            modelBuilder.Entity("HireMeDAL.ProjectReview", b =>
+                {
+                    b.HasOne("HireMeDAL.Client", "Client")
+                        .WithMany("ProjectReviews")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HireMeDAL.Freelancer", "Freelancer")
+                        .WithMany("ProjectReviews")
+                        .HasForeignKey("FreeLancerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Freelancer");
                 });
 
             modelBuilder.Entity("HireMeDAL.Transaction", b =>
@@ -890,7 +937,11 @@ namespace HireMeDAL.Migrations
 
             modelBuilder.Entity("HireMeDAL.Client", b =>
                 {
+                    b.Navigation("ProjectComments");
+
                     b.Navigation("ProjectPosts");
+
+                    b.Navigation("ProjectReviews");
 
                     b.Navigation("Projects");
                 });
@@ -900,6 +951,8 @@ namespace HireMeDAL.Migrations
                     b.Navigation("Portfolio");
 
                     b.Navigation("ProjectPostApplicants");
+
+                    b.Navigation("ProjectReviews");
                 });
 #pragma warning restore 612, 618
         }

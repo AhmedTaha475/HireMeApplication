@@ -1,6 +1,5 @@
-﻿namespace HireMeBLL.Dtos.ProjectComment
-{
-    public record ClientChildReadDto
+﻿namespace HireMeBLL { 
+    public record UserChildReadDto
     {
         public string Id { get; init; }
         public string FName { get; init; }

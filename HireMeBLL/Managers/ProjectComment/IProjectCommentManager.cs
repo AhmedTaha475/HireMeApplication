@@ -1,4 +1,4 @@
-﻿using HireMeBLL.Dtos.ProjectComment;
+﻿using HireMeBLL;
 
 namespace HireMeBLL.Managers.ProjectComment
 {

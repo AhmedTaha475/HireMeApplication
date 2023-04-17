@@ -7,7 +7,6 @@ using HireMeBLL;
 using HireMeDAL;
 using HireMeDAL.Repos;
 using HireMeDAL.Repos.Projects;
-using HireMeDAL.Repos.ProjectsComments;
 using HireMeDAL.Repos.ProjectsImages;
 using HireMeDAL.Repos.ProjectsReview;
 using Microsoft.AspNetCore.Identity;

@@ -8,5 +8,6 @@ namespace HireMeBLL.Managers.ProjectsManager
        public bool CreateProject(CreateProjectDto projectDto);
         public bool DeleteProject(int id);
         public bool UpdateByProjectId(UpdateProjectByIdDto updateProjectByIdDto);
+        public List<ProjectDetailsReadDto> GetAllProjectsByPortfolioId(int PortFolio_Id);
     }
 }

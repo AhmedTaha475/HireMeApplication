@@ -39,6 +39,47 @@ namespace HireMeBLL.Managers.ProjectsManager
             return projectsRepo.Delete(id);             
         }
 
+        public List<ProjectDetailsReadDto> GetAllProjectsByPortfolioId(int PortFolio_Id)
+        {
+            List<Project>? projects = projectsRepo.GetAllByPortfolioId(PortFolio_Id);
+            return projects.Select(p => new ProjectDetailsReadDto()
+            {
+                P_Id = p.ProjectID,
+                Description = p.Description,
+                Title = p.ProjectTitle,
+                Date = p.ProjectDate,
+                SystemProject = p.SystemProject,
+                MoneyEarned = p.MoneyEarned,
+                ProjectReview =
+               new PojectReviewReadDto()
+               {
+                   PR_Id = p.PR_Id,
+                   ClientReview = p.ProjectReview.ClientReview,
+                   FreelancerReview = p.ProjectReview.FreelancerReview,
+                   ClientStars = p.ProjectReview.ClientStars,
+                   FreelancerStars = p.ProjectReview.FreelancerStars,
+                   Client = new UserChildReadDto()
+                   {
+                       FName = p.Client.FirstName,
+                       LName = p.Client.LastName,
+                       Id = p.Client.Id,
+                       img = p.Client.Image
+                   }
+               },
+                ProjectComments = p.ProjectComments.Select(c=>new ProjectCommentReadDto(c.Comment, new UserChildReadDto()
+                {
+                    FName = c.Client.FirstName,
+                    LName = c.Client.LastName,
+                    Id = c.Client.Id,
+                    img = c.Client.Image
+                })).ToList(),
+                projectImgs = p.ProjectImages.Select(i=> new ProjectImgDto()
+                {
+                    Image = i.Image,
+                }).ToList()
+            }).ToList();
+        }
+
         public bool UpdateByProjectId(UpdateProjectByIdDto updateProjectByIdDto)
         {
             throw new NotImplementedException();

@@ -45,9 +45,7 @@ namespace HireMePL.Controllers
             if (token != null)
                 return Ok(token);
             else
-                return BadRequest(ModelState);
-
-
+                return NotFound(new {Message="Login failed please check your email and password"});
 
         }
 
@@ -55,7 +53,7 @@ namespace HireMePL.Controllers
 
         [HttpPost]
         [Route("ChangePassword")]
-
+        [Authorize]
         public async Task<ActionResult> ChangePassowrd(ChangePasswordDto passwordData)
         {
             if (!ModelState.IsValid)
@@ -103,7 +101,7 @@ namespace HireMePL.Controllers
 
         [HttpDelete]
         [Route("DeleteCurrentFreelancer")]
-        //[Authorize]  client will delete his account
+        [Authorize]  
         public async Task<ActionResult> DeleteCurrentFreelancer()
         {
             var FreelancerToBeDeleted = await _userManager.GetUserAsync(User);
@@ -186,12 +184,13 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("GetCurrentFreelancer")]
+        [Authorize]
         public async Task<ActionResult<ClientDto>> GetCurrentFreelancer()
         {
 
             var CurrentFreelancer = await _userManager.GetUserAsync(User);
 
-            var freelancer = _freelancerManager.GetFreelancerById(CurrentFreelancer.Id);
+            var freelancer = await _freelancerManager.GetFreelancerById(CurrentFreelancer.Id);
 
             if (freelancer != null)
                 return Ok(new { Message = "Here is Your Client", body = freelancer });
@@ -257,7 +256,7 @@ namespace HireMePL.Controllers
 
         [HttpDelete]
         [Route("DeleteCurrentClient")]
-        //[Authorize]  client will delete his account
+        [Authorize] 
         public async Task<ActionResult> DeleteCurrentClient()
         {
             var ClientToBeDeleted = await _userManager.GetUserAsync(User);
@@ -332,6 +331,7 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("GetCurrentClient")]
+        [Authorize]
         public async Task<ActionResult<ClientDto>> GetCurrentClient()
         {
 

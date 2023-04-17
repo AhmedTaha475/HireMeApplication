@@ -1,3 +1,4 @@
+
 ﻿using HireMeBLL;
 using HireMeDAL;
 using Microsoft.AspNetCore.Authorization;
@@ -22,6 +23,7 @@ namespace HireMePL.Controllers
         }
         [HttpPost]
         [Route("ProjectPost/Create")]
+
         public async Task<ActionResult> CreateProjectPost(CreateProjectPostDto createProjectPostDto)
         {
             if (!ModelState.IsValid)
@@ -43,6 +45,7 @@ namespace HireMePL.Controllers
         }
         [HttpDelete]
         [Route("ProjectPost/{projectPostId}/Delete")]
+
         public async Task<ActionResult> DeleteProjectPost(int projectPostId)
         {
             if (!ModelState.IsValid)
@@ -74,3 +77,5 @@ namespace HireMePL.Controllers
         }
     }
 }
+
+

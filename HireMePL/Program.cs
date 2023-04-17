@@ -1,4 +1,14 @@
+
+
+using HireMeBLL.Managers.ProjectsManager;
+
+using HireMeBLL;
+
 using HireMeDAL;
+using HireMeDAL.Repos;
+using HireMeDAL.Repos.Projects;
+using HireMeDAL.Repos.ProjectsImages;
+using HireMeDAL.Repos.ProjectsReview;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -11,6 +21,28 @@ namespace HireMePL
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            #region DI Middleware
+            builder.Services.AddScoped<ISystemUserRepo, SystemUserRepo>();
+            builder.Services.AddScoped<ISystemUserManager, SystemUserManager>();
+            builder.Services.AddScoped<IFreelancerRepo, FreelancerRepo>();
+            builder.Services.AddScoped<IFreelancerManager, FreelancerManager>();
+            builder.Services.AddScoped<IClientRepo, ClientRepo>();
+
+            builder.Services.AddScoped<IProjectsRepo, ProjectsRepo>();
+            builder.Services.AddScoped<IProjectsReviewRepo, ProjectsReviewRepo>();
+            builder.Services.AddScoped<IProjectImagesRepo, ProjectImagesRepo>();
+            builder.Services.AddScoped<IProjectCommentsRepo, ProjectCommentsRepo>();
+            builder.Services.AddScoped<IProjectsManager, ProjectsManager>();
+
+
+
+
+
+
+
+            builder.Services.AddScoped<IClientManager, ClientManager>();
+            #endregion
 
             #region defaults
             builder.Services.AddControllers();
@@ -81,6 +113,8 @@ namespace HireMePL
             }
 
             app.UseHttpsRedirection();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

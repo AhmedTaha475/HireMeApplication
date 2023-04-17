@@ -12,9 +12,8 @@ namespace HireMeDAL
     {
         [Key]
         public int PI_Id { get; set; }
-
+        [Required]
         public byte[] Image { get; set; }
-
         public int ProjectId { get; set; }
         [ForeignKey("ProjectId")]
         public virtual Project? Project { get; set; }

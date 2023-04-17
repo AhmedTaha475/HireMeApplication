@@ -14,15 +14,15 @@ namespace HireMeDAL
         
         public int Rank { get; set; }
         
-        public string JobTitle { get; set; }
+        public string ?JobTitle { get; set; }
 
         public int Bids { get; set; }
 
-        public string  Description { get; set; }
+        public string ? Description { get; set; }
 
         public decimal TotalMoneyEarned { get; set; }
 
-        public byte[] CV { get; set; }
+        public byte[] ?CV { get; set; }
 
         public decimal AverageRate { get; set; }
 
@@ -32,10 +32,9 @@ namespace HireMeDAL
         public virtual Portfolio? Portfolio { get; set; }
 
         public virtual HashSet<ProjectPostApplicant> ProjectPostApplicants { get; set; } = new HashSet<ProjectPostApplicant>();
+        public virtual HashSet<ProjectReview> ProjectReviews { get; set; } = new HashSet<ProjectReview>();
 
-        public static implicit operator Freelancer(string v)
-        {
-            throw new NotImplementedException();
-        }
+
+
     }
 }

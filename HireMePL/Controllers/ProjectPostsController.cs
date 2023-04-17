@@ -22,32 +22,38 @@ namespace HireMePL.Controllers
             this._projectPostManager = projectPostManager;
         }
         [HttpPost]
-
-        [Authorize(policy:"Client")]
-        [Route("Ashraf")]
+        [Route("ProjectPost/Create")]
 
         public async Task<ActionResult> CreateProjectPost(CreateProjectPostDto createProjectPostDto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             Client user = (Client)await _userManager.GetUserAsync(User);
             _projectPostManager.CreateProjectPost(createProjectPostDto,user.Id);
-            return Ok();
+            return Ok(new { Message = "Project Post Created Successfully" });
         }
-        [HttpPost]
-        [Route("Test")]
+        [HttpPut]
+        [Route("ProjectPost/{projectPostId}/Update")]
         public async Task<ActionResult> UpdateProjectPost(int projectPostId,UpdateProjectPostDto updateProjectPostDto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
             Client user = (Client)await _userManager.GetUserAsync(User);
             _projectPostManager.UpdateProjectPost(projectPostId,updateProjectPostDto, user.Id);
-            return Ok();
+            return Ok(new { Message = "Project Post Updated Successfully" });
         }
         [HttpDelete]
-        [Route("{id}")]
+        [Route("ProjectPost/{projectPostId}/Delete")]
+
         public async Task<ActionResult> DeleteProjectPost(int projectPostId)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
             try
             {
                 _projectPostManager.DeleteProjectPost(projectPostId);
-                return NoContent();
+                return Ok(new { Message = "Project Post Deleted Successfully" });
 
             }
             catch (Exception ex)
@@ -57,15 +63,16 @@ namespace HireMePL.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("ProjectPost/{id}")]
         [AllowAnonymous]
         public ActionResult<ProjectPostWithApplicantsDetailsDto> GetProjectPostWithApplicantsById(int id)
         {
-
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
             var projectPost = _projectPostManager.GetProjectPostWithApplicantsById(id);
             if (projectPost != null)
                 return Ok(projectPost);
-            return NotFound();
+            return NotFound(new {Message="Can't Find Project Post"});
 
         }
     }

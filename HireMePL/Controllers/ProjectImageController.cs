@@ -69,7 +69,7 @@ namespace HireMePL.Controllers
         [HttpPut]
         [Route("UpdateImage")]
 
-        public ActionResult updateImage(UpdateProjectImageDto updatedimage)
+        public ActionResult updateImage([FromForm]UpdateProjectImageDto updatedimage)
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);

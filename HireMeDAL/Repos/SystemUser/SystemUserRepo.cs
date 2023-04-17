@@ -61,7 +61,7 @@ namespace HireMeDAL
         {
 
             var AdminResult = (SystemUser)await usermanager.FindByEmailAsync(adminEmail);
-            
+           
             if(AdminResult!=null) 
             {
                 var PasswordResult=await usermanager.CheckPasswordAsync(AdminResult,adminPassword);
@@ -148,6 +148,14 @@ namespace HireMeDAL
             return new Token() { token = tokenString, Expiry = expiry, Roles = userRoles };
         }
 
+        public async Task<bool> ChangePassword(IdentityUser user, string oldpassword, string NewPassword)
+        {
+            var result=await usermanager.ChangePasswordAsync(user, oldpassword, NewPassword);   
+
+            if (result.Succeeded)
+                return true;
+            return false;
+        }
     }
 }
 

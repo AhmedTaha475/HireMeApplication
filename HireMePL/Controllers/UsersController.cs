@@ -28,7 +28,7 @@ namespace HireMePL.Controllers
         }
 
 
-        #region Login Method
+        #region System Methods
         [HttpPost]
         [Route("Login")]
 
@@ -49,6 +49,25 @@ namespace HireMePL.Controllers
 
 
 
+        }
+
+
+
+        [HttpPost]
+        [Route("ChangePassword")]
+
+        public async Task<ActionResult> ChangePassowrd(ChangePasswordDto passwordData)
+        {
+            if (!ModelState.IsValid)
+            { return BadRequest(ModelState); }
+
+            var CurrentUser=await _userManager.GetUserAsync(User);
+
+           var result= await _systemUserManager.changeUserPassword(CurrentUser, passwordData.oldPassword,passwordData.NewPassword);
+
+            if(result)
+                return Ok(new {Message="Password Changed Successfully"});
+            return BadRequest(new {Message="Couldn't change the password"});
         }
         #endregion
 

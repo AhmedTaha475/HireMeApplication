@@ -22,6 +22,12 @@ namespace HireMeBLL
             this.usermanager = usermanager;
         }
 
+        public async Task<bool> changeUserPassword(IdentityUser user, string oldpassword, string newpassword)
+        {
+            var result= await systemUserRepo.ChangePassword(user, oldpassword, newpassword);
+            return result;
+        }
+
         public async Task<TokenDto> Login(LoginDto credential)
         {
             var resultToken= await systemUserRepo.Login(credential.Email, credential.Password);

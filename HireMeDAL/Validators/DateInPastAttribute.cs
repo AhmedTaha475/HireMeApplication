@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HireMeDAL.Validators
+namespace HireMeDAL
 {
-    internal class DateInPastAttribute:ValidationAttribute
+    public class DateInPastAttribute:ValidationAttribute
     {
         public override bool IsValid(object? value)
         {

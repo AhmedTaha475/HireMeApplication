@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HireMeDAL.Validators;
+using HireMeDAL;
 
 namespace HireMeDAL
 {
@@ -24,11 +24,24 @@ namespace HireMeDAL
         public decimal Amount { get; set; }
 
         [StringLength(150,MinimumLength =2)]
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         public string SystemUserId { get; set; }
 
         [ForeignKey("SystemUserId")]
         public virtual SystemUser? SystemUser { get; set; }
+
+        public Transaction( DateTime datetime , decimal amount , string descreption)
+        {
+            DateOfTransaction = datetime;
+            Amount = amount;
+            Description = descreption;
+            
+        }
+
+        public Transaction()
+        {
+            
+        }
     }
 }

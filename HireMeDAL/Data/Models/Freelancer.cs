@@ -32,14 +32,7 @@ namespace HireMeDAL
         public virtual Portfolio? Portfolio { get; set; }
 
         public virtual HashSet<ProjectPostApplicant> ProjectPostApplicants { get; set; } = new HashSet<ProjectPostApplicant>();
-
-        public static implicit operator Freelancer(string v)
-        {
-            throw new NotImplementedException();
-        }
-        public int PR_Id { get; set; }
-        [ForeignKey("PR_Id")]
-        public virtual ProjectReview? ProjectReview { get; set; }
+       
 
     }
 }

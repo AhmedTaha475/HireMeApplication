@@ -24,7 +24,7 @@ namespace HireMePL.Controllers
         [HttpPost]
 
         [Authorize(policy:"Client")]
-   
+        [Route("Ashraf")]
 
         public async Task<ActionResult> CreateProjectPost(CreateProjectPostDto createProjectPostDto)
         {

@@ -52,7 +52,8 @@ namespace HireMeDAL.Repos.Projects
             return context.projects
                 .Include(p => p.ProjectComments).ThenInclude(C => C.Client)
                 .Include(p => p.ProjectImages)
-                .Include(p => p.ProjectReview)
+                .Include(p => p.ProjectReview).ThenInclude(r=> r.Client)
+                .Include(p=>p.Portfolio).ThenInclude(p=>p.Freelancer)
                 .Include(p => p.Client).Where(p=>p.PortfolioId== Portfolio_Id)
                 .ToList();
         }
@@ -63,9 +64,9 @@ namespace HireMeDAL.Repos.Projects
             Project? project = context.projects
                 .Include(p => p.ProjectComments).ThenInclude(C => C.Client)
                 .Include(p => p.ProjectImages)
-                .Include(p => p.ProjectReview).
-                Include(p => p.Client)
-                .FirstOrDefault(p => p.ProjectID == id);
+                .Include(p => p.ProjectReview).ThenInclude(r => r.Client)
+                .Include(p => p.Portfolio).ThenInclude(p => p.Freelancer)
+                .Include(p => p.Client).FirstOrDefault(p => p.ProjectID == id);
             return project;
         }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using HireMeDAL.Data.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,7 @@ namespace HireMeDAL
         public DbSet<ProjectPost> projectPosts { get; set; }
         public DbSet<Milestone> milestones { get; set; }
         public DbSet<ProjectPostApplicant> projectPostApplicants { get; set; }
+        public DbSet<ProjectComment> projectComments { get; set; }
 
         public DbSet<Plan> plans { get; set; }
 
@@ -96,6 +98,18 @@ namespace HireMeDAL
             builder.Entity<Portfolio>()
                 .HasOne(f => f.Freelancer)
                 .WithOne(p => p.Portfolio)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<ProjectComment>()
+              .HasOne(p => p.Client)
+              .WithMany(c => c.ProjectComments)
+              .HasForeignKey(c => c.ClientId)
+              .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<ProjectReview>()
+                .HasOne(p => p.Freelancer)
+                .WithMany(r => r.ProjectReviews)
+                .HasForeignKey(r=>r.FreeLancerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);

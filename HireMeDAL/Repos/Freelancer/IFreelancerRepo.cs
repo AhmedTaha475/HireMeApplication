@@ -8,11 +8,12 @@ namespace HireMeDAL
 {
     public interface IFreelancerRepo
     {
-        public List<Freelancer> GetAllFrelancer();
-        public Task<Freelancer> GetFrelancerById(string id);
-        public Task<bool> CreateFrelancer(Freelancer suser, string password);
-        public bool UpdateFrelancer(Freelancer user);
-        Task<bool> DeleteFrelancer(int id);
+        public List<Freelancer> GetAllFreelancer();
+        public Task<Freelancer> GetFreelancerById(string id);
+        public Task<bool> CreateFreelancer(Freelancer suser, string password);
+        public Task<bool> UpdateFreelancer(Freelancer user);
+        Task<bool> DeleteFreelancer(string id);
+
 
     }
 }

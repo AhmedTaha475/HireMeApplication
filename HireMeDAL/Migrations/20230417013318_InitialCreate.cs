@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HireMeDAL.Migrations
 {
     /// <inheritdoc />
-    public partial class m1 : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -31,7 +31,7 @@ namespace HireMeDAL.Migrations
                 {
                     LookupId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    LookupName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    LookupName = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -52,23 +52,6 @@ namespace HireMeDAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_plans", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "projectReviews",
-                columns: table => new
-                {
-                    PR_Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ClientReview = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FreelancerReview = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ClientStars = table.Column<int>(type: "int", nullable: false),
-                    FreelancerStars = table.Column<int>(type: "int", nullable: false),
-                    ProjectId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_projectReviews", x => x.PR_Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -98,7 +81,7 @@ namespace HireMeDAL.Migrations
                 {
                     ValueId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ValueName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ValueName = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     LookupId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -167,14 +150,12 @@ namespace HireMeDAL.Migrations
                         name: "FK_AspNetUsers_lookupValues_PaymentMethodId",
                         column: x => x.PaymentMethodId,
                         principalTable: "lookupValues",
-                        principalColumn: "ValueId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ValueId");
                     table.ForeignKey(
                         name: "FK_AspNetUsers_plans_PlanId",
                         column: x => x.PlanId,
                         principalTable: "plans",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
@@ -311,14 +292,45 @@ namespace HireMeDAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "projectReviews",
+                columns: table => new
+                {
+                    PR_Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ClientReview = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    FreelancerReview = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    ClientStars = table.Column<int>(type: "int", nullable: false),
+                    FreelancerStars = table.Column<int>(type: "int", nullable: false),
+                    ProjectId = table.Column<int>(type: "int", nullable: false),
+                    FreeLancerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClientId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_projectReviews", x => x.PR_Id);
+                    table.ForeignKey(
+                        name: "FK_projectReviews_AspNetUsers_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_projectReviews_AspNetUsers_FreeLancerId",
+                        column: x => x.FreeLancerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "transactions",
                 columns: table => new
                 {
                     TransactionId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DateOfTransaction = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateOfTransaction = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     SystemUserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
@@ -330,43 +342,6 @@ namespace HireMeDAL.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "projects",
-                columns: table => new
-                {
-                    ProjectID = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProjectDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ProjectTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SystemProject = table.Column<bool>(type: "bit", nullable: false),
-                    MoneyEarned = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    PortfolioId = table.Column<int>(type: "int", nullable: false),
-                    ClientId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PR_Id = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_projects", x => x.ProjectID);
-                    table.ForeignKey(
-                        name: "FK_projects_AspNetUsers_ClientId",
-                        column: x => x.ClientId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_projects_portfolios_PortfolioId",
-                        column: x => x.PortfolioId,
-                        principalTable: "portfolios",
-                        principalColumn: "PortId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_projects_projectReviews_ProjectID",
-                        column: x => x.ProjectID,
-                        principalTable: "projectReviews",
-                        principalColumn: "PR_Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -417,19 +392,62 @@ namespace HireMeDAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProjectComment",
+                name: "projects",
+                columns: table => new
+                {
+                    ProjectID = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    ProjectDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ProjectTitle = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    SystemProject = table.Column<bool>(type: "bit", nullable: false),
+                    MoneyEarned = table.Column<decimal>(type: "money", nullable: false),
+                    PortfolioId = table.Column<int>(type: "int", nullable: false),
+                    ClientId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    PR_Id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_projects", x => x.ProjectID);
+                    table.ForeignKey(
+                        name: "FK_projects_AspNetUsers_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_projects_portfolios_PortfolioId",
+                        column: x => x.PortfolioId,
+                        principalTable: "portfolios",
+                        principalColumn: "PortId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_projects_projectReviews_ProjectID",
+                        column: x => x.ProjectID,
+                        principalTable: "projectReviews",
+                        principalColumn: "PR_Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "projectComments",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProjectId = table.Column<int>(type: "int", nullable: false)
+                    Comment = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    ProjectId = table.Column<int>(type: "int", nullable: false),
+                    ClientId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProjectComment", x => x.Id);
+                    table.PrimaryKey("PK_projectComments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProjectComment_projects_ProjectId",
+                        name: "FK_projectComments_AspNetUsers_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_projectComments_projects_ProjectId",
                         column: x => x.ProjectId,
                         principalTable: "projects",
                         principalColumn: "ProjectID",
@@ -528,8 +546,13 @@ namespace HireMeDAL.Migrations
                 filter: "[FreelancerId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProjectComment_ProjectId",
-                table: "ProjectComment",
+                name: "IX_projectComments_ClientId",
+                table: "projectComments",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_projectComments_ProjectId",
+                table: "projectComments",
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
@@ -551,6 +574,16 @@ namespace HireMeDAL.Migrations
                 name: "IX_projectPosts_ClientId",
                 table: "projectPosts",
                 column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_projectReviews_ClientId",
+                table: "projectReviews",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_projectReviews_FreeLancerId",
+                table: "projectReviews",
+                column: "FreeLancerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_projects_ClientId",
@@ -590,7 +623,7 @@ namespace HireMeDAL.Migrations
                 name: "milestones");
 
             migrationBuilder.DropTable(
-                name: "ProjectComment");
+                name: "projectComments");
 
             migrationBuilder.DropTable(
                 name: "projectImages");

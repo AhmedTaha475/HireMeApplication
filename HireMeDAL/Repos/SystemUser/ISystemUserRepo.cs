@@ -1,4 +1,5 @@
 ﻿using HireMeDAL.Data.Models;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,10 @@ namespace HireMeDAL
 {
     public interface ISystemUserRepo
     {
-        public  Task<bool> CreateSystemUser(SystemUser suser, string password);
-        public  Task<Token> Login(string UserName, String Password);
+ 
+        public  Task<Token> Login(string Email, String Password);
 
-        //public List<SystemUser> GetAllSystemUsers();
-        //public  Task<SystemUser> GetSystemUserById(string id);
-        //public bool UpdateSystemUser(SystemUser user);
-        //Task<bool> DeleteSystemUser(int id);
-
+        Task<bool> ChangePassword(IdentityUser user, string oldpassword, string NewPassword);
 
     }
 }

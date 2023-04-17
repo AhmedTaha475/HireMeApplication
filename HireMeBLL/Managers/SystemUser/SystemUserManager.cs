@@ -22,36 +22,19 @@ namespace HireMeBLL
             this.usermanager = usermanager;
         }
 
-
-        public async Task <bool> CreateSystemUser(SystemUserDto suser)
+        public async Task<bool> changeUserPassword(IdentityUser user, string oldpassword, string newpassword)
         {
-            SystemUser user = new SystemUser();
-            user.FirstName = suser.FirstName;
-            user.LastName = suser.LastName;
-            user.Email = suser.Email;
-            user.UserName = suser.UserName;
-            user.PaymentMethodId = suser.PaymentMethodId;
-            user.PlanId = suser.PlanId;
-            user.Street = suser.Street;
-            user.City = suser.City;
-            user.Country = suser.Country;
-            user.Age = suser.Age;
-            user.Image = suser.Image;
-            user.PaymentMethodId = suser.PaymentMethodId;
-            user.PhoneNumber = suser.PhoneNumber;
-            user.Balance = suser.Balance;
-            
-
-            var result =await systemUserRepo.CreateSystemUser(user,suser.Password);
+            var result= await systemUserRepo.ChangePassword(user, oldpassword, newpassword);
             return result;
         }
 
-        public async Task<Token> Login(LoginDto credential)
+        public async Task<TokenDto> Login(LoginDto credential)
         {
-            var result= await systemUserRepo.Login(credential.UserName, credential.Password);
-            if(result!=null)
+            var resultToken= await systemUserRepo.Login(credential.Email, credential.Password);
+            if(resultToken != null)
             {
-                return result;
+                var Token= new TokenDto() { Token=resultToken.token,ExpiryDate=resultToken.Expiry,Roles=resultToken.Roles};
+                return Token;
             }
             return null;
         }

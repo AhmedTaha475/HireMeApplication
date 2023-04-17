@@ -49,5 +49,19 @@ namespace HireMeDAL.Repos.ProjectsImages
         {
             return context.projectImages.FirstOrDefault(i => i.PI_Id == id);
         }
+
+        public bool Update(ProjectImage image)
+        {
+           
+                var projectimage = context.projectImages.Find(image.PI_Id);
+                if (projectimage != null)
+                {
+                    projectimage.Image = image.Image;
+                    context.projectImages.Update(projectimage);
+                    context.SaveChanges();
+                    return true;
+                }
+                return false;
+        }
     }
 }

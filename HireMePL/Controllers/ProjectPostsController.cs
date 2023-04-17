@@ -30,9 +30,12 @@ namespace HireMePL.Controllers
         [HttpPost]
         public async Task<ActionResult> UpdateProjectPost(int projectPostId,UpdateProjectPostDto updateProjectPostDto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             Client user = (Client)await _userManager.GetUserAsync(User);
             _projectPostManager.UpdateProjectPost(projectPostId,updateProjectPostDto, user.Id);
-            return Ok();
+            return Ok(new {Message="Updated Successfully!"});
         }
         [HttpDelete]
         [Route("{id}")]
@@ -41,7 +44,7 @@ namespace HireMePL.Controllers
             try
             {
                 _projectPostManager.DeleteProjectPost(projectPostId);
-                return NoContent();
+                return Ok(new { Message = "Deleted Successfully!" });
 
             }
             catch (Exception ex)

@@ -8,14 +8,14 @@ namespace HireMeDAL
 {
     public interface IProjectPostApplicantRepo
     {
-        List<ProjectPostApplicant> GetALl();
-        ProjectPostApplicant GetProjectPostApplicantById(int id);
+        List<ProjectPostApplicant> GetProjectPostApplicants(int projectPostId);
+        ProjectPostApplicant GetProjectPostApplicantById(string id);
 
         void CreateProjectPostApplicant(ProjectPostApplicant projectPostApplicant);
 
-        void UpdateProjectPostApplicant(int id, ProjectPostApplicant projectPostApplicant);
+        void UpdateProjectPostApplicant(string id, ProjectPostApplicant projectPostApplicant);
 
-        void DeleteProjectPostApplicant(int id);
+        void DeleteProjectPostApplicant(string id);
         int SaveChanges();
     }
 }

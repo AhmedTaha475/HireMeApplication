@@ -20,9 +20,9 @@ namespace HireMeDAL
             SaveChanges();
         }
 
-        public void DeleteProjectPostApplicant(int id)
+        public void DeleteProjectPostApplicant(string id)
         {
-            var projectPostApplicant = _hireMeContext.projectPostApplicants.Find(id);
+            var projectPostApplicant = _hireMeContext.projectPostApplicants.FirstOrDefault(ppa=>ppa.FreelancerId == id);
             if (projectPostApplicant != null)
             {
                 _hireMeContext.projectPostApplicants.Remove(projectPostApplicant);
@@ -30,31 +30,26 @@ namespace HireMeDAL
             }
         }
 
-        public List<ProjectPostApplicant> GetALl()
+        public List<ProjectPostApplicant> GetProjectPostApplicants(int projectPostId)
         {
-            return _hireMeContext.projectPostApplicants.ToList();
+            return _hireMeContext.projectPostApplicants.Where(ppa=>ppa.PP_ID== projectPostId).ToList();
         }
 
-        public ProjectPostApplicant GetProjectPostApplicantById(int id)
+        public ProjectPostApplicant GetProjectPostApplicantById(string id)
         {
-            return _hireMeContext.projectPostApplicants.Find(id) ?? null;
+            return _hireMeContext.projectPostApplicants.FirstOrDefault(ppa => ppa.FreelancerId == id) ?? null;
         }
-
         public int SaveChanges()
         {
             return _hireMeContext.SaveChanges();
         }
 
-        public void UpdateProjectPostApplicant(int id, ProjectPostApplicant projectPostApplicant)
+        public void UpdateProjectPostApplicant(string id, ProjectPostApplicant projectPostApplicant)
         {
             var currentprojectPostApplicant = GetProjectPostApplicantById(id);
             if (currentprojectPostApplicant != null)
             {
                 currentprojectPostApplicant.BiddingPrice = projectPostApplicant.BiddingPrice;
-                currentprojectPostApplicant.ProjectPost = projectPostApplicant.ProjectPost;
-                currentprojectPostApplicant.PP_ID = projectPostApplicant.PP_ID;
-                currentprojectPostApplicant.FreelancerId = projectPostApplicant.FreelancerId;
-                currentprojectPostApplicant.Freelancer = projectPostApplicant.Freelancer;
                 currentprojectPostApplicant.Proposal = projectPostApplicant.Proposal;
                 SaveChanges();
             }

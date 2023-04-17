@@ -14,7 +14,7 @@ namespace HireMeDAL
         void CreateMilestone(Milestone milestone);
 
         void UpdateMilestone(int id, Milestone milestone);
-
+        List<Milestone> GetProjectPostMilestones(int prjectPostId);
         void DeleteMilestone(int id);
         int SaveChanges();
     }

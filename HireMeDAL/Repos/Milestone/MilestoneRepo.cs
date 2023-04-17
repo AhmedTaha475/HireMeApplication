@@ -40,6 +40,11 @@ namespace HireMeDAL
             return _hireMeContext.milestones.Find(id) ?? null;
         }
 
+        public List<Milestone> GetProjectPostMilestones(int prjectPostId)
+        {
+            return _hireMeContext.milestones.Where(m=> m.ProjectPostId== prjectPostId).ToList();
+        }
+
         public int SaveChanges()
         {
             return _hireMeContext.SaveChanges();

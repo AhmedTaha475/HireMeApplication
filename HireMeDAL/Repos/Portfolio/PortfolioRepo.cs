@@ -18,25 +18,27 @@ namespace HireMeDAL
             _context= context;
         }
 
-        public void AddPortfolio(Portfolio portfolio)
+        public bool AddPortfolio(Portfolio portfolio)
         {
             if (portfolio != null)
             {
                 _context.portfolios.Add(portfolio);
                 _context.SaveChanges();
-
+                return true;
             }
-            else return; 
+            else return false; 
         }
 
-        public void DeletePortfolio(int id)
+        public bool DeletePortfolio(int id)
         {
             var port = _context.portfolios.Find(id);
             if (port != null)
             {
                 _context.portfolios.Remove(port);
+                _context.SaveChanges();
+                return true;
             }
-            else return; 
+            else return false;  
         }
 
         public IEnumerable<Portfolio> GetAll()
@@ -45,12 +47,12 @@ namespace HireMeDAL
             {
                 return _context.portfolios.ToList();
             }
-          else  return Enumerable.Empty<Portfolio>(); 
+          else  return null; 
         }
 
         public Portfolio GetById(int id)
         {
-                return _context.portfolios.Find(id)??new Portfolio(); //////
+            return _context.portfolios.Find(id) ?? null;
         }
 
         public void saveChanges()

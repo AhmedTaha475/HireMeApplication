@@ -12,8 +12,8 @@ namespace HireMeBLL
     {
         public IEnumerable<PortfolioReadDto> GetAll();
         public PortfolioReadDto GetById(int id);
-        public void DeleteById(int id);
-        public void AddPortfolio(PortfolioReadDto portfolio);
+        public bool DeleteById(int id);
+        public bool AddPortfolio(string freelancerId);
 
     }
 }

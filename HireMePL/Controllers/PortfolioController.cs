@@ -17,7 +17,12 @@ namespace HireMePL
         [HttpGet]
         public ActionResult<List<PortfolioReadDto>> GetAll()
         {
-            return _portfolioManger.GetAll().ToList();
+            var result= _portfolioManger.GetAll().ToList();
+            if(result != null)
+            {
+                return Ok(result);
+            }
+            return NotFound(new {message="No portfolios were found"});
         }
         [HttpGet]
         [Route("{id}")]
@@ -26,25 +31,41 @@ namespace HireMePL
             PortfolioReadDto? portfolio = _portfolioManger.GetById(id);
             if(portfolio is null)
             {
-                return NotFound(); 
+                return NotFound(new {message="Not portfolio was found"}); 
             }
             return portfolio; 
         }
         [HttpPost]
-        public ActionResult AddPortfolio(PortfolioReadDto portfolio)
+        public ActionResult AddPortfolio(string freelancerId)
         {
-           _portfolioManger.AddPortfolio(portfolio);
-            return NoContent(); 
+            try
+            {
+                if (_portfolioManger.AddPortfolio(freelancerId))
+                    return NoContent();
+                else
+                    return BadRequest(new { message = "Something went wrong" });
+            }catch  (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
         [HttpDelete("{id}")]
         public ActionResult DeletePortfolio (int id)
         {
-            PortfolioReadDto? portfolio = _portfolioManger.GetById(id);
-            if (portfolio is null)
+            try
             {
-                return NotFound();
+                var result = _portfolioManger.DeleteById(id);
+                if (!result)
+                {
+                    return NotFound(new { message = "No portfolio with that id" });
+                }
+                return Ok(new { message = "Portfoli was deleted successfully" });
+            }catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
-           return NoContent(); 
+           
         }
 
     }

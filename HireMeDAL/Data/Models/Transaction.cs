@@ -31,12 +31,12 @@ namespace HireMeDAL
         [ForeignKey("SystemUserId")]
         public virtual SystemUser? SystemUser { get; set; }
 
-        public Transaction( DateTime datetime , decimal amount , string descreption)
+        public Transaction( DateTime datetime , decimal amount , string descreption,string userId)
         {
             DateOfTransaction = datetime;
             Amount = amount;
             Description = descreption;
-            
+            SystemUserId=userId;
         }
 
         public Transaction()

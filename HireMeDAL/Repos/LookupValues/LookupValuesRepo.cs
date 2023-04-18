@@ -10,12 +10,13 @@ namespace HireMeDAL
     public class LookupValuesRepo : ILookupValuesRepo
     {
         #region Constructor && All Injection Requires for Repo Lookup Values Class 
+        private readonly HireMeContext Context;
         public LookupValuesRepo( HireMeContext context)
         {
             Context = context;
         }
 
-        public HireMeContext Context { get; }
+        
         #endregion
 
         #region All Get Cruds for Repo Lookup Values Class

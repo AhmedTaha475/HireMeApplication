@@ -48,19 +48,19 @@ namespace HireMePL.Controllers
         #endregion
 
         #region Crud to get specific Lookup Table with its Name and get its lookup values 
-        [HttpGet]
-        [Route("GetLookupTableByName/{name}")]
-        public ActionResult<LookupTableDto> GetLookupTableByName(string name)
-        {
-            LookupTableDto? lookupdto = lookupTableManager.GetLookupTableByName(name);
-            if (lookupdto == null)
-                return NotFound(new {message=$" this lookup table with name = {name} is not found !! "});
-            return Ok(lookupdto);
-        }
+        //[HttpGet]
+        //[Route("GetLookupTableByName/{name}")]
+        //public ActionResult<LookupTableDto> GetLookupTableByName(string name)
+        //{
+        //    LookupTableDto? lookupdto = lookupTableManager.GetLookupTableByName(name);
+        //    if (lookupdto == null)
+        //        return NotFound(new {message=$" this lookup table with name = {name} is not found !! "});
+        //    return Ok(lookupdto);
+        //}
         #endregion
 
         #region Crud to create new look up table to system 
-        [HttpPut]
+        [HttpPost]
         [Route("CreateNewLookupTable")]
         public ActionResult CreateNewLookupTable( LookupTableDto lookupTableDto)
         {
@@ -70,7 +70,7 @@ namespace HireMePL.Controllers
         #endregion
 
         #region Crud to Update lookup table with its Id 
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateLookupTableById/{id}")]
 
         public ActionResult UpdateLookupTableById(LookupTableDto lookupTableDto , int id)
@@ -94,7 +94,7 @@ namespace HireMePL.Controllers
         #endregion
 
         #region Crud to Update lookup table with its Name
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateLookupTableById/{name}")]
 
         public ActionResult UpdateLookupTableByName(LookupTableDto lookupTableDto, string name)

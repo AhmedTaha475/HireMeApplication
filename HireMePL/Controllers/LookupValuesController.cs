@@ -53,7 +53,7 @@ namespace HireMePL.Controllers
         #endregion
 
         #region Crud to Create new lookup valiue to specific lookup table
-        [HttpGet]
+        [HttpPost]
         [Route("CreateLookupValue")]
         public ActionResult CreateLookupValue( LookupValueDTO lookvaluedto)
         {
@@ -84,7 +84,7 @@ namespace HireMePL.Controllers
         }
         #endregion
 
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateLookupValueById/{id}")]
         public ActionResult UpdateLookupValueById(LookupValueDTO lookupValueDTO , int id )
         {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HireMeBLL.Dtos.TransactionDtos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,22 +11,18 @@ namespace HireMeBLL
     {
         #region Get Crud for Transaction Manager (Interface)
 
-        public IEnumerable<TransactionReadDto> GetAllTransactionByUserId(string userid);
+        public List<TransactionReadDto> GetAllTransactionByUserId(string userid);
         public TransactionReadDto GetTransactionById(int id);
 
         #endregion
 
         #region Create Crud for Transaction Manager (Interface)
-        public void CreateNewTransaction(TransactionReadDto transactiondto);
-
-        #endregion
-
-        #region Update Crud for Transaction Manager (Interface)
+        public bool CreateNewTransaction(CreateTransactionDto transactiondto,string userId);
 
         #endregion
 
         #region Delete Crud for Transaction Manager (Interface)
-        public void DeleteTransaction(int id);
+        public bool DeleteTransaction(int id);
 
         #endregion
 

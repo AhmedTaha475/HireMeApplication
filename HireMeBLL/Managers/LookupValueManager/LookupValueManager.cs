@@ -11,9 +11,9 @@ namespace HireMeBLL
     public class LookupValueManager: ILookupValueManager
     {
         #region Constructor && All Injecton Requires in Lookup Value manager Class 
-        private readonly LookupValuesRepo lookupValuesRepo;
+        private readonly ILookupValuesRepo lookupValuesRepo;
 
-        public LookupValueManager( LookupValuesRepo lookupValuesRepo)
+        public LookupValueManager( ILookupValuesRepo lookupValuesRepo)
         {
             this.lookupValuesRepo = lookupValuesRepo;
         }

@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using HireMeBLL.Managers.ProjectComment;
 
 namespace HireMePL
 {
@@ -25,23 +26,50 @@ namespace HireMePL
             #region DI Middleware
             builder.Services.AddScoped<ISystemUserRepo, SystemUserRepo>();
             builder.Services.AddScoped<ISystemUserManager, SystemUserManager>();
+
             builder.Services.AddScoped<IFreelancerRepo, FreelancerRepo>();
             builder.Services.AddScoped<IFreelancerManager, FreelancerManager>();
+
             builder.Services.AddScoped<IClientRepo, ClientRepo>();
+            builder.Services.AddScoped<IClientManager, ClientManager>();
 
             builder.Services.AddScoped<IProjectsRepo, ProjectsRepo>();
-            builder.Services.AddScoped<IProjectsReviewRepo, ProjectsReviewRepo>();
-            builder.Services.AddScoped<IProjectImagesRepo, ProjectImagesRepo>();
-            builder.Services.AddScoped<IProjectCommentsRepo, ProjectCommentsRepo>();
             builder.Services.AddScoped<IProjectsManager, ProjectsManager>();
 
+            builder.Services.AddScoped<IProjectsReviewRepo, ProjectsReviewRepo>();
+            builder.Services.AddScoped<IProjectReviewManager, ProjectReviewManager>();
 
+            builder.Services.AddScoped<IProjectImagesRepo, ProjectImagesRepo>();
+            builder.Services.AddScoped<IProjectImageManager, ProjectImageManager>();
 
+            builder.Services.AddScoped<IProjectCommentsRepo, ProjectCommentsRepo>();
+            builder.Services.AddScoped<IProjectCommentManager, ProjectCommentManager>();
 
+            builder.Services.AddScoped<IMilestoneRepo, MilestoneRepo>();
+            //To Be Added
+            //builder.Services.AddScoped<IMileStoneManager, MileStoneManager>();
 
+            builder.Services.AddScoped<IPlanRepo,PlanRepo>();
+            builder.Services.AddScoped<IPlanManager, PlanManager>();
 
+            builder.Services.AddScoped<IPortfolioRepo, PortfolioRepo>();
+            builder.Services.AddScoped<IPortfolioManager, PortfolioManager>();
 
-            builder.Services.AddScoped<IClientManager, ClientManager>();
+            builder.Services.AddScoped<IProjectPostRepo, ProjectPostRepo>();
+            builder.Services.AddScoped<IProjectPostManager, ProjectPostManager>();
+
+            builder.Services.AddScoped<IProjectPostApplicantRepo, ProjectPostApplicantRepo>();
+            //To be Added
+            //builder.Services.AddScoped<IProjectPostApplicantManager, ProjectPostApplicantManager>();
+
+            builder.Services.AddScoped<ITransactionRepo, TransactionRepo>();
+            builder.Services.AddScoped<ITransactionManager, TransactionManager>();
+
+            builder.Services.AddScoped<ILookupValuesRepo, LookupValuesRepo>();
+            builder.Services.AddScoped<ILookupValueManager, LookupValueManager>();
+
+            builder.Services.AddScoped<ILookupTableRepo,LookupTableRepo>();
+            builder.Services.AddScoped<ILookupTableManager,LookupTableManager>();
             #endregion
 
             #region defaults
@@ -111,7 +139,7 @@ namespace HireMePL
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseCors(corsPolicy);
             app.UseHttpsRedirection();
 
             app.UseAuthentication();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HireMeDAL
 {
-    internal class PlanRepo : IPlanRepo
+    public class PlanRepo : IPlanRepo
     {
         private readonly HireMeContext _context; 
         public PlanRepo(HireMeContext context) 

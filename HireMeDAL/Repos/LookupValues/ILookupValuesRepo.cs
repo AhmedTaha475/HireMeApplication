@@ -16,24 +16,25 @@ namespace HireMeDAL
         public IEnumerable<LookupValue> GetLookupValuesByLookupId( int id );
         public IEnumerable<LookupValue> GetLookupValuesByLookupName( string name );
 
+        public List<LookupValue> GetAllLookupValues();
 
         public LookupValue GetLookupValueById(int id);
 
         #endregion
 
         #region Create Cruds in Lookup Values Rep (Interface)
-        public void CreateLookupValue(LookupValue lookvalue);
+        public bool CreateLookupValue(LookupValue lookvalue);
 
 
         #endregion
 
         #region Update Cruds in Lookup Values Repo (Interface)
-        public void UpdateLookupValueById(LookupValue lookvalue, int id );
+        public bool UpdateLookupValueById(LookupValue lookvalue, int id );
 
         #endregion
 
         #region Delete Cruds in Lookup Values Repo (Interface)
-        public void DeleteLookupValueById(int id);
+        public bool DeleteLookupValueById(int id);
 
         #endregion
 

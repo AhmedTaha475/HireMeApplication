@@ -14,20 +14,22 @@ namespace HireMeBLL
         public IEnumerable<LookupValueDTO> GetLookupValuesByLookupId(int id);
         public IEnumerable<LookupValueDTO> GetLookupValuesByLookupName(string name);
 
+        List<LookupValueDTO> GetAllLookupValues();
+        LookupValueDTO GetLookupValueById(int id);
         #endregion
 
         #region Create Crud for Lookup Value Manager (Interface)
-        public void  CreateLookupValue( LookupValueDTO lookvaluedto);
+        public bool  CreateLookupValue(CreateLookupValueDto lookvaluedto);
 
         #endregion
 
         #region Update Crud for Lookup Value Manager (Interface)
-        public void UpdateLookupValueById(LookupValueDTO lookupValue, int id);
+        public bool UpdateLookupValueById(LookupValueDTO lookupValue, int id);
 
         #endregion
 
         #region Delte Crud for Lookup Value Manager (Interface)
-        public void DeleteLookupValueById(int id);
+        public bool DeleteLookupValueById(int id);
 
         #endregion
 

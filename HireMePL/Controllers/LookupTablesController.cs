@@ -47,7 +47,6 @@ namespace HireMePL.Controllers
         }
         #endregion
 
-        
 
         #region Crud to create new look up table to system 
         [HttpPost]
@@ -100,37 +99,6 @@ namespace HireMePL.Controllers
 
         #endregion
 
-        #region Crud to Update lookup table with its Name
-        //[HttpPut]
-        //[Route("UpdateLookupTableById/{name}")]
-
-        //public ActionResult UpdateLookupTableByName(LookupTableDto lookupTableDto, string name)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return BadRequest(ModelState);
-
-        //    try
-        //    {
-        //        if(lookupTableManager.UpdateLookupTableByName(lookupTableDto,name))
-        //        {
-        //        return Ok(new { message = $" lookup table with Id = {name} is updated successfully !!" });
-
-        //        }
-        //        else
-        //        {
-        //            return BadRequest(new { message = "Something went wrong" });
-        //        }
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-
-        //    }
-        //}
-
-        #endregion
-
         #region Crud to delete specific lookup table with its id 
         [HttpDelete]
         [Route("DeleteLookupTableById/{id}")]
@@ -153,31 +121,6 @@ namespace HireMePL.Controllers
             }
         }
 
-        #endregion
-
-        #region Crud to delete specific lookup table with its name
-
-        //[HttpDelete]
-        //[Route("DeleteLookupTableByName/{name}")]
-        //public ActionResult DeleteLookupTableByName(int name)
-        //{
-
-        //    try
-        //    {
-        //        if(lookupTableManager.DeleteLookupTableById(name))
-        //        {
-        //        return Ok(new {message=$" lookup table with name = {name} is successfully deleted !!"});
-
-        //        }
-        //        return BadRequest(new { message = "Something went wrong" });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest($"{ex.Message}");
-
-
-        //    }
-        //}
         #endregion
 
         #endregion

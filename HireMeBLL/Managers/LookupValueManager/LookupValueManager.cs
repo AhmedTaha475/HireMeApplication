@@ -26,52 +26,89 @@ namespace HireMeBLL
         public IEnumerable<LookupValueDTO> GetLookupValuesByLookupId(int id)
         {
             var lookupvaluesDb = lookupValuesRepo.GetLookupValuesByLookupId(id);
-
-            var lookvaluesdtolist = new List<LookupValueDTO>();
-            foreach (LookupValue lookupvalue in lookupvaluesDb)
+            if(lookupvaluesDb !=null)
             {
-                lookvaluesdtolist.Add(new LookupValueDTO() { LookupId = lookupvalue.LookupId, ValueName = lookupvalue.ValueName, ValueId = lookupvalue.ValueId });
+                var lookvaluesdtolist = new List<LookupValueDTO>();
+                foreach (LookupValue lookupvalue in lookupvaluesDb)
+                {
+                    lookvaluesdtolist.Add(new LookupValueDTO() { LookupId = lookupvalue.LookupId, ValueName = lookupvalue.ValueName, ValueId = lookupvalue.ValueId });
 
-            }
-            return lookvaluesdtolist;
+                }
+                return lookvaluesdtolist;
+            }return null;
+     
         }
 
         // ===== this function to get all lookup values for specific lookup table (Name) ===== // 
         public IEnumerable<LookupValueDTO> GetLookupValuesByLookupName(string name)
         {
             var lookupvaluesDb = lookupValuesRepo.GetLookupValuesByLookupName(name);
-            var lookvaluesdtolist = new List<LookupValueDTO>();
-            foreach (LookupValue lookupvalue in lookupvaluesDb)
+            if(lookupvaluesDb !=null)
             {
-                lookvaluesdtolist.Add(new LookupValueDTO() { LookupId = lookupvalue.LookupId, ValueName = lookupvalue.ValueName, ValueId = lookupvalue.ValueId });
+                var lookvaluesdtolist = new List<LookupValueDTO>();
+                foreach (LookupValue lookupvalue in lookupvaluesDb)
+                {
+                    lookvaluesdtolist.Add(new LookupValueDTO() { LookupId = lookupvalue.LookupId, ValueName = lookupvalue.ValueName, ValueId = lookupvalue.ValueId });
 
-            }
-            return lookvaluesdtolist;
+                }
+                return lookvaluesdtolist;
+            }return null;
+            
         }
+
+
+        public List<LookupValueDTO> GetAllLookupValues()
+        {
+            var list=lookupValuesRepo.GetAllLookupValues()
+                .Select(v=>new LookupValueDTO() { ValueId=v.ValueId,ValueName=v.ValueName,LookupId=v.LookupId}).ToList();
+
+            if (list!= null)
+            {
+                return list;
+            }
+            else return null;
+        }
+
+        public LookupValueDTO GetLookupValueById(int id)
+        {
+            var value=lookupValuesRepo.GetLookupValueById(id);
+            if(value != null)
+                return new LookupValueDTO() { LookupId = id, ValueName = value.ValueName,ValueId=value.LookupId };
+            return null;
+        }
+
 
         #endregion
 
         #region All Create Cruds in Lookup Value Manager Class
 
         // ==== thiis function to create new lookup value ===== // 
-        public void CreateLookupValue(LookupValueDTO lookvaluedto)
+        public bool CreateLookupValue(CreateLookupValueDto lookvaluedto)
         {
-            LookupValue lookuptodb = new LookupValue() { ValueName = lookvaluedto.ValueName };
+            LookupValue lookuptodb = new LookupValue() { ValueName = lookvaluedto.ValueName,LookupId=lookvaluedto.LookupId };
 
-            lookupValuesRepo.CreateLookupValue(lookuptodb);
+           if( lookupValuesRepo.CreateLookupValue(lookuptodb))
+            {
+                return true;
+
+            }return false;
         }
 
         #endregion
 
         #region All Update Cruds in Lookup Value Manager Class
-        public void UpdateLookupValueById(LookupValueDTO lookupValue, int id)
+        public bool UpdateLookupValueById(LookupValueDTO lookupValue, int id)
         {
             var lookupvaluefromdb = lookupValuesRepo.GetLookupValueById(id);
             if (lookupvaluefromdb != null && lookupvaluefromdb.LookupId == id) ;
             {
                 lookupvaluefromdb.ValueName = lookupValue.ValueName;
-                lookupValuesRepo.UpdateLookupValueById(lookupvaluefromdb, id);
+                if(lookupValuesRepo.UpdateLookupValueById(lookupvaluefromdb, id))
+                {
+                    return true;
+                }return false;
             }
+            return false;
         }
 
         #endregion
@@ -79,13 +116,12 @@ namespace HireMeBLL
         #region All Delete Cruds in Lookup Value Manager Class
 
         // ===== this function to delete lookup value by its Id =====  //
-        public void DeleteLookupValueById(int id)
+        public bool DeleteLookupValueById(int id)
         {
-            lookupValuesRepo.DeleteLookupValueById(id);
+            if (lookupValuesRepo.DeleteLookupValueById(id))
+                return true;
+            return false;
         }
-
-       
-
         #endregion
 
     }

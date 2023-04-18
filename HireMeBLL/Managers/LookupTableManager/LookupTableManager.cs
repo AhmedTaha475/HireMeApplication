@@ -12,12 +12,10 @@ namespace HireMeBLL
     {
         #region Constructor & All Ingection Requires for Lookup Table Manager ( Class)
         private readonly ILookupTableRepo lookupTableRepo;
-        //private readonly ILookupValuesRepo lookupValuesRepo;
-
-        public LookupTableManager( ILookupTableRepo lookupTableRepo /*, ILookupValuesRepo lookupValuesRepo*/)
+        public LookupTableManager( ILookupTableRepo lookupTableRepo )
         {
             this.lookupTableRepo = lookupTableRepo;
-            //this.lookupValuesRepo = lookupValuesRepo;
+
         }
         #endregion
 

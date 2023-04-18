@@ -11,9 +11,9 @@ namespace HireMePL.Controllers
     public class LookupValuesController : ControllerBase
     {
         #region Constructor & Ingect All Required
-        private readonly LookupValueManager lookupValueManager;
+        private readonly ILookupValueManager lookupValueManager;
 
-        public LookupValuesController( LookupValueManager lookupValueManager)
+        public LookupValuesController( ILookupValueManager lookupValueManager)
         {
             this.lookupValueManager = lookupValueManager;
         }
@@ -33,6 +33,31 @@ namespace HireMePL.Controllers
             if (lookupvaluesdtolist is null)
                 return NotFound(new { message = " there are no lookup values !!" });
             return Ok(lookupvaluesdtolist);
+        }
+        [HttpGet]
+        [Route("GetAll")]
+        public ActionResult<List<LookupValueDTO>> GetAllLookupValues()
+        {
+            var valueList= lookupValueManager.GetAllLookupValues();
+            if (valueList != null)
+            {
+                return Ok(valueList);
+            }return NotFound(new { Message = " Values are empty" });
+
+        }
+
+        [HttpGet]
+        [Route("GetValueById/{id}")]
+
+        public ActionResult<LookupValueDTO> GetLookUpValueByid(int id)
+        {
+            var value=lookupValueManager.GetLookupValueById(id);
+            if(value != null)
+                return Ok(value);
+            else
+            {
+                return NotFound(new { message = "Value not found" });
+            }
         }
 
         #endregion
@@ -55,11 +80,11 @@ namespace HireMePL.Controllers
         #region Crud to Create new lookup valiue to specific lookup table
         [HttpPost]
         [Route("CreateLookupValue")]
-        public ActionResult CreateLookupValue( LookupValueDTO lookvaluedto)
+        public ActionResult CreateLookupValue(CreateLookupValueDto lookvaluedto)
         {
-            lookupValueManager.CreateLookupValue(lookvaluedto);
+           if(lookupValueManager.CreateLookupValue(lookvaluedto))
             return Ok(new { message = $" new lookup value added successfully to lookup table with Id= {lookvaluedto.LookupId} !!" });
-
+           return BadRequest(new { message="something went wrong"});
 
         }
         #endregion
@@ -73,9 +98,9 @@ namespace HireMePL.Controllers
         {
             try
             {
-                lookupValueManager.DeleteLookupValueById(id);
-                return Ok(new { message = $" lookup value with id = {id} is successfully deleted !!" });
-
+                if(lookupValueManager.DeleteLookupValueById(id))
+                    return Ok(new { message = $" lookup value with id = {id} is successfully deleted !!" });
+                return NotFound(new {message="Id Not found"});
             }
             catch (Exception ex)
             {
@@ -93,9 +118,9 @@ namespace HireMePL.Controllers
 
             try
             {
-                lookupValueManager.UpdateLookupValueById(lookupValueDTO , id);
-                return Ok(new { message = $" lookup table with Id = {id} is updated successfully !!" });
-
+                if(lookupValueManager.UpdateLookupValueById(lookupValueDTO , id))
+                    return Ok(new { message = $" lookup table with Id = {id} is updated successfully !!" });
+                return BadRequest(new { message = "Something went wrong" });
             }
             catch (Exception ex)
             {

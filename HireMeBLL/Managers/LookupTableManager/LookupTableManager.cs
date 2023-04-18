@@ -12,12 +12,10 @@ namespace HireMeBLL
     {
         #region Constructor & All Ingection Requires for Lookup Table Manager ( Class)
         private readonly ILookupTableRepo lookupTableRepo;
-        //private readonly ILookupValuesRepo lookupValuesRepo;
-
-        public LookupTableManager( ILookupTableRepo lookupTableRepo /*, ILookupValuesRepo lookupValuesRepo*/)
+        public LookupTableManager( ILookupTableRepo lookupTableRepo )
         {
             this.lookupTableRepo = lookupTableRepo;
-            //this.lookupValuesRepo = lookupValuesRepo;
+
         }
         #endregion
 
@@ -27,50 +25,44 @@ namespace HireMeBLL
         public IEnumerable<LookupTableDto> GetAllLookupTables()
         {
             var lookuptablesDb = lookupTableRepo.GetAllLookups();
-            //var lookupdtolist = new List<LookupTableDto>();
-            //var lookvaluesdtolist = new List<LookupValueDTO>();
-            //foreach (LookupTable lookup in lookuptablesDb)
-            //{
-            //    var lookupvaluesfromdto = lookupValuesRepo.GetLookupValuesByLookupId(lookup.LookupId).Select(l => new LookupValueDTO() { ValueId = l.ValueId, ValueName = l.ValueName, LookupId = l.LookupId });
-            //    lookupdtolist.Add(new LookupTableDto() { LookupId = lookup.LookupId, LookupName = lookup.LookupName, lookupValuesdto = lookupvaluesfromdto.ToList() });
-
-            //}
-            //return lookupdtolist;
+            if( lookuptablesDb != null ) 
+            {
             return lookuptablesDb.Select(c => new LookupTableDto() { LookupId = c.LookupId, LookupName = c.LookupName }).ToList();
+
+            }
+            else
+            {
+                return null;
+            }
         }
 
         // ======  Get Lookup Table By Id  ===== // 
         public LookupTableDto GetLookupTableById(int id)
         {
             var lookupTablefromDb = lookupTableRepo.GetLookupById(id);
-            //var lookupvaluesfromdto = lookupValuesRepo.GetLookupValuesByLookupId(id).Select(l => new LookupValueDTO() { ValueId = l.ValueId, ValueName = l.ValueName, LookupId = l.LookupId });
+            if (lookupTablefromDb != null)
+            {
+                return new LookupTableDto() { LookupId = lookupTablefromDb.LookupId, LookupName = lookupTablefromDb.LookupName };
 
-            //return new LookupTableDto() { LookupId = lookupTablefromDb.LookupId, LookupName = lookupTablefromDb.LookupName, lookupValuesdto = lookupvaluesfromdto.ToList() };
-            return new LookupTableDto() { LookupId=lookupTablefromDb.LookupId,LookupName=lookupTablefromDb.LookupName};
+            }
+            else
+                return null;
         }
 
-
-        // ======  Get Lookup Table By Name ===== // 
-        //public LookupTableDto GetLookupTableByName(string name)
-        //{
-        //    var lookuptablefromDb = lookupTableRepo.GetLookupByName(name);
-        //    var lookuptablevaluesdtoname = lookupValuesRepo.GetLookupValuesByLookupName(name)
-        //        .Select(l => new LookupValueDTO() { LookupId = l.LookupId, ValueId = l.ValueId, ValueName = l.ValueName });
-
-        //    return new LookupTableDto() { LookupId = lookuptablefromDb.LookupId, LookupName = lookuptablefromDb.LookupName, lookupValuesdto = lookuptablevaluesdtoname.ToList() };
-
-
-        //}
         #endregion
 
         #region All Create Cruds for  LookupTables for Lookup Table Manager 
-        public void CreateNewLookupTable(LookupTableDto lookupTableDto)
+        public bool CreateNewLookupTable(string name)
         {
             LookupTable lookuptoDb = new LookupTable() { 
-            LookupName = lookupTableDto.LookupName
+            LookupName = name
             };
 
-            lookupTableRepo.CreateNewLookup(lookuptoDb);
+            if (lookupTableRepo.CreateNewLookup(lookuptoDb)) 
+            { 
+                return true;
+            }
+            return false;
         }
         #endregion
        
@@ -78,25 +70,31 @@ namespace HireMeBLL
 
 
         // ===== Update LookupTable By Id ===== //
-        public void UpdateLookupTableById(LookupTableDto lookupTableDto, int id)
+        public bool UpdateLookupTableById(string name, int id)
         {
             var lookuptablefromdb = lookupTableRepo.GetLookupById(id);
             if(lookuptablefromdb !=null && lookuptablefromdb.LookupId ==id )
             {
-                lookuptablefromdb.LookupName = lookupTableDto.LookupName;
-                lookupTableRepo.UpdateLookupById(lookuptablefromdb, id);
+                lookuptablefromdb.LookupName = name;
+               if( lookupTableRepo.UpdateLookupById(name, id))
+                { return true; }
+               return false;
             }
+            return false;
         }
 
         // ===== Update LookupTable By Name ===== //
-        public void UpdateLookupTableByName(LookupTableDto lookupTableDto, string name)
+        public bool UpdateLookupTableByName(LookupTableDto lookupTableDto, string name)
         {
             var lookuptablefromdb = lookupTableRepo.GetLookupByName(name);
             if (lookuptablefromdb != null && lookuptablefromdb.LookupName== name)
             {
                 lookuptablefromdb.LookupName = lookupTableDto.LookupName;
-                lookupTableRepo.UpdateLookupByName(lookuptablefromdb, name);
+                if(lookupTableRepo.UpdateLookupByName(lookuptablefromdb, name))
+                { return true; }
+                return false;
             }
+            return false;
 
         }
 
@@ -105,15 +103,20 @@ namespace HireMeBLL
         #region All Delete Cruds for  LookupTables for Lookup Table Manager 
 
         // ===== Delete Lookup Table By Id ===== //
-        public void DeleteLookupTableById(int id)
+        public bool DeleteLookupTableById(int id)
         {
-            lookupTableRepo.DeleteLookupById(id);
+            if(lookupTableRepo.DeleteLookupById(id))
+            { return true; }
+            return false;
         }
 
         // ===== Delete Lookup Table By Name ===== //
-        public void DeleteLookupTableByName(string name)
+        public bool DeleteLookupTableByName(string name)
         {
-            lookupTableRepo.DeleteLookupByName(name);
+            if(lookupTableRepo.DeleteLookupByName(name))
+            {
+                return true;
+            }return false;
         }
         #endregion
 

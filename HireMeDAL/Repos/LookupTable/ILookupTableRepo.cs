@@ -16,19 +16,19 @@ namespace HireMeDAL
         #endregion
 
         #region Update Cruds In Lookup Table Repo (Interface) 
-        public void UpdateLookupById( LookupTable lookup , int id);
-        public void UpdateLookupByName( LookupTable lookup , string name);
+        public bool UpdateLookupById( string name , int id);
+        public bool UpdateLookupByName( LookupTable lookup , string name);
 
         #endregion
 
         #region Create Cruds In Lookup Table Repo (Interface)
-        public void CreateNewLookup(LookupTable lookup);
+        public bool CreateNewLookup(LookupTable lookup);
 
         #endregion
 
         #region Delete Cruds In Lookup Table Repo (Interface)
-        public void DeleteLookupById(int id);
-        public void DeleteLookupByName(string name);
+        public bool DeleteLookupById(int id);
+        public bool DeleteLookupByName(string name);
 
         #endregion
 

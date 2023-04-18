@@ -12,8 +12,8 @@ namespace HireMeBLL
     {
         public IEnumerable<PlanReadDto> GetAll();
         public PlanReadDto GetById(int id);
-        public void DeleteById(int id);
-        public void AddPlan(PlanReadDto plan);
-        public void UpdatePlan(PlanReadDto plan);
+        public bool DeleteById(int id);
+        public bool AddPlan(CreatePlanDto plan);
+        public bool UpdatePlan(PlanReadDto plan);
     }
 }

@@ -13,25 +13,27 @@ namespace HireMeDAL
         { 
         _context= context;
                 }
-        public void AddPlan(Plan plan)
+        public bool AddPlan(Plan plan)
         {
             if (plan != null)
             {
                 _context.plans.Add(plan);
                 _context.SaveChanges();
+                return true;
             }
-            else return; 
+            else return false; 
         }
 
-        public void DeletePlan(int id)
+        public bool DeletePlan(int id)
         {
             var plan = _context.plans.Find(id);
             if (plan != null)
             {
                 _context.plans.Remove(plan);
                 _context.SaveChanges();
+                return true;
             }
-            else return; 
+            else return false; 
         }
 
         public IEnumerable<Plan> GetAll()
@@ -41,16 +43,16 @@ namespace HireMeDAL
                 return _context.plans.ToList(); 
 
             }
-            else return Enumerable.Empty<Plan>(); ////
+            else return null; ////
         }
 
         public Plan GetById(int id)
         {
-            return _context.plans.Find(id) ?? new Plan(); 
+            return _context.plans.Find(id) ?? null; 
         }
 
       
-        public void UpdatePlan(Plan plan)
+        public bool UpdatePlan(Plan plan)
         {
             var myPlan = _context.plans.Find(plan.id);
             if (myPlan != null)
@@ -60,8 +62,9 @@ namespace HireMeDAL
                 myPlan.Name = plan.Name;
                 myPlan.Bids = plan.Bids;
                 _context.SaveChanges();
+                return true;
             }
-            else return; 
+            else return false; 
         }
         public void saveChanges()
         {

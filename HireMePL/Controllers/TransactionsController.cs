@@ -1,5 +1,7 @@
 ﻿using HireMeBLL;
+using HireMeBLL.Dtos.TransactionDtos;
 using HireMeDAL;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -27,11 +29,16 @@ namespace HireMePL
 
         #region Crud To Get All Transaction For Specific User ( Client or FreeLancer)
         [HttpGet]
-        [Route("GetAllTranscationsByUserId")]       
+        [Route("GetAllTranscationsByUserId")]
+        [Authorize]
         public async Task < ActionResult<List<TransactionReadDto>>> GetAllTransactionByUserId()
         {
             var user = await UserManager.GetUserAsync(User); 
-            var transactionreadlist = TrasactionManager.GetAllTransactionByUserId(user.Id).ToList();
+            var transactionreadlist = TrasactionManager.GetAllTransactionByUserId(user.Id);
+            if(transactionreadlist == null)
+            {
+                return NotFound(new { Message = "No Data were found" });
+            }
             return Ok(transactionreadlist);          
 
         }
@@ -55,14 +62,18 @@ namespace HireMePL
         // with no content or ok and then push message .. 
         #region crud To Add new Transactio To System 
         [HttpPost]
-        [Route("CreateNewTransaction")]
-        public ActionResult CreateNewTransaction(TransactionReadDto transaction)
+        [Route("CreateNewTransaction/{id}")]
+        
+        public ActionResult CreateNewTransaction(CreateTransactionDto transaction,string id)
         {
-            if (transaction == null) { return NotFound(new { message=" you have to enter transaction requires !! "}); }
-            TrasactionManager.CreateNewTransaction(transaction);
-            // why not work ??? 
-            //return NoContent(new { message ="A new Transaction Added Successfuly !!" });
-            return NoContent();
+            if (transaction == null) {
+                return BadRequest(new { message=" you have to enter transaction requires !! "}); 
+            }
+            if(TrasactionManager.CreateNewTransaction(transaction,id))
+            {
+                return Ok(new { message = "Transaction created successfully" });
+            }
+            return BadRequest(new { message="Somethign went wrong ....."});
 
         }
         #endregion
@@ -70,12 +81,17 @@ namespace HireMePL
         #region Crud to Delete A specific Transaction With its Id 
         [HttpDelete]
         [Route("DeleteTransaction/{id}")]
-        public ActionResult DeleteTransaction(int id) {
+        public ActionResult DeleteTransaction(int id) 
+        {
 
             try
             {
-                TrasactionManager.DeleteTransaction(id);
-                return Ok( new {meesage = $" Transaction with Id = {id} Deleted Successfully !! "});
+                if (TrasactionManager.DeleteTransaction(id))
+                {
+                return Ok( new {message = $" Transaction with Id = {id} Deleted Successfully !! "});
+
+                }else
+                    return NotFound(new {message=$"Transaction with Id ={id} Not found"});
 
             }
             catch (Exception ex)

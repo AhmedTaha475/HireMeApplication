@@ -26,7 +26,7 @@ namespace HireMeDAL
             var Transactions = Context.transactions.Where(t => t.SystemUserId == userid).ToList();
             if (Transactions is null)
             {
-                return new List<Transaction>();
+                return null;
             }
             else
                 return Transactions;
@@ -37,7 +37,7 @@ namespace HireMeDAL
         {
             Transaction? transaction = Context.transactions.FirstOrDefault(t => t.TransactionId == id);
             if (transaction is null)
-                return new Transaction();
+                return null;
             else
                 return transaction;
         }
@@ -47,10 +47,17 @@ namespace HireMeDAL
         #region All Create Cruds for Repo Trasaction Class
 
         // ======== this method to Add New Transaction ========= //
-        public void AddNewTranscation(Transaction transaction)
+        public bool AddNewTranscation(Transaction transaction)
         {
+            try
+            {
             Context.transactions.Add(transaction);
             saveChanges();
+                return true;
+            }catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         #endregion
@@ -83,17 +90,22 @@ namespace HireMeDAL
         #region All Delete Cruds for Repo Trasaction Class
 
         // ======== this method to Delete Transaction ========= //
-        public void DeleteTransaction(int id)
+        public bool DeleteTransaction(int id)
         {
             Transaction? delTransaction = Context.transactions.Find(id);
 
             if (delTransaction is null)
             {
                 Console.WriteLine($"this transaction with {id} is not found !");
+                return false;
             }
-
-            Context.transactions.Remove(delTransaction);
-            saveChanges();
+            else 
+            { 
+                Context.transactions.Remove(delTransaction);
+                saveChanges();
+                return true;
+            }
+            
         }
 
         public void saveChanges()

@@ -15,7 +15,7 @@ namespace HireMeDAL.Repos
         #endregion
 
         #region Create Cruds in Transaction (Interface)
-        public void AddNewTranscation(Transaction transaction);
+        public bool AddNewTranscation(Transaction transaction);
         #endregion
 
         #region Update Cruds in Transaction (Interface)
@@ -24,7 +24,7 @@ namespace HireMeDAL.Repos
         #endregion
 
         #region Delete Cruds in Transaction (Interface)
-        public void DeleteTransaction(int id);
+        public bool DeleteTransaction(int id);
 
         #endregion
 

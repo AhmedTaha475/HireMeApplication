@@ -17,7 +17,7 @@ namespace HireMeBLL
         [StringLength(15, MinimumLength = 3 ,ErrorMessage =" your Lookup Table name Length must be in range 3 - 15 chars only ")]
         public string LookupName { get; set; }
 
-        public List<LookupValueDTO> lookupValuesdto { get; set; } = new List<LookupValueDTO>();
+        //public List<LookupValueDTO> lookupValuesdto { get; set; } = new List<LookupValueDTO>();
 
         
     }

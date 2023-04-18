@@ -12,12 +12,12 @@ namespace HireMeBLL
     {
         #region Constructor & All Ingection Requires for Lookup Table Manager ( Class)
         private readonly ILookupTableRepo lookupTableRepo;
-        private readonly ILookupValuesRepo lookupValuesRepo;
+        //private readonly ILookupValuesRepo lookupValuesRepo;
 
-        public LookupTableManager( ILookupTableRepo lookupTableRepo , ILookupValuesRepo lookupValuesRepo)
+        public LookupTableManager( ILookupTableRepo lookupTableRepo /*, ILookupValuesRepo lookupValuesRepo*/)
         {
             this.lookupTableRepo = lookupTableRepo;
-            this.lookupValuesRepo = lookupValuesRepo;
+            //this.lookupValuesRepo = lookupValuesRepo;
         }
         #endregion
 
@@ -27,38 +27,40 @@ namespace HireMeBLL
         public IEnumerable<LookupTableDto> GetAllLookupTables()
         {
             var lookuptablesDb = lookupTableRepo.GetAllLookups();
-            var lookupdtolist = new List<LookupTableDto>();
-            var lookvaluesdtolist = new List<LookupValueDTO>();
-            foreach (LookupTable lookup in lookuptablesDb)
-            {
-                var lookupvaluesfromdto = lookupValuesRepo.GetLookupValuesByLookupId(lookup.LookupId).Select(l => new LookupValueDTO() { ValueId = l.ValueId, ValueName = l.ValueName, LookupId = l.LookupId });
-                lookupdtolist.Add(new LookupTableDto() { LookupId = lookup.LookupId, LookupName = lookup.LookupName, lookupValuesdto = lookupvaluesfromdto.ToList() });
+            //var lookupdtolist = new List<LookupTableDto>();
+            //var lookvaluesdtolist = new List<LookupValueDTO>();
+            //foreach (LookupTable lookup in lookuptablesDb)
+            //{
+            //    var lookupvaluesfromdto = lookupValuesRepo.GetLookupValuesByLookupId(lookup.LookupId).Select(l => new LookupValueDTO() { ValueId = l.ValueId, ValueName = l.ValueName, LookupId = l.LookupId });
+            //    lookupdtolist.Add(new LookupTableDto() { LookupId = lookup.LookupId, LookupName = lookup.LookupName, lookupValuesdto = lookupvaluesfromdto.ToList() });
 
-            }
-            return lookupdtolist;
+            //}
+            //return lookupdtolist;
+            return lookuptablesDb.Select(c => new LookupTableDto() { LookupId = c.LookupId, LookupName = c.LookupName }).ToList();
         }
 
         // ======  Get Lookup Table By Id  ===== // 
         public LookupTableDto GetLookupTableById(int id)
         {
             var lookupTablefromDb = lookupTableRepo.GetLookupById(id);
-            var lookupvaluesfromdto = lookupValuesRepo.GetLookupValuesByLookupId(id).Select(l => new LookupValueDTO() { ValueId = l.ValueId, ValueName = l.ValueName, LookupId = l.LookupId });
+            //var lookupvaluesfromdto = lookupValuesRepo.GetLookupValuesByLookupId(id).Select(l => new LookupValueDTO() { ValueId = l.ValueId, ValueName = l.ValueName, LookupId = l.LookupId });
 
-            return new LookupTableDto() { LookupId = lookupTablefromDb.LookupId, LookupName = lookupTablefromDb.LookupName, lookupValuesdto = lookupvaluesfromdto.ToList() };
+            //return new LookupTableDto() { LookupId = lookupTablefromDb.LookupId, LookupName = lookupTablefromDb.LookupName, lookupValuesdto = lookupvaluesfromdto.ToList() };
+            return new LookupTableDto() { LookupId=lookupTablefromDb.LookupId,LookupName=lookupTablefromDb.LookupName};
         }
 
 
         // ======  Get Lookup Table By Name ===== // 
-        public LookupTableDto GetLookupTableByName(string name)
-        {
-            var lookuptablefromDb = lookupTableRepo.GetLookupByName(name);
-            var lookuptablevaluesdtoname = lookupValuesRepo.GetLookupValuesByLookupName(name)
-                .Select(l => new LookupValueDTO() { LookupId = l.LookupId, ValueId = l.ValueId, ValueName = l.ValueName });
+        //public LookupTableDto GetLookupTableByName(string name)
+        //{
+        //    var lookuptablefromDb = lookupTableRepo.GetLookupByName(name);
+        //    var lookuptablevaluesdtoname = lookupValuesRepo.GetLookupValuesByLookupName(name)
+        //        .Select(l => new LookupValueDTO() { LookupId = l.LookupId, ValueId = l.ValueId, ValueName = l.ValueName });
 
-            return new LookupTableDto() { LookupId = lookuptablefromDb.LookupId, LookupName = lookuptablefromDb.LookupName, lookupValuesdto = lookuptablevaluesdtoname.ToList() };
+        //    return new LookupTableDto() { LookupId = lookuptablefromDb.LookupId, LookupName = lookuptablefromDb.LookupName, lookupValuesdto = lookuptablevaluesdtoname.ToList() };
 
 
-        }
+        //}
         #endregion
 
         #region All Create Cruds for  LookupTables for Lookup Table Manager 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HireMeBLL.Dtos.TransactionDtos;
 using HireMeDAL;
 using HireMeDAL.Repos;
 
@@ -23,10 +24,14 @@ namespace HireMeBLL
         #region All Get Cruds in Transaction Manager Class
 
         // ==== this function use transaction repo methods to get all transaction for specific user ===== //
-        public IEnumerable<TransactionReadDto> GetAllTransactionByUserId(string userid)
+        public List<TransactionReadDto> GetAllTransactionByUserId(string userid)
         {
             var transactionDbList = TransactionRepo.GetAllTranscations(userid);
-            return transactionDbList.Select(t => new TransactionReadDto(dateTime: t.DateOfTransaction, amount: t.Amount, description: t.Description));
+            if (transactionDbList != null) 
+            {
+            return transactionDbList.Select(t => new TransactionReadDto() {Id=t.TransactionId, Amount=t.Amount,Description=t.Description,DateOfTransaction=t.DateOfTransaction}).ToList();
+            
+            }return null;
         }
 
         // ==== this function use transaction repo methods to get specific transaction by id  ===== //
@@ -34,7 +39,7 @@ namespace HireMeBLL
         {
             Transaction? transactionfromDb = TransactionRepo.GetTransactionById(id);
             if (transactionfromDb is null) { return null; };
-            return new TransactionReadDto(dateTime: transactionfromDb.DateOfTransaction, amount: transactionfromDb.Amount, description: transactionfromDb.Description);
+            return new TransactionReadDto() {Id=transactionfromDb.TransactionId, Amount =transactionfromDb.Amount,DateOfTransaction=transactionfromDb.DateOfTransaction,Description=transactionfromDb.Description};
         }
 
         #endregion
@@ -42,24 +47,28 @@ namespace HireMeBLL
         #region All Create Cruds in Transaction Manager Class
 
         // ==== this function use transaction repo methods to create new transaction ===== //
-        public void CreateNewTransaction(TransactionReadDto transactiondto)
+        public bool CreateNewTransaction(CreateTransactionDto transactiondto,string userId)
         {
-            var transactionread = new Transaction(transactiondto.DateOfTransaction, transactiondto.Amount, transactiondto.Description);
-            TransactionRepo.AddNewTranscation(transactionread);
+            var transactionread = new Transaction(transactiondto.DateOfTransaction, transactiondto.Amount, transactiondto.Description,userId);
+            if (TransactionRepo.AddNewTranscation(transactionread))
+            {
+                return true;
+            }
+            return false;
         }
-
-        #endregion
-
-        #region All Update Cruds in Transaction Manager Class
 
         #endregion
 
         #region All Delete Cruds in Transaction Manager Class
 
         // ==== this function use transaction repo methods to delete a specific transaction ===== //
-        public void DeleteTransaction(int id)
+        public bool DeleteTransaction(int id)
         {
-            TransactionRepo.DeleteTransaction(id);
+            if (TransactionRepo.DeleteTransaction(id))
+            {
+                return true;            
+            }
+            return false;
         }
 
         #endregion

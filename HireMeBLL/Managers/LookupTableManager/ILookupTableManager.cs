@@ -12,7 +12,7 @@ namespace HireMeBLL
         #region Get Crud( Manager Interface )
         public IEnumerable<LookupTableDto> GetAllLookupTables();
         public LookupTableDto GetLookupTableById(int id);
-        public LookupTableDto GetLookupTableByName(string name);
+        //public LookupTableDto GetLookupTableByName(string name);
 
         #endregion
 

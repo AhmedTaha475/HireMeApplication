@@ -337,7 +337,7 @@ namespace HireMePL.Controllers
 
             var CurrentClient = await _userManager.GetUserAsync(User);
 
-            var Client = _clientManager.GetClientById(CurrentClient.Id);
+            var Client =await _clientManager.GetClientById(CurrentClient.Id);
 
             if (Client != null)
                 return Ok(new { Message = "Here is Your Client", body = Client });

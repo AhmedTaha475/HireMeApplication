@@ -20,29 +20,37 @@ namespace HireMeBLL
             _portfolioRepo = portfolioRepo;
         }
 
-        public void AddPortfolio(PortfolioReadDto portfolio)
+        public bool AddPortfolio(string freelancerId)
         {
-            var portfolioDto = new Portfolio() { PortId = portfolio.PortId, FreelancerId = portfolio.FreelancerId };
-            _portfolioRepo.AddPortfolio(portfolioDto);
+            var portfolioDto = new Portfolio() {  FreelancerId = freelancerId };
+            if(_portfolioRepo.AddPortfolio(portfolioDto))
+                return true;
+            return false;
         }
 
 
-        public void DeleteById(int id)
+        public bool DeleteById(int id)
         {
-            _portfolioRepo.DeletePortfolio(id);
+            if(_portfolioRepo.DeletePortfolio(id))                    
+                 return true;
+            return false;
         }
 
         public IEnumerable<PortfolioReadDto> GetAll()
         {
             var portfolioFromDb = _portfolioRepo.GetAll();
-            return portfolioFromDb.Select(
-                p => new PortfolioReadDto() { PortId= p.PortId, FreelancerId= p.FreelancerId });
+            if(portfolioFromDb != null)
+                return portfolioFromDb.Select(
+                    p => new PortfolioReadDto() { PortId= p.PortId, FreelancerId= p.FreelancerId }).ToList();
+            return null;
         }
 
         public PortfolioReadDto GetById(int id)
         {
             var portfolioFromDb = _portfolioRepo.GetById(id);
-            return new PortfolioReadDto() { PortId=portfolioFromDb.PortId, FreelancerId= portfolioFromDb.FreelancerId };
+            if(portfolioFromDb != null)
+                return new PortfolioReadDto() { PortId=portfolioFromDb.PortId, FreelancerId= portfolioFromDb.FreelancerId };
+            return null;
         }
     }
 }

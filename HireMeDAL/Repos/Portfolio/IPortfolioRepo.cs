@@ -11,8 +11,8 @@ namespace HireMeDAL
     {
         public IEnumerable<Portfolio> GetAll();
         public Portfolio GetById(int id);
-        public void AddPortfolio (Portfolio portfolio);
-        public void DeletePortfolio(int id);
+        public bool AddPortfolio (Portfolio portfolio);
+        public bool DeletePortfolio(int id);
         public void saveChanges(); 
 
     }

@@ -22,35 +22,46 @@ namespace HireMeBLL
             _planRepo = planRepo;
         }
 
-        public void AddPlan(PlanReadDto plan)
+        public bool AddPlan(CreatePlanDto plan)
         {
-            var planDto = new Plan() {id=plan.id, Name= plan.Name, Price= plan.Price, Description= plan.Description, Bids= plan.Bids };
-            _planRepo.AddPlan(planDto);
+            var planDto = new Plan() { Name= plan.Name, Price= plan.Price, Description= plan.Description, Bids= plan.Bids };
+           if( _planRepo.AddPlan(planDto))
+                return true;
+           return false;
         }
 
 
 
-        public void DeleteById(int id)
+        public bool DeleteById(int id)
         {
-            _planRepo.DeletePlan(id);
+            if(_planRepo.DeletePlan(id)) 
+                return true;
+            return false;
         }
 
         public IEnumerable<PlanReadDto> GetAll()
         {
             var planFromDb = _planRepo.GetAll();
-            return planFromDb.Select(
-                p => new PlanReadDto() { id= p.id,Name=p.Name,Description= p.Description,Price= p.Price,Bids= p.Bids});
+            if (planFromDb != null)
+                return planFromDb.Select(
+                   p => new PlanReadDto() { id = p.id, Name = p.Name, Description = p.Description, Price = p.Price, Bids = p.Bids }).ToList();
+            else
+                return null;
         }
 
         public PlanReadDto GetById(int id)
         {
             var planFromDb = _planRepo.GetById(id);
-            return new PlanReadDto() { id = planFromDb.id, Name = planFromDb.Name, Price = planFromDb.Price, Description = planFromDb.Description, Bids = planFromDb.Bids };
+            if (planFromDb != null)
+                return new PlanReadDto() { id = planFromDb.id, Name = planFromDb.Name, Price = planFromDb.Price, Description = planFromDb.Description, Bids = planFromDb.Bids };
+            return null;
         }
-        public void UpdatePlan(PlanReadDto plan)
+        public bool UpdatePlan(PlanReadDto plan)
         {
             var planDto = new Plan() { id = plan.id, Name = plan.Name, Price = plan.Price, Description = plan.Description, Bids = plan.Bids };
-            _planRepo.UpdatePlan(planDto);
+            if(_planRepo.UpdatePlan(planDto))
+                return true;
+            return false;
 
         }
     }

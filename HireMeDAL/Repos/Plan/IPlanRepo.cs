@@ -10,9 +10,9 @@ namespace HireMeDAL
     {
         public IEnumerable<Plan> GetAll(); 
         public Plan GetById(int id);
-        public void DeletePlan(int id); 
-        public void UpdatePlan(Plan plan);
-        public void AddPlan(Plan plan);
+        public bool DeletePlan(int id); 
+        public bool UpdatePlan(Plan plan);
+        public bool AddPlan(Plan plan);
         public void saveChanges(); 
     }
 }

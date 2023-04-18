@@ -25,7 +25,7 @@ namespace HireMeDAL
         {
             var lookuplist = Context.lookupTables.Include(l => l.LookupValues).ToList();
             if (lookuplist is null)
-                return Enumerable.Empty<LookupTable>();
+                return null;
             else
                 return lookuplist;
         }
@@ -35,7 +35,7 @@ namespace HireMeDAL
         {
             LookupTable? findlookup = Context.lookupTables.Include(l => l.LookupValues).FirstOrDefault(l => l.LookupId == id);
             if (findlookup is null)
-                return new LookupTable();
+                return null;
             else
                 return findlookup;
         }
@@ -45,7 +45,7 @@ namespace HireMeDAL
         {
             LookupTable? findlookup = Context.lookupTables.Include(l => l.LookupValues).FirstOrDefault(l => l.LookupName.ToLower() == name.ToLower());
             if (findlookup is null)
-                return new LookupTable();
+                return null;
             else
                 return findlookup;
         }
@@ -54,10 +54,21 @@ namespace HireMeDAL
 
         #region All Create Cruds for Repo Lookup Table Class
         // ====== this function to create new Lookup by id  ====== //
-        public void CreateNewLookup(LookupTable lookup)
+        public bool CreateNewLookup(LookupTable lookup)
         {
-            Context.lookupTables.Add(lookup);
-            saveChanges();
+            try
+            {
+                Context.lookupTables.Add(lookup);
+                saveChanges();
+                return true;
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+         
 
         }
 
@@ -65,33 +76,32 @@ namespace HireMeDAL
 
         #region All Update Cruds for Repo Lookup Table Class
         // ====== this function to update specific Lookup by id  ====== //
-        public void UpdateLookupById(LookupTable lookup, int id)
+        public bool UpdateLookupById(string name, int id)
         {
             var updlookup = Context.lookupTables.FirstOrDefault(l => l.LookupId == id);
             if (updlookup is null)
                 //Console.WriteLine($" this lookup with {id} is not found");
-                return;
+                return false;
 
             else
             {
-                updlookup.LookupName = lookup.LookupName;
+                updlookup.LookupName = name;
                 saveChanges();
                 //Console.WriteLine($" this lookup with {id} updated successfully !! ");
-
+                return true;
             }
         }
 
         // ====== this function to update specific Lookup by Name  ====== //
-        public void UpdateLookupByName(LookupTable lookup, string name)
+        public bool UpdateLookupByName(LookupTable lookup, string name)
         {
             var updlookup = Context.lookupTables.FirstOrDefault(l => l.LookupName.ToLower() == name.ToLower());
             if (updlookup != null)
-
             {
                 updlookup.LookupName = lookup.LookupName;
                 saveChanges();
-
-            }
+                return true;
+            }return false;
 
         }
 
@@ -100,30 +110,32 @@ namespace HireMeDAL
         #region All Delete Cruds for Repo Lookup Table Class
 
         // ====== this function to delete specific Lookup by id  ====== //
-        public void DeleteLookupById(int id)
+        public bool DeleteLookupById(int id)
         {
             LookupTable? dellookup = Context.lookupTables.FirstOrDefault(l => l.LookupId == id);
             if (dellookup != null)
-
             {
                 Context.lookupTables.Remove(dellookup);
                 saveChanges();
+                return true;
             }
+            return false;
 
         }
 
         // ====== this function to delete specific Lookup by name  ====== //
-        public void DeleteLookupByName(string name)
+        public bool DeleteLookupByName(string name)
         {
 
             LookupTable? dellookup = Context.lookupTables.FirstOrDefault(l => l.LookupName.ToLower() == name.ToLower());
             if (dellookup != null)
-
             {
+
                 Context.lookupTables.Remove(dellookup);
                 saveChanges();
-
+                return true;
             }
+            else { return false; }
         }
 
         // ===== this function save all operations in contet ---> to data base ====== //

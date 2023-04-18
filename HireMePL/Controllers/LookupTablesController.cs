@@ -47,25 +47,25 @@ namespace HireMePL.Controllers
         }
         #endregion
 
-        #region Crud to get specific Lookup Table with its Name and get its lookup values 
-        //[HttpGet]
-        //[Route("GetLookupTableByName/{name}")]
-        //public ActionResult<LookupTableDto> GetLookupTableByName(string name)
-        //{
-        //    LookupTableDto? lookupdto = lookupTableManager.GetLookupTableByName(name);
-        //    if (lookupdto == null)
-        //        return NotFound(new {message=$" this lookup table with name = {name} is not found !! "});
-        //    return Ok(lookupdto);
-        //}
-        #endregion
+        
 
         #region Crud to create new look up table to system 
         [HttpPost]
         [Route("CreateNewLookupTable")]
-        public ActionResult CreateNewLookupTable( LookupTableDto lookupTableDto)
+        public ActionResult CreateNewLookupTable( string lookupname)
         {
-            lookupTableManager.CreateNewLookupTable(lookupTableDto);
-            return Ok(new { message=" new lookup table added successfully !! "});
+            try
+            {
+                if(lookupTableManager.CreateNewLookupTable(lookupname))
+                {
+                    return Ok(new { message = " new lookup table added successfully !! " });
+                }
+                return BadRequest(new {Message="Somethign went wrong"});
+            }catch  (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
         #endregion
 
@@ -73,15 +73,22 @@ namespace HireMePL.Controllers
         [HttpPut]
         [Route("UpdateLookupTableById/{id}")]
 
-        public ActionResult UpdateLookupTableById(LookupTableDto lookupTableDto , int id)
+        public ActionResult UpdateLookupTableById(string name , int id)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                lookupTableManager.UpdateLookupTableById(lookupTableDto, id);
+                if(lookupTableManager.UpdateLookupTableById(name, id))
+                {
                 return Ok(new {message=$" lookup table with Id = {id} is updated successfully !!"});
+
+                }
+                else
+                {
+                    return BadRequest(new { message="Something went wrong"});
+                }
 
             }
             catch( Exception ex)
@@ -94,26 +101,33 @@ namespace HireMePL.Controllers
         #endregion
 
         #region Crud to Update lookup table with its Name
-        [HttpPut]
-        [Route("UpdateLookupTableById/{name}")]
+        //[HttpPut]
+        //[Route("UpdateLookupTableById/{name}")]
 
-        public ActionResult UpdateLookupTableByName(LookupTableDto lookupTableDto, string name)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+        //public ActionResult UpdateLookupTableByName(LookupTableDto lookupTableDto, string name)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return BadRequest(ModelState);
 
-            try
-            {
-                lookupTableManager.UpdateLookupTableByName(lookupTableDto,name);
-                return Ok(new { message = $" lookup table with Id = {name} is updated successfully !!" });
+        //    try
+        //    {
+        //        if(lookupTableManager.UpdateLookupTableByName(lookupTableDto,name))
+        //        {
+        //        return Ok(new { message = $" lookup table with Id = {name} is updated successfully !!" });
 
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
+        //        }
+        //        else
+        //        {
+        //            return BadRequest(new { message = "Something went wrong" });
+        //        }
 
-            }
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+
+        //    }
+        //}
 
         #endregion
 
@@ -125,8 +139,12 @@ namespace HireMePL.Controllers
 
             try
             {
-                lookupTableManager.DeleteLookupTableById(id);
+                if(lookupTableManager.DeleteLookupTableById(id))
+                {
                 return Ok(new { message = $" lookup table with name = {id} is successfully deleted !!" });
+
+                }else
+                { return BadRequest(new { message = "something went wrong" }); };
 
             }
             catch (Exception ex)
@@ -139,24 +157,27 @@ namespace HireMePL.Controllers
 
         #region Crud to delete specific lookup table with its name
 
-        [HttpDelete]
-        [Route("DeleteLookupTableByName/{name}")]
-        public ActionResult DeleteLookupTableByName(int name)
-        {
+        //[HttpDelete]
+        //[Route("DeleteLookupTableByName/{name}")]
+        //public ActionResult DeleteLookupTableByName(int name)
+        //{
 
-            try
-            {
-                lookupTableManager.DeleteLookupTableById(name);
-                return Ok(new {message=$" lookup table with name = {name} is successfully deleted !!"});
+        //    try
+        //    {
+        //        if(lookupTableManager.DeleteLookupTableById(name))
+        //        {
+        //        return Ok(new {message=$" lookup table with name = {name} is successfully deleted !!"});
 
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"{ex.Message}");
+        //        }
+        //        return BadRequest(new { message = "Something went wrong" });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest($"{ex.Message}");
 
 
-            }
-        }
+        //    }
+        //}
         #endregion
 
         #endregion

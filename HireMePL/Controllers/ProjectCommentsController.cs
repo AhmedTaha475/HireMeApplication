@@ -23,37 +23,49 @@ namespace HireMePL.Controllers
             {
                 return BadRequest(ModelState);
             }
-            if (!projectCommentManager.PostComment(commentDto))
-                return BadRequest();
-           return Ok();
+            try
+            {
+                if (!projectCommentManager.PostComment(commentDto))
+                    return BadRequest(new {message="Somethign went wrong..."});
+                return Ok(new {message="Comment added successfully"});
+            }catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+           
         }
         [HttpDelete]
-        public ActionResult Delete(int Commentid)
+        [Route("{id}")]
+        public ActionResult Delete(int id)
         {
             try{
-                if (!projectCommentManager.DeleteComment(Commentid))
-                    return NotFound();
+                if (!projectCommentManager.DeleteComment(id))
+                    return NotFound(new {message="Comment not found"});
                 else
                 return NoContent();
-            }catch
-            { return BadRequest(); }
+            }catch(Exception ex) 
+            { return BadRequest(ex.Message); }
         }
         [HttpPut]
         public ActionResult UpdateComment(UpdateCommentDto updateCommentDto)
         {
+            if (!ModelState.IsValid) { return BadRequest(ModelState); }
             try
             {
                 if (projectCommentManager.UpdateComment(updateCommentDto))
-                return Ok();
-                else return BadRequest();
-            }catch { return BadRequest(); }
+                return Ok(new {message="comment updated successfully"});
+                else return BadRequest(new { message = "comment not found" });
+            }catch(Exception ex) { return BadRequest(ex.Message); }
            
         }
         [HttpGet]
         [Route("{id}")]
-        public ActionResult<List<ProjectCommentReadDto>> GetAllCommentsForProject(int ProjectId)
+        public ActionResult<List<ProjectCommentReadDto>> GetAllCommentsForProject(int id)
         {
-           return projectCommentManager.GetAllCommentsWithClientByProjectId(ProjectId);
+             var list= projectCommentManager.GetAllCommentsWithClientByProjectId(id);
+            if (list == null)
+                return NotFound(new { message = "No comments found" });
+            return Ok(list);
         }
     }
 }

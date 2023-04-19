@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace HireMeBLL
 {
-    public record ProjectCommentReadDto ( string Comment ,UserChildReadDto clientChild );
+    public record ProjectCommentReadDto (int commentID, string Comment ,UserChildReadDto clientChild );
 }

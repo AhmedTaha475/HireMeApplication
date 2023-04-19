@@ -26,9 +26,13 @@ namespace HireMeBLL
         public List<ProjectCommentReadDto> GetAllCommentsWithClientByProjectId(int Projectid)
         {
             List<ProjectComment> projectComments = projectCommentsRepo.GetAllByProjectId(Projectid);
-            return projectComments.Select(c => new ProjectCommentReadDto( Comment : c.Comment,
-           new UserChildReadDto() { FName = c.Client.FirstName , LName = c.Client.LastName,img = c.Client.Image,Id=c.Client.Id}
+            if(projectComments.Count > 0)
+            {
+                return projectComments.Select(c => new ProjectCommentReadDto(commentID:c.Id,Comment: c.Comment,
+           new UserChildReadDto() { FName = c.Client.FirstName, LName = c.Client.LastName, img = c.Client.Image, Id = c.Client.Id }
                 )).ToList();
+            }return null;
+            
         }
 
         public bool PostComment(CreateProjectCommentDto commentDto)

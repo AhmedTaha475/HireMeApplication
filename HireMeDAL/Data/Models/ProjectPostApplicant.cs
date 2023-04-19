@@ -15,7 +15,7 @@ namespace HireMeDAL
         //public int PPA_Id { get; set; }
 
         public string Proposal { get; set; }
-
+        [Column(TypeName = "money")]
         public decimal BiddingPrice { get; set; }
 
         public int PP_ID { get; set; }

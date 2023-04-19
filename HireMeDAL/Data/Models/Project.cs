@@ -14,6 +14,7 @@ namespace HireMeDAL
     public class Project
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProjectID { get; set; }
         [MaxLength(300), Required]
         public string Description { get; set; }=string.Empty;
@@ -37,7 +38,7 @@ namespace HireMeDAL
         public virtual Client? Client { get; set; }
 
 
-        public int PR_Id { get; set; }
+        public int? PR_Id { get; set; }
 
         [ForeignKey("PR_Id")]
         public virtual ProjectReview? ProjectReview { get; set; }

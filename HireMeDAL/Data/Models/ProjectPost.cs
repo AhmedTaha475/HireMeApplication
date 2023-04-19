@@ -19,6 +19,7 @@ namespace HireMeDAL
         public string PostTitle { get; set; } = string.Empty;
 
         [Required]
+        [Column(TypeName = "money")]
         public decimal AveragePrice { get; set; }
 
         public int CategoryId { get; set; }

@@ -27,7 +27,9 @@ namespace HireMeBLL.Managers.ProjectsManager
                 ProjectDate= projectDto.Date ,
                 MoneyEarned= projectDto.MoneyEarned ,
                 SystemProject= projectDto.SystemProject ,
-                ProjectImages = projectDto.projectImgs.Select(s=>new ProjectImage() {Image=s.Image }).ToHashSet<ProjectImage>()
+                PortfolioId=projectDto.portfolioId,
+                //ProjectImages = projectDto.projectImgs.Select(s=>new ProjectImage() {Image=Helper.ConvertFromFileToByteArray(s.Image) }).ToHashSet<ProjectImage>()
+                ProjectImages=projectDto.projectImgs.Select(c=> new ProjectImage() { Image=Helper.ConvertFromFileToByteArray(c) }).ToHashSet()
                 }))
                     return true;
                else return false;
@@ -36,108 +38,61 @@ namespace HireMeBLL.Managers.ProjectsManager
 
         public bool DeleteProject(int id)
         {
-            return projectsRepo.Delete(id);             
+             if(projectsRepo.Delete(id))
+                return true;
+            return false;
         }
 
         public List<ProjectDetailsReadDto> GetAllProjectsByPortfolioId(int PortFolio_Id)
         {
             List<Project>? projects = projectsRepo.GetAllByPortfolioId(PortFolio_Id);
-            return projects.Select(p => new ProjectDetailsReadDto()
+            if (projects != null)
             {
-                P_Id = p.ProjectID,
-                Description = p.Description,
-                Title = p.ProjectTitle,
-                Date = p.ProjectDate,
-                SystemProject = p.SystemProject,
-                MoneyEarned = p.MoneyEarned,
-                ProjectReview =
-               new PojectReviewReadDto()
-               {
-                   PR_Id = p.PR_Id,
-                   ClientReview = p.ProjectReview.ClientReview,
-                   FreelancerReview = p.ProjectReview.FreelancerReview,
-                   ClientStars = p.ProjectReview.ClientStars,
-                   FreelancerStars = p.ProjectReview.FreelancerStars,
-                   Client = new UserChildReadDto()
-                   {
-                       FName = p.Client.FirstName,
-                       LName = p.Client.LastName,
-                       Id = p.Client.Id,
-                       img = p.Client.Image
-                   },
-                   Freelancer = new UserChildReadDto()
-                   {
-                       FName = p.Portfolio.Freelancer.FirstName,
-                       LName = p.Portfolio.Freelancer.LastName,
-                       Id = p.Portfolio.Freelancer.Id,
-                       img = p.Portfolio.Freelancer.Image
-                   },
-               },
-                ProjectComments = p.ProjectComments.Select(c=>new ProjectCommentReadDto(c.Comment, new UserChildReadDto()
+                return projects.Select(p => new ProjectDetailsReadDto()
                 {
-                    FName = c.Client.FirstName,
-                    LName = c.Client.LastName,
-                    Id = c.Client.Id,
-                    img = c.Client.Image
-                })).ToList(),
-                projectImgs = p.ProjectImages.Select(i=> new ProjectImgDto()
-                {
-                    Image = i.Image,
-                }).ToList()
-            }).ToList();
+                    P_Id = p.ProjectID,
+                    Description = p.Description,
+                    Title = p.ProjectTitle,
+                    Date = p.ProjectDate,
+                    SystemProject = p.SystemProject,
+                    MoneyEarned = p.MoneyEarned,
+                }).ToList();
+            }return null;
+            
         }
 
         public ProjectDetailsReadDto GetById(int id)
         {
             Project p = projectsRepo.GetById(id);
-            return new ProjectDetailsReadDto()
-            {
-                P_Id = p.ProjectID,
-                Description = p.Description,
-                Title = p.ProjectTitle,
-                Date = p.ProjectDate,
-                SystemProject = p.SystemProject,
-                MoneyEarned = p.MoneyEarned,
-                ProjectReview =
-               new PojectReviewReadDto()
-               {
-                   PR_Id = p.PR_Id,
-                   ClientReview = p.ProjectReview.ClientReview,
-                   FreelancerReview = p.ProjectReview.FreelancerReview,
-                   ClientStars = p.ProjectReview.ClientStars,
-                   FreelancerStars = p.ProjectReview.FreelancerStars,
-                   Client = new UserChildReadDto()
-                   {
-                       FName = p.Client.FirstName,
-                       LName = p.Client.LastName,
-                       Id = p.Client.Id,
-                       img = p.Client.Image
-                   },
-                   Freelancer = new UserChildReadDto()
-                   {
-                       FName = p.Portfolio.Freelancer.FirstName,
-                       LName = p.Portfolio.Freelancer.LastName,
-                       Id = p.Portfolio.Freelancer.Id,
-                       img = p.Portfolio.Freelancer.Image
-                   },
-               },
-                ProjectComments = p.ProjectComments.Select(c => new ProjectCommentReadDto(c.Comment, new UserChildReadDto()
+            if (p != null)
+                return new ProjectDetailsReadDto()
                 {
-                    FName = c.Client.FirstName,
-                    LName = c.Client.LastName,
-                    Id = c.Client.Id,
-                    img = c.Client.Image
-                })).ToList(),
-                projectImgs = p.ProjectImages.Select(i => new ProjectImgDto()
-                {
-                    Image = i.Image,
-                }).ToList()
-            };      
+                    P_Id = p.ProjectID,
+                    Description = p.Description,
+                    Title = p.ProjectTitle,
+                    Date = p.ProjectDate,
+                    SystemProject = p.SystemProject,
+                    MoneyEarned = p.MoneyEarned,
+                   
+                };
+            return null;
         }
 
-        public bool UpdateByProjectId(UpdateProjectByIdDto updateProjectByIdDto)
+        public bool UpdateByProjectId(UpdateProjectByIdDto updateProjectByIdDto,int id)
         {
-            throw new NotImplementedException();
+            var project = new Project()
+            {
+                ProjectID=updateProjectByIdDto.ProjectID,
+                Description=updateProjectByIdDto.Description,
+                ProjectDate = updateProjectByIdDto.ProjectDate,
+                ProjectTitle = updateProjectByIdDto.ProjectTitle,
+                SystemProject=updateProjectByIdDto.SystemProject,
+                MoneyEarned=updateProjectByIdDto.MoneyEarned,
+                
+            };
+          if(projectsRepo.Update(project, id))
+                return true;
+          return false;
         }
     }
 }

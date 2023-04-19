@@ -19,11 +19,11 @@ namespace HireMeDAL
         public int Bids { get; set; }
 
         public string ? Description { get; set; }
-
+        [Column(TypeName = "money")]
         public decimal TotalMoneyEarned { get; set; }
 
         public byte[] ?CV { get; set; }
-
+        [Column(TypeName = "money")]
         public decimal AverageRate { get; set; }
 
         public int PortfolioId { get; set; }

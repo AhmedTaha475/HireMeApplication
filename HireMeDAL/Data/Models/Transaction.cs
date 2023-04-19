@@ -16,11 +16,12 @@ namespace HireMeDAL
 
         [Required]
         [Column(TypeName = "datetime")]
+        [DateInPast]
         public DateTime DateOfTransaction { get; set; }
 
         [Required]
-        [Column(TypeName ="decimal(10,2)")]
-        [DateInPast]
+        [Column(TypeName = "money")]
+        
         public decimal Amount { get; set; }
 
         [StringLength(150,MinimumLength =2)]

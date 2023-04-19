@@ -18,10 +18,18 @@ namespace HireMeDAL.Repos.Projects
         }
         public bool Add(Project project)
         {
-            
+            try
+            {
                 context.projects.Add(project);
                 context.SaveChanges();
                 return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+                
            
            
         }
@@ -40,44 +48,54 @@ namespace HireMeDAL.Repos.Projects
 
         public List<Project>? GetAll()
         {
-            return context.projects
-                .Include(p => p.ProjectComments).ThenInclude(C => C.Client)
-                .Include(p=>p.ProjectImages)
-                .Include(p=>p.ProjectReview)
-                .Include(p => p.Client)
-                .ToList();
+            //return context.projects
+            //    .Include(p => p.ProjectComments).ThenInclude(C => C.Client)
+            //    .Include(p=>p.ProjectImages)
+            //    .Include(p=>p.ProjectReview)
+            //    .Include(p => p.Client)
+            //    .ToList();
+            var list=context.projects.ToList();
+            if(list.Count == 0) return null;
+            return list;
         }
         public List<Project>? GetAllByPortfolioId(int Portfolio_Id)
         {
-            return context.projects
-                .Include(p => p.ProjectComments).ThenInclude(C => C.Client)
-                .Include(p => p.ProjectImages)
-                .Include(p => p.ProjectReview).ThenInclude(r=> r.Client)
-                .Include(p=>p.Portfolio).ThenInclude(p=>p.Freelancer)
-                .Include(p => p.Client).Where(p=>p.PortfolioId== Portfolio_Id)
-                .ToList();
+            //var list= context.projects
+            //    .Include(p => p.ProjectComments).ThenInclude(C => C.Client)
+            //    .Include(p => p.ProjectImages)
+            //    .Include(p => p.ProjectReview).ThenInclude(r => r.Client)
+            //    .Include(p => p.Portfolio).ThenInclude(p => p.Freelancer)
+            //    .Include(p => p.Client).Where(p => p.PortfolioId == Portfolio_Id)
+            //    .ToList();
+            var list=context.projects.Where(p=>p.PortfolioId == Portfolio_Id).ToList();
+            if (list.Count > 0)
+                return list;
+            return null;
         }
         //GetallByPortfolioId
 
         public Project? GetById(int id)
         {
-            Project? project = context.projects
-                .Include(p => p.ProjectComments).ThenInclude(C => C.Client)
-                .Include(p => p.ProjectImages)
-                .Include(p => p.ProjectReview).ThenInclude(r => r.Client)
-                .Include(p => p.Portfolio).ThenInclude(p => p.Freelancer)
-                .Include(p => p.Client).FirstOrDefault(p => p.ProjectID == id);
+            //Project? project = context.projects
+            //    .Include(p => p.ProjectComments).ThenInclude(C => C.Client)
+            //    .Include(p => p.ProjectImages)
+            //    .Include(p => p.ProjectReview).ThenInclude(r => r.Client)
+            //    .Include(p => p.Portfolio).ThenInclude(p => p.Freelancer)
+            //    .Include(p => p.Client).FirstOrDefault(p => p.ProjectID == id);
+            var project=context.projects.FirstOrDefault(p=>p.ProjectID == id);
+            if (project == null) return null;
             return project;
         }
 
         public Project? GetByName(string Name)
         {
-            Project? project = context.projects
-                 .Include(p => p.ProjectComments).ThenInclude(C => C.Client)
-                .Include(p => p.ProjectImages)
-                .Include(p => p.ProjectReview).
-                Include(p => p.Client)
-                .FirstOrDefault(p => p.ProjectTitle == Name);
+            //Project? project = context.projects
+            //     .Include(p => p.ProjectComments).ThenInclude(C => C.Client)
+            //    .Include(p => p.ProjectImages)
+            //    .Include(p => p.ProjectReview).
+            //    Include(p => p.Client)
+            //    .FirstOrDefault(p => p.ProjectTitle == Name);
+            var project=context.projects.FirstOrDefault(p=>p.ProjectTitle == Name);
             return project;
         }
 
@@ -88,15 +106,15 @@ namespace HireMeDAL.Repos.Projects
                 return false;
             if (id != P.ProjectID)
                 return false;
-             P.ProjectTitle = project.ProjectTitle;
-             P.Description = project.Description;
+            P.ProjectTitle = project.ProjectTitle;
+            P.Description = project.Description;
             P.ProjectDate = project.ProjectDate;
             P.SystemProject = project.SystemProject;
             P.MoneyEarned = project.MoneyEarned;
-            P.ProjectImages = project.ProjectImages;
-            P.ProjectReview = project.ProjectReview;
-            P.ProjectComments = project.ProjectComments;
-            P.Client = project.Client;
+            P.ClientId = project.ClientId;
+            //P.ProjectImages = project.ProjectImages;
+            //P.ProjectReview = project.ProjectReview;
+            //P.ProjectComments = project.ProjectComments;
             context.SaveChanges();
             return true;
 

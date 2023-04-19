@@ -15,9 +15,9 @@ namespace HireMeBLL.Dtos
         public DateTime Date { get; init; }
         public bool SystemProject { get; init; }
         public decimal MoneyEarned { get; init; }
-        public PojectReviewReadDto ProjectReview { get; init; }
-        public List<ProjectCommentReadDto> ProjectComments { get; init; }
-        public List<ProjectImgDto> projectImgs { get; init; }
+        //public PojectReviewReadDto ProjectReview { get; init; }
+        //public List<ProjectCommentReadDto> ProjectComments { get; init; }
+        //public List<ProjectImgDto> projectImgs { get; init; }
 
     }
 }

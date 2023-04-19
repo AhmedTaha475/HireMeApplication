@@ -32,14 +32,15 @@ namespace HireMeDAL
             
         }
 
-        public void DeleteProjectPost(int id)
+        public bool DeleteProjectPost(int id)
         {
             var projectPost = _hireMeContext.projectPosts.Find(id);
             if (projectPost != null)
             {
                 _hireMeContext.projectPosts.Remove(projectPost);
                 SaveChanges();
-            }
+                return true;
+            }return false;
         }
 
         public List<ProjectPost> GetALl()

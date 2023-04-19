@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
@@ -47,64 +48,25 @@ namespace HireMeDAL
                 .WithMany(s => s.SystemUsers)
                 .HasForeignKey(s => s.PaymentMethodId);
 
-            //builder.Entity<SystemUser>()
-            //    .HasOne(s => s.LookupValue)
-            //    .WithMany(s => s.SystemUsers)
-            //    .HasForeignKey(s => s.PlanId);
-
-
-
             builder.Entity<Project>()
-                .HasOne(p => p.Portfolio)
-                .WithMany(p => p.Projects)
-                .HasForeignKey(p => p.PortfolioId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<Project>()
-             .HasMany(p=>p.ProjectImages)
-             .WithOne(p=>p.Project)
-             .HasForeignKey(p => p.ProjectId)
-             .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<Project>()
-             .HasOne(p=>p.ProjectReview)
+             .HasOne(p => p.ProjectReview)
              .WithOne(p => p.Project)
+             .HasForeignKey<Project>(p=>p.PR_Id)
              .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<ProjectPost>()
-                .HasOne(p => p.LookupValue)
-                .WithMany(s => s.ProjectPosts)
-                .HasForeignKey(s => s.CategoryId)
+                .HasMany(p => p.ProjectPostApplicants)
+                .WithOne(p => p.ProjectPost)
+                .HasForeignKey(p => p.PP_ID)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<ProjectPost>()
-                .HasMany(p=>p.Milestones)
-                .WithOne(p=>p.ProjectPost)
-                .HasForeignKey(p=>p.ProjectPostId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<ProjectPost>()
-                .HasMany(p=>p.ProjectPostApplicants)
-                .WithOne(p=>p.ProjectPost)
-                .HasForeignKey(p=>p.PP_ID)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<ProjectPost>()
-                .HasOne(c => c.Client)
-                .WithMany(p => p.ProjectPosts)
-                .HasForeignKey(p => p.ClientId)
-                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Portfolio>()
                 .HasOne(f => f.Freelancer)
                 .WithOne(p => p.Portfolio)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<ProjectComment>()
-              .HasOne(p => p.Client)
-              .WithMany(c => c.ProjectComments)
-              .HasForeignKey(c => c.ClientId)
-              .OnDelete(DeleteBehavior.Restrict);
+
 
             builder.Entity<ProjectReview>()
                 .HasOne(p => p.Freelancer)

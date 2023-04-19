@@ -17,14 +17,19 @@ namespace HireMePL.Controllers
             this.projectsManager = projectsManager;
         }
         [HttpPost]
-        public ActionResult CreateProject(CreateProjectDto projectDto)
+        public ActionResult CreateProject([FromForm]CreateProjectDto projectDto)
         {
-          if(projectsManager.CreateProject(projectDto))
-                return CreatedAtAction(
-                actionName: nameof(GetById),
-            value: new { Message = "Project has been created successfully." }
-                );
-          else return BadRequest();
+            try
+            {
+                if (projectsManager.CreateProject(projectDto))
+                    return Ok(new { message = "Project created successfully" });
+
+                else return BadRequest(new { message = "Something went wrong" });
+            }catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+         
         }
         [HttpDelete]
         public ActionResult DeleteProject(int id)
@@ -44,15 +49,37 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("Project/{id}")]
-        public ActionResult<ProjectDetailsReadDto> GetById(int P_Id)
+        public ActionResult<ProjectDetailsReadDto> GetById(int id)
         {
-            return projectsManager.GetById(P_Id);
+               var projectdetail= projectsManager.GetById(id);
+            if (projectdetail != null)
+                return Ok(projectdetail);
+            return NotFound(new { message = "Project not found" });
         }
         [HttpGet]
-        [Route("Projects/{id}")]
-        public ActionResult<List<ProjectDetailsReadDto>> GetByPortfolioId(int Pf_Id)
+        [Route("ProjectByPortfolioId/{id}")]
+        public ActionResult<List<ProjectDetailsReadDto>> GetByPortfolioId(int id)
         {
-            return projectsManager.GetAllProjectsByPortfolioId(Pf_Id);
+               var projectList= projectsManager.GetAllProjectsByPortfolioId(id);
+            if (projectList != null)
+                return Ok(projectList);
+            return NotFound(new { message = "No project for this portfolio id" });
+        }
+
+        [HttpPut]
+        [Route("UpdateProjectById/{id}")]
+        public ActionResult UpdateProjectByID(UpdateProjectByIdDto updatedProject,int id)
+        {
+            try
+            {
+                if (projectsManager.UpdateByProjectId(updatedProject, id))
+                    return Ok(new { message = "Project updated successfully" });
+                return BadRequest(new { message = "Somethign went wrong....." });
+            }catch  (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
     }
 }

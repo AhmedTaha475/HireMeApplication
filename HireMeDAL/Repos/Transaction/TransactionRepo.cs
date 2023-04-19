@@ -24,7 +24,7 @@ namespace HireMeDAL
         public IEnumerable<Transaction> GetAllTranscations(string userid)
         {
             var Transactions = Context.transactions.Where(t => t.SystemUserId == userid).ToList();
-            if (Transactions is null)
+            if (Transactions.Count==0)
             {
                 return null;
             }

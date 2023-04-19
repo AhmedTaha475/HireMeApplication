@@ -4,6 +4,7 @@ using HireMeDAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HireMeDAL.Migrations
 {
     [DbContext(typeof(HireMeContext))]
-    partial class HireMeContextModelSnapshot : ModelSnapshot
+    [Migration("20230419002311_v1")]
+    partial class v1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,7 +158,7 @@ namespace HireMeDAL.Migrations
                     b.Property<decimal>("MoneyEarned")
                         .HasColumnType("money");
 
-                    b.Property<int?>("PR_Id")
+                    b.Property<int>("PR_Id")
                         .HasColumnType("int");
 
                     b.Property<int>("PortfolioId")
@@ -177,8 +180,7 @@ namespace HireMeDAL.Migrations
                     b.HasIndex("ClientId");
 
                     b.HasIndex("PR_Id")
-                        .IsUnique()
-                        .HasFilter("[PR_Id] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("PortfolioId");
 
@@ -705,7 +707,8 @@ namespace HireMeDAL.Migrations
                     b.HasOne("HireMeDAL.ProjectReview", "ProjectReview")
                         .WithOne("Project")
                         .HasForeignKey("HireMeDAL.Project", "PR_Id")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("HireMeDAL.Portfolio", "Portfolio")
                         .WithMany("Projects")

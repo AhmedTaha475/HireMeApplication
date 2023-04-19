@@ -33,7 +33,7 @@ namespace HireMeDAL
         public int Age { get; set; }
 
         public string ?SSN { get; set; }
-
+        [Column(TypeName = "money")]
         public decimal ?Balance { get; set; }
 
 

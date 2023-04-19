@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace HireMeBLL.Dtos
 {
     public record ProjectImgDto
     {
-        public byte[] Image { get; init; }
+        public IFormFile Image { get; init; }
     }
 }

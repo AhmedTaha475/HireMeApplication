@@ -10,18 +10,7 @@ namespace HireMeDAL
 {
     public class Plan
     {
-        //public Plan()
-        //{
-         
-        //}
-        //public Plan(int id, string name, decimal price, string description, int bids)
-        //{
-        //    this.id = id;
-        //    Name = name;
-        //    Price = price;
-        //    Description = description;
-        //    Bids = bids;
-        //}
+
 
         [Key]
         public int id { get; set; }
@@ -30,7 +19,7 @@ namespace HireMeDAL
 
         public string Description { get; set; } = string.Empty;
         [Required]
-        [Column(TypeName ="decimal(10,2)")]
+        [Column(TypeName = "money")]
         public decimal Price { get; set; }
         [Required]
 

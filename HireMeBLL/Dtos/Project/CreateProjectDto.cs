@@ -1,4 +1,5 @@
 ﻿using HireMeDAL;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -21,7 +22,9 @@ namespace HireMeBLL.Dtos.Project
         [Required]
         public bool SystemProject { get; init; }
         public string? ClientId { get; init; }
-        public List<ProjectImgDto> projectImgs { get; init; }   
+        [Required]
+        public int portfolioId { get; set; }
+        public List<IFormFile> projectImgs { get; init; }   
 
     }
 }

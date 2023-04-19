@@ -12,7 +12,7 @@ namespace HireMeDAL
         public override bool IsValid(object? value)
         {
            DateTime? date = value as DateTime?;
-            if (date != null)
+            if (date == null)
             {
                 return false; 
             }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HireMeDAL.Migrations
 {
     [DbContext(typeof(HireMeContext))]
-    [Migration("20230417013318_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230419003116_v2")]
+    partial class v2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -112,7 +112,7 @@ namespace HireMeDAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(10,2)");
+                        .HasColumnType("money");
 
                     b.HasKey("id");
 
@@ -142,7 +142,10 @@ namespace HireMeDAL.Migrations
             modelBuilder.Entity("HireMeDAL.Project", b =>
                 {
                     b.Property<int>("ProjectID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProjectID"));
 
                     b.Property<string>("ClientId")
                         .HasColumnType("nvarchar(450)");
@@ -155,7 +158,7 @@ namespace HireMeDAL.Migrations
                     b.Property<decimal>("MoneyEarned")
                         .HasColumnType("money");
 
-                    b.Property<int>("PR_Id")
+                    b.Property<int?>("PR_Id")
                         .HasColumnType("int");
 
                     b.Property<int>("PortfolioId")
@@ -175,6 +178,10 @@ namespace HireMeDAL.Migrations
                     b.HasKey("ProjectID");
 
                     b.HasIndex("ClientId");
+
+                    b.HasIndex("PR_Id")
+                        .IsUnique()
+                        .HasFilter("[PR_Id] IS NOT NULL");
 
                     b.HasIndex("PortfolioId");
 
@@ -241,7 +248,7 @@ namespace HireMeDAL.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Pp_Id"));
 
                     b.Property<decimal>("AveragePrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("money");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
@@ -276,7 +283,7 @@ namespace HireMeDAL.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("BiddingPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("money");
 
                     b.Property<string>("Proposal")
                         .IsRequired()
@@ -302,11 +309,10 @@ namespace HireMeDAL.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ClientReview")
-                        .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<int>("ClientStars")
+                    b.Property<int?>("ClientStars")
                         .HasColumnType("int");
 
                     b.Property<string>("FreeLancerId")
@@ -314,11 +320,10 @@ namespace HireMeDAL.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FreelancerReview")
-                        .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<int>("FreelancerStars")
+                    b.Property<int?>("FreelancerStars")
                         .HasColumnType("int");
 
                     b.Property<int>("ProjectId")
@@ -342,7 +347,7 @@ namespace HireMeDAL.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransactionId"));
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(10,2)");
+                        .HasColumnType("money");
 
                     b.Property<DateTime>("DateOfTransaction")
                         .HasColumnType("datetime");
@@ -577,7 +582,7 @@ namespace HireMeDAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal?>("Balance")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("money");
 
                     b.Property<int?>("CategoryId")
                         .HasColumnType("int");
@@ -621,7 +626,7 @@ namespace HireMeDAL.Migrations
                     b.HasBaseType("HireMeDAL.SystemUser");
 
                     b.Property<decimal>("TotalMoneySpent")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("money");
 
                     b.HasDiscriminator().HasValue("Client");
                 });
@@ -631,7 +636,7 @@ namespace HireMeDAL.Migrations
                     b.HasBaseType("HireMeDAL.SystemUser");
 
                     b.Property<decimal>("AverageRate")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("money");
 
                     b.Property<int>("Bids")
                         .HasColumnType("int");
@@ -655,7 +660,7 @@ namespace HireMeDAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("TotalMoneyEarned")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("money");
 
                     b.HasIndex("LookupValueValueId");
 
@@ -678,7 +683,7 @@ namespace HireMeDAL.Migrations
                     b.HasOne("HireMeDAL.ProjectPost", "ProjectPost")
                         .WithMany("Milestones")
                         .HasForeignKey("ProjectPostId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ProjectPost");
@@ -700,16 +705,15 @@ namespace HireMeDAL.Migrations
                         .WithMany("Projects")
                         .HasForeignKey("ClientId");
 
+                    b.HasOne("HireMeDAL.ProjectReview", "ProjectReview")
+                        .WithOne("Project")
+                        .HasForeignKey("HireMeDAL.Project", "PR_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("HireMeDAL.Portfolio", "Portfolio")
                         .WithMany("Projects")
                         .HasForeignKey("PortfolioId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("HireMeDAL.ProjectReview", "ProjectReview")
-                        .WithOne("Project")
-                        .HasForeignKey("HireMeDAL.Project", "ProjectID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Client");
@@ -724,7 +728,7 @@ namespace HireMeDAL.Migrations
                     b.HasOne("HireMeDAL.Client", "Client")
                         .WithMany("ProjectComments")
                         .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("HireMeDAL.Project", "Project")
@@ -743,7 +747,7 @@ namespace HireMeDAL.Migrations
                     b.HasOne("HireMeDAL.Project", "Project")
                         .WithMany("ProjectImages")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Project");
@@ -754,13 +758,13 @@ namespace HireMeDAL.Migrations
                     b.HasOne("HireMeDAL.LookupValue", "LookupValue")
                         .WithMany("ProjectPosts")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("HireMeDAL.Client", "Client")
                         .WithMany("ProjectPosts")
                         .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Client");

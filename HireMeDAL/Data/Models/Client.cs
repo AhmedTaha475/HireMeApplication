@@ -1,6 +1,7 @@
 ﻿using HireMeDAL.Data.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace HireMeDAL
 {
     public class Client:SystemUser
     {
+        [Column(TypeName ="money")]
         public decimal TotalMoneySpent { get; set; }
 
         public virtual HashSet<ProjectComment> ProjectComments { get; set; } = new HashSet<ProjectComment>();

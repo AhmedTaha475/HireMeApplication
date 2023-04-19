@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HireMeDAL.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class v1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -46,7 +46,7 @@ namespace HireMeDAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
+                    Price = table.Column<decimal>(type: "money", nullable: false),
                     Bids = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -109,18 +109,18 @@ namespace HireMeDAL.Migrations
                     Image = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     Age = table.Column<int>(type: "int", nullable: true),
                     SSN = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Balance = table.Column<decimal>(type: "money", nullable: true),
                     PaymentMethodId = table.Column<int>(type: "int", nullable: true),
                     PlanId = table.Column<int>(type: "int", nullable: true),
                     CategoryId = table.Column<int>(type: "int", nullable: true),
-                    TotalMoneySpent = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    TotalMoneySpent = table.Column<decimal>(type: "money", nullable: true),
                     Rank = table.Column<int>(type: "int", nullable: true),
                     JobTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Bids = table.Column<int>(type: "int", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TotalMoneyEarned = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    TotalMoneyEarned = table.Column<decimal>(type: "money", nullable: true),
                     CV = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    AverageRate = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    AverageRate = table.Column<decimal>(type: "money", nullable: true),
                     PortfolioId = table.Column<int>(type: "int", nullable: true),
                     LookupValueValueId = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -270,7 +270,7 @@ namespace HireMeDAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PostTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AveragePrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    AveragePrice = table.Column<decimal>(type: "money", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     ClientId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -282,13 +282,13 @@ namespace HireMeDAL.Migrations
                         column: x => x.ClientId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_projectPosts_lookupValues_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "lookupValues",
                         principalColumn: "ValueId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -297,10 +297,10 @@ namespace HireMeDAL.Migrations
                 {
                     PR_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ClientReview = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
-                    FreelancerReview = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
-                    ClientStars = table.Column<int>(type: "int", nullable: false),
-                    FreelancerStars = table.Column<int>(type: "int", nullable: false),
+                    ClientReview = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
+                    FreelancerReview = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
+                    ClientStars = table.Column<int>(type: "int", nullable: true),
+                    FreelancerStars = table.Column<int>(type: "int", nullable: true),
                     ProjectId = table.Column<int>(type: "int", nullable: false),
                     FreeLancerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ClientId = table.Column<string>(type: "nvarchar(450)", nullable: false)
@@ -329,7 +329,7 @@ namespace HireMeDAL.Migrations
                     TransactionId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DateOfTransaction = table.Column<DateTime>(type: "datetime", nullable: false),
-                    Amount = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
+                    Amount = table.Column<decimal>(type: "money", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     SystemUserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -362,7 +362,7 @@ namespace HireMeDAL.Migrations
                         column: x => x.ProjectPostId,
                         principalTable: "projectPosts",
                         principalColumn: "Pp_Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -372,7 +372,7 @@ namespace HireMeDAL.Migrations
                     PP_ID = table.Column<int>(type: "int", nullable: false),
                     FreelancerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Proposal = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BiddingPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    BiddingPrice = table.Column<decimal>(type: "money", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -395,7 +395,8 @@ namespace HireMeDAL.Migrations
                 name: "projects",
                 columns: table => new
                 {
-                    ProjectID = table.Column<int>(type: "int", nullable: false),
+                    ProjectID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     ProjectDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ProjectTitle = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
@@ -418,10 +419,10 @@ namespace HireMeDAL.Migrations
                         column: x => x.PortfolioId,
                         principalTable: "portfolios",
                         principalColumn: "PortId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_projects_projectReviews_ProjectID",
-                        column: x => x.ProjectID,
+                        name: "FK_projects_projectReviews_PR_Id",
+                        column: x => x.PR_Id,
                         principalTable: "projectReviews",
                         principalColumn: "PR_Id",
                         onDelete: ReferentialAction.Restrict);
@@ -445,7 +446,7 @@ namespace HireMeDAL.Migrations
                         column: x => x.ClientId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_projectComments_projects_ProjectId",
                         column: x => x.ProjectId,
@@ -471,7 +472,7 @@ namespace HireMeDAL.Migrations
                         column: x => x.ProjectId,
                         principalTable: "projects",
                         principalColumn: "ProjectID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -594,6 +595,12 @@ namespace HireMeDAL.Migrations
                 name: "IX_projects_PortfolioId",
                 table: "projects",
                 column: "PortfolioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_projects_PR_Id",
+                table: "projects",
+                column: "PR_Id",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_transactions_SystemUserId",

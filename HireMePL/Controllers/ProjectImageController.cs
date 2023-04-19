@@ -56,7 +56,7 @@ namespace HireMePL.Controllers
             {
             var result=_projectImageManager.Add(image);
             if(result)
-                return Ok(result);
+                return Ok(new {message="Image added successfully"});
             return BadRequest(new {Message="Something went wrong"});
             }
             catch (Exception ex)
@@ -77,7 +77,7 @@ namespace HireMePL.Controllers
             {
             var result=_projectImageManager.Update(updatedimage);
             if(result)
-                return Ok(result);
+                return Ok(new {message="Image updated successfully"});
             return BadRequest(new {Message = "Somethign Went wrong"});
             }catch (Exception ex)
             {

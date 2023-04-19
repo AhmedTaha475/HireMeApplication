@@ -32,17 +32,17 @@ namespace HireMeDAL.Repos.ProjectsReview
 
         public List<ProjectReview> GetAllByClientId(string id)
         {
-            return context.projectReviews.Include(r => r.Project).Include(r=>r.Freelancer).Where(r => r.Project.ClientId == id).ToList();
+            return context.projectReviews.Include(r=>r.Client).Include(r=>r.Freelancer).Where(r => r.ClientId == id).ToList();
         }
 
         public List<ProjectReview> GetAllByFreeLancerId(string id)
         {
-            return context.projectReviews.Include(r=>r.Project).Include(r => r.Client).Where(r => r.FreeLancerId == id).ToList();
+            return context.projectReviews.Include(r=>r.Freelancer).Include(r => r.Client).Where(r => r.FreeLancerId == id).ToList();
         }
 
         public ProjectReview GetByProjectId(int projectId)
         {
-            return context.projectReviews.Include(r=>r.Freelancer).Include(r=>r.Client).FirstOrDefault(r=>r.PR_Id== projectId);
+            return context.projectReviews.Include(r=>r.Freelancer).Include(r=>r.Client).FirstOrDefault(r=>r.ProjectId== projectId);
         }
 
         public bool Update(ProjectReview review, int PR_Id)

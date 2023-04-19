@@ -21,44 +21,45 @@ namespace HireMeBLL
         public List<UserPojectReviewReadDto> GetReviewsByFreeLancerId(string fL_id)
         {
             var R = reviewRepo.GetAllByFreeLancerId(fL_id);
-            return R.Select(r =>
-                new UserPojectReviewReadDto()
-                {
-                    ClientReview = r.ClientReview,
-                    ClientStars = r.ClientStars ,
-                    FreeLancerReview =r.FreelancerReview,
-                    FreeLancerStars = r.FreelancerStars,
-                    Client = new UserChildReadDto()
-                    {
-                        Id = r.ClientId,
-                        FName = r.Client.FirstName,
-                        LName = r.Client.LastName,
-                        img = r.Client.Image
-                    },
-                    FreeLancer = new UserChildReadDto()
-                    {
-                        Id = r.FreeLancerId,
-                        FName = r.Freelancer.FirstName,
-                        LName = r.Freelancer.LastName,
-                        img = r.Freelancer.Image
-                    },
-                    Project = new Dtos.ProjectComment.ProjectChildReadDto()
-                    {
-                        P_Id = r.ProjectId,
-                        Title = r.Project.ProjectTitle
-                    }
-                }).ToList();
+            if(R.Count > 0)
+            {
+                return R.Select(r =>
+               new UserPojectReviewReadDto()
+               {
+                   ClientReview = r.ClientReview,
+                   ClientStars = r.ClientStars,
+                   FreeLancerReview = r.FreelancerReview,
+                   FreeLancerStars = r.FreelancerStars,
+                   Client = new UserChildReadDto()
+                   {
+                       Id = r.ClientId,
+                       FName = r.Client.FirstName,
+                       LName = r.Client.LastName,
+                       img = r.Client.Image
+                   },
+                   FreeLancer = new UserChildReadDto()
+                   {
+                       Id = r.FreeLancerId,
+                       FName = r.Freelancer.FirstName,
+                       LName = r.Freelancer.LastName,
+                       img = r.Freelancer.Image
+                   }
+               }).ToList();
+            }return null;
+           
         }
         public List<UserPojectReviewReadDto> GetReviewsByClientId(string Client_id)
         {
             var R = reviewRepo.GetAllByClientId(Client_id);
-            return R.Select(r =>
+            if (R.Count>0)
+            {
+                return R.Select(r =>
                  new UserPojectReviewReadDto()
                  {
                      ClientReview = r.ClientReview,
-                     ClientStars = r.ClientStars ,
+                     ClientStars = r.ClientStars,
                      FreeLancerReview = r.FreelancerReview,
-                     FreeLancerStars = r.FreelancerStars ,
+                     FreeLancerStars = r.FreelancerStars,
                      Client = new UserChildReadDto()
                      {
                          Id = r.ClientId,
@@ -72,40 +73,41 @@ namespace HireMeBLL
                          FName = r.Freelancer.FirstName,
                          LName = r.Freelancer.LastName,
                          img = r.Freelancer.Image
-                     },
-                     Project = new Dtos.ProjectComment.ProjectChildReadDto()
-                     {
-                         P_Id = r.ProjectId,
-                         Title = r.Project.ProjectTitle
                      }
                  }).ToList();
+            }
+            return null;
         }
 
         public PojectReviewReadDto GetReviewByProjectId(int p_Id)
         {
             var Review = reviewRepo.GetByProjectId(p_Id);
-            return new PojectReviewReadDto()
+            if(Review !=null)
             {
-                PR_Id = Review.PR_Id,
-                ClientReview = Review.ClientReview,
-                ClientStars = Review.ClientStars,
-                FreelancerReview = Review.FreelancerReview,
-                FreelancerStars = Review.FreelancerStars,
-                Client = new UserChildReadDto()
+                return new PojectReviewReadDto()
                 {
-                    Id = Review.ClientId,
-                    FName = Review.Client.FirstName,
-                    LName = Review.Client.LastName,
-                    img = Review.Client.Image
-                },
-                Freelancer = new UserChildReadDto()
-                {
-                    Id = Review.FreeLancerId,
-                    FName = Review.Freelancer.FirstName,
-                    LName = Review.Freelancer.LastName,
-                    img = Review.Freelancer.Image
-                }
-            };
+                    PR_Id = Review.PR_Id,
+                    ClientReview = Review.ClientReview,
+                    ClientStars = Review.ClientStars,
+                    FreelancerReview = Review.FreelancerReview,
+                    FreelancerStars = Review.FreelancerStars,
+                    Client = new UserChildReadDto()
+                    {
+                        Id = Review.ClientId,
+                        FName = Review.Client.FirstName,
+                        LName = Review.Client.LastName,
+                        img = Review.Client.Image
+                    },
+                    Freelancer = new UserChildReadDto()
+                    {
+                        Id = Review.FreeLancerId,
+                        FName = Review.Freelancer.FirstName,
+                        LName = Review.Freelancer.LastName,
+                        img = Review.Freelancer.Image
+                    }
+                };
+            }return null;
+            
         }
 
         public bool AddClientReview(CreateClientProjectReviewDto createClientReviewdto)
@@ -129,7 +131,7 @@ namespace HireMeBLL
                 FreelancerReview = createFreeLancerReviewdto.Freelncer_Review,
                 FreelancerStars = createFreeLancerReviewdto.Freelancer_Stars,               
             }, PR_Id)) 
-            return true;
+             return true;
             return false;
         }
     }

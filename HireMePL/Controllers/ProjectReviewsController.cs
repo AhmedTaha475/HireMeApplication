@@ -23,22 +23,35 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("FreelancerReviews/{id}")]
-        public ActionResult<List<UserPojectReviewReadDto>> GetAllByFreeLancerId(string FL_id)
+        public ActionResult<List<UserPojectReviewReadDto>> GetAllByFreeLancerId(string id)
         {
-           return projectReviewManager.GetReviewsByFreeLancerId(FL_id);
+            var ReviewList= projectReviewManager.GetReviewsByFreeLancerId(id);
+            if (ReviewList!=null)
+            {
+                return Ok(ReviewList);
+
+            }return NotFound(new { Message = "Reviews not found" });
         }
 
         [HttpGet]
         [Route("ClientReviews/{id}")]
-        public ActionResult<List<UserPojectReviewReadDto>> GetAllByClientrId(string Client_id)
+        public ActionResult<List<UserPojectReviewReadDto>> GetAllByClientrId(string id)
         {
-            return projectReviewManager.GetReviewsByClientId(Client_id);
+              var ReviewList =projectReviewManager.GetReviewsByClientId(id);
+            if (ReviewList!=null)
+            {
+                return Ok(ReviewList);
+
+            }return NotFound(new { message = "Reviews not found" });
         }
         [HttpGet]
-        [Route("ProjectReview/{id}")]
-        public ActionResult<PojectReviewReadDto> GetReviewByProjectId(int P_Id)
+        [Route("ProjectReview/{Id}")]
+        public ActionResult<PojectReviewReadDto> GetReviewByProjectId(int Id)
         {
-            return projectReviewManager.GetReviewByProjectId(P_Id);
+              var Review=  projectReviewManager.GetReviewByProjectId(Id);
+            if (Review != null)
+                return Ok(Review);
+            return NotFound(new { message = "Review not found" });
         }
         [HttpPost]
         [Route("AddClientReview")]
@@ -48,24 +61,30 @@ namespace HireMePL.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            if (!projectReviewManager.AddClientReview(createClientReviewdto))
-                return BadRequest();
-            return Ok();
+            try
+            {
+                if (!projectReviewManager.AddClientReview(createClientReviewdto))
+                    return BadRequest(new {message="Somethign went wrong ....."});
+                return Ok(new {message="Client review added"});
+            }catch  (Exception ex) { return BadRequest(ex.Message); };
+            
         }
 
         [HttpPut]
-        [Route("AddFreelancerReview")]
+        [Route("AddFreelancerReview/{PR_Id}")]
         public ActionResult AddFreeLancerReview(CreateFreeLancerProjectReviewDto createFreeLancerReviewdto,int PR_Id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            if (!projectReviewManager.AddFreeLancerReview(createFreeLancerReviewdto,PR_Id))
-                return BadRequest();
-            return Ok();
+            try
+            {
+                if (!projectReviewManager.AddFreeLancerReview(createFreeLancerReviewdto, PR_Id))
+                    return BadRequest(new { message = "Somethign went wrong ....." });
+                return Ok(new { message = "Freelancer review added" });
+            }catch (Exception ex) { return BadRequest(ex.Message); }
+            
         }
     }
 }

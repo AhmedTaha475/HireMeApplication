@@ -20,8 +20,6 @@ namespace HireMeBLL.Dtos.ProjectReview
         public UserChildReadDto FreeLancer { get; init; }
         [Required]
         public UserChildReadDto Client { get; init; }
-        [Required]
-        public ProjectChildReadDto Project { get; init; }
           
     }
 }

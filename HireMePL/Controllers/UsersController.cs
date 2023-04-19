@@ -162,8 +162,8 @@ namespace HireMePL.Controllers
             var freelancersList = _freelancerManager.GetAllFreelancers();
 
             if (freelancersList != null)
-                return Ok(new { Message = "Here are all clients", body = freelancersList });
-            return NotFound(new { Message = "No Clients Were Found" });
+                return Ok(new { Message = "Here are all Freelancers", body = freelancersList });
+            return NotFound(new { Message = "No Freelancers Were Found" });
 
         }
 

@@ -19,6 +19,10 @@ namespace HireMePL.Controllers
         [HttpPost]
         public ActionResult CreateProject([FromForm]CreateProjectDto projectDto)
         {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             try
             {
                 if (projectsManager.CreateProject(projectDto))
@@ -70,6 +74,7 @@ namespace HireMePL.Controllers
         [Route("UpdateProjectById/{id}")]
         public ActionResult UpdateProjectByID(UpdateProjectByIdDto updatedProject,int id)
         {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
             try
             {
                 if (projectsManager.UpdateByProjectId(updatedProject, id))

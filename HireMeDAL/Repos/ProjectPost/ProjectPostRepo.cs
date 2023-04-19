@@ -16,10 +16,20 @@ namespace HireMeDAL
         {
             this._hireMeContext = hireMeContext;
         }
-        public void CreateProjectPost(ProjectPost projectPost)
+        public bool CreateProjectPost(ProjectPost projectPost)
         {
-            _hireMeContext.projectPosts.Add(projectPost);
-            SaveChanges();
+            try
+            {
+                _hireMeContext.projectPosts.Add(projectPost);
+                SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+
+               return false;
+            }
+            
         }
 
         public void DeleteProjectPost(int id)

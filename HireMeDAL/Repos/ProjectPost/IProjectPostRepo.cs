@@ -13,11 +13,11 @@ namespace HireMeDAL
         ProjectPost GetProjectPostById(int id);
         ProjectPost GetProjectPostWithApplicantsById(int id);
 
-        void CreateProjectPost(ProjectPost projectPost);
+        bool CreateProjectPost(ProjectPost projectPost);
 
-        void UpdateProjectPost(int id, ProjectPost projectPost);
+        bool UpdateProjectPost(int id, ProjectPost projectPost);
 
-        void DeleteProjectPost(int id);
+        bool DeleteProjectPost(int id);
         int SaveChanges();
     }
 }

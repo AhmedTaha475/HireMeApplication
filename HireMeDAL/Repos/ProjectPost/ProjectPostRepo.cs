@@ -55,7 +55,7 @@ namespace HireMeDAL
 
         public ProjectPost GetProjectPostWithApplicantsById(int id)
         {
-            return _hireMeContext.projectPosts.Include(p=> p.ProjectPostApplicants).FirstOrDefault(p=>p.Pp_Id == id) ?? null;
+            return _hireMeContext.projectPosts.Include(p=> p.ProjectPostApplicants).FirstOrDefault(p=>p.Pp_Id == id);
         }
 
         public int SaveChanges()
@@ -63,7 +63,7 @@ namespace HireMeDAL
             return _hireMeContext.SaveChanges();
         }
 
-        public void UpdateProjectPost(int id, ProjectPost projectPost)
+        public bool UpdateProjectPost(int id, ProjectPost projectPost)
         {
             var currentProjectPost = GetProjectPostById(id);
             if (currentProjectPost != null)
@@ -76,7 +76,8 @@ namespace HireMeDAL
                 currentProjectPost.CategoryId = projectPost.CategoryId;
                 currentProjectPost.Milestones = projectPost.Milestones;
                 SaveChanges();
-            }
+                return true;
+            }return false;
         }
     }
 }

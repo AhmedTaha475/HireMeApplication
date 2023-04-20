@@ -9,13 +9,13 @@ namespace HireMeDAL
     public interface IProjectPostApplicantRepo
     {
         List<ProjectPostApplicant> GetProjectPostApplicants(int projectPostId);
-        ProjectPostApplicant GetProjectPostApplicantById(string id);
+        List<ProjectPostApplicant> GetProjectPostApplicantById(string id);
 
-        void CreateProjectPostApplicant(ProjectPostApplicant projectPostApplicant);
+        bool CreateProjectPostApplicant(ProjectPostApplicant projectPostApplicant);
 
-        void UpdateProjectPostApplicant(string id, ProjectPostApplicant projectPostApplicant);
+        bool UpdateProjectPostApplicant(int id, ProjectPostApplicant projectPostApplicant);
 
-        void DeleteProjectPostApplicant(string id);
+        bool DeleteProjectPostApplicant(string id);
         int SaveChanges();
     }
 }

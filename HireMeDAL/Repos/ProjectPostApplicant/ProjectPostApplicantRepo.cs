@@ -14,20 +14,31 @@ namespace HireMeDAL
         {
             this._hireMeContext = hireMeContext;
         }
-        public void CreateProjectPostApplicant(ProjectPostApplicant projectPostApplicant)
+        public bool CreateProjectPostApplicant(ProjectPostApplicant projectPostApplicant)
         {
-            _hireMeContext.projectPostApplicants.Add(projectPostApplicant);
-            SaveChanges();
+            try
+            {
+                _hireMeContext.projectPostApplicants.Add(projectPostApplicant);
+                SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+          
         }
 
-        public void DeleteProjectPostApplicant(string id)
+        public bool DeleteProjectPostApplicant(string id)
         {
             var projectPostApplicant = _hireMeContext.projectPostApplicants.FirstOrDefault(ppa=>ppa.FreelancerId == id);
             if (projectPostApplicant != null)
             {
                 _hireMeContext.projectPostApplicants.Remove(projectPostApplicant);
                 SaveChanges();
-            }
+                return true;
+            }return false;
         }
 
         public List<ProjectPostApplicant> GetProjectPostApplicants(int projectPostId)
@@ -35,24 +46,37 @@ namespace HireMeDAL
             return _hireMeContext.projectPostApplicants.Where(ppa=>ppa.PP_ID== projectPostId).ToList();
         }
 
-        public ProjectPostApplicant GetProjectPostApplicantById(string id)
+        public List<ProjectPostApplicant> GetProjectPostApplicantById(string id)
         {
-            return _hireMeContext.projectPostApplicants.FirstOrDefault(ppa => ppa.FreelancerId == id) ?? null;
+            return _hireMeContext.projectPostApplicants.Where(ppa => ppa.FreelancerId == id).ToList();
         }
         public int SaveChanges()
         {
             return _hireMeContext.SaveChanges();
         }
 
-        public void UpdateProjectPostApplicant(string id, ProjectPostApplicant projectPostApplicant)
+        public bool UpdateProjectPostApplicant(int id, ProjectPostApplicant projectPostApplicant)
         {
-            var currentprojectPostApplicant = GetProjectPostApplicantById(id);
-            if (currentprojectPostApplicant != null)
+            //var currentprojectPostApplicant = GetProjectPostApplicantById(id);
+            //if (currentprojectPostApplicant != null)
+            //{
+            //    currentprojectPostApplicant.BiddingPrice = projectPostApplicant.BiddingPrice;
+            //    currentprojectPostApplicant.Proposal = projectPostApplicant.Proposal;
+            //    SaveChanges();
+            //    return true;
+            //}return true;
+
+            var currentApplication = _hireMeContext.projectPostApplicants
+                .FirstOrDefault(p => p.PP_ID == id && p.FreelancerId == projectPostApplicant.FreelancerId);
+            if (currentApplication != null)
             {
-                currentprojectPostApplicant.BiddingPrice = projectPostApplicant.BiddingPrice;
-                currentprojectPostApplicant.Proposal = projectPostApplicant.Proposal;
+                currentApplication.BiddingPrice = projectPostApplicant.BiddingPrice;
+                currentApplication.Proposal=projectPostApplicant.Proposal;
                 SaveChanges();
-            }
+                return true;
+            }return false;
+
+
         }
 
     }

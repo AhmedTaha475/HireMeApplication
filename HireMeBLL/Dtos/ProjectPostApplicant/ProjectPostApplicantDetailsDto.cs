@@ -11,13 +11,13 @@ namespace HireMeBLL
 {
     public record ProjectPostApplicantDetailsDto
     {
-        [Required]
+        
         public string Proposal { get; set; }
-        [Required]
+        
         public decimal BiddingPrice { get; set; }
-        [Required]
+        
         public int PP_ID { get; set; }
-        [Required]
+        
         public string FreelancerId { get; set; }
     }
 }

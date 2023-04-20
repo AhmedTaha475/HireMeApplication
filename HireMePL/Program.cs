@@ -46,8 +46,7 @@ namespace HireMePL
             builder.Services.AddScoped<IProjectCommentManager, ProjectCommentManager>();
 
             builder.Services.AddScoped<IMilestoneRepo, MilestoneRepo>();
-            //To Be Added
-            //builder.Services.AddScoped<IMileStoneManager, MileStoneManager>();
+            builder.Services.AddScoped<IMilestoneManager,MilestoneManager>();
 
             builder.Services.AddScoped<IPlanRepo,PlanRepo>();
             builder.Services.AddScoped<IPlanManager, PlanManager>();
@@ -59,8 +58,7 @@ namespace HireMePL
             builder.Services.AddScoped<IProjectPostManager, ProjectPostManager>();
 
             builder.Services.AddScoped<IProjectPostApplicantRepo, ProjectPostApplicantRepo>();
-            //To be Added
-            //builder.Services.AddScoped<IProjectPostApplicantManager, ProjectPostApplicantManager>();
+            builder.Services.AddScoped<IProjectPostApplicantManager, ProjectPostApplicantManager>();
 
             builder.Services.AddScoped<ITransactionRepo, TransactionRepo>();
             builder.Services.AddScoped<ITransactionManager, TransactionManager>();

@@ -17,29 +17,37 @@ namespace HireMeBLL
             this._milestoneRepo = milestoneRepo;
         }
 
-        public void CreateMilestone(MilestoneDetailsDto milestone)
+        public bool CreateMilestone(CreateMileStoneDto milestone)
         {
-            _milestoneRepo.CreateMilestone(new Milestone() { 
-                Id= milestone.Id,
+           if( _milestoneRepo.CreateMilestone(new Milestone() { 
                 Name= milestone.Name,
                 ProjectPostId= milestone.ProjectPostId,
                 Value= milestone.Value,
-            });
+            }))return true;
+           return false;
         }
 
-        public void DeleteMilestone(int milestoneId)
+        public bool DeleteMilestone(int milestoneId)
         {
-            _milestoneRepo.DeleteMilestone(milestoneId);
+            if(_milestoneRepo.DeleteMilestone(milestoneId))
+                return true;
+            return false;
         }
 
         public MilestoneDetailsDto GetMilestoneById(int milestoneId)
         {
             var milestoneDB = _milestoneRepo.GetMilestoneById(milestoneId);
-            return new MilestoneDetailsDto() { 
-                Id= milestoneDB.Id,
-                Name= milestoneDB.Name,
-                ProjectPostId= milestoneDB.ProjectPostId, 
-                Value= milestoneDB.Value };
+            if(milestoneDB !=null)
+            {
+                return new MilestoneDetailsDto()
+                {
+                    Id = milestoneDB.Id,
+                    Name = milestoneDB.Name,
+                    ProjectPostId = milestoneDB.ProjectPostId,
+                    Value = milestoneDB.Value
+                };
+            }return null;
+            
         }
 
         public List<MilestoneDetailsDto> GetProjectPostMilestones(int projectId)
@@ -53,15 +61,17 @@ namespace HireMeBLL
             }).ToList();
         }
 
-        public void UpdateMilestone(int milestoneId, UpdateMilestoneDto updatedMilestone)
+        public bool UpdateMilestone(int milestoneId, UpdateMilestoneDto updatedMilestone)
         {
             var milestone = _milestoneRepo.GetMilestoneById(milestoneId);
             if (milestone != null)
             {
                 milestone.Name = updatedMilestone.Name;
                 milestone.Value = updatedMilestone.Value;
-                _milestoneRepo.UpdateMilestone(milestoneId, milestone);
+                if(_milestoneRepo.UpdateMilestone(milestoneId, milestone))
+                    return true;
             }
+            return false;
         }
     }
 }

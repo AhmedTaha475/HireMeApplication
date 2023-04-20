@@ -11,8 +11,8 @@ namespace HireMeBLL
     {
         MilestoneDetailsDto GetMilestoneById(int milestoneId);
         List<MilestoneDetailsDto> GetProjectPostMilestones(int projectId);
-        void CreateMilestone(MilestoneDetailsDto milestone);
-        void UpdateMilestone(int milestoneId, UpdateMilestoneDto updatedMilestone);
-        void DeleteMilestone(int milestoneId);
+        bool CreateMilestone(CreateMileStoneDto milestone);
+        bool UpdateMilestone(int milestoneId, UpdateMilestoneDto updatedMilestone);
+        bool DeleteMilestone(int milestoneId);
     }
 }

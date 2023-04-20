@@ -10,9 +10,7 @@ namespace HireMeDAL
 {
     public class ProjectPostApplicant
     {
-        //Might need adjustment
-        //[Key]
-        //public int PPA_Id { get; set; }
+       
 
         public string Proposal { get; set; }
         [Column(TypeName = "money")]

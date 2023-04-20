@@ -14,20 +14,30 @@ namespace HireMeDAL
         {
             this._hireMeContext = hireMeContext;
         }
-        public void CreateMilestone(Milestone milestone)
+        public bool CreateMilestone(Milestone milestone)
         {
-            _hireMeContext.milestones.Add(milestone);
-            SaveChanges();
+            try
+            {
+                _hireMeContext.milestones.Add(milestone);
+                SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            
         }
 
-        public void DeleteMilestone(int id)
+        public bool DeleteMilestone(int id)
         {
             var milestone = _hireMeContext.milestones.Find(id);
             if (milestone != null)
             {
                 _hireMeContext.milestones.Remove(milestone);
                 SaveChanges();
-            }
+                return true;
+            }return false;
         }
 
         public List<Milestone> GetALl()
@@ -50,7 +60,7 @@ namespace HireMeDAL
             return _hireMeContext.SaveChanges();
         }
 
-        public void UpdateMilestone(int id, Milestone milestone)
+        public bool UpdateMilestone(int id, Milestone milestone)
         {
             var currentMilestone = GetMilestoneById(id);
             if (currentMilestone != null)
@@ -61,7 +71,9 @@ namespace HireMeDAL
                 currentMilestone.Value = milestone.Value;
                 currentMilestone.Id = milestone.Id;
                 SaveChanges();
+                return true;
             }
+            return false;
         }
 
     }

@@ -11,11 +11,12 @@ namespace HireMeDAL
         List<Milestone> GetALl();
         Milestone GetMilestoneById(int id);
 
-        void CreateMilestone(Milestone milestone);
+        bool CreateMilestone(Milestone milestone);
 
-        void UpdateMilestone(int id, Milestone milestone);
+        bool UpdateMilestone(int id, Milestone milestone);
         List<Milestone> GetProjectPostMilestones(int prjectPostId);
-        void DeleteMilestone(int id);
+        bool DeleteMilestone(int id);
+
         int SaveChanges();
     }
 }

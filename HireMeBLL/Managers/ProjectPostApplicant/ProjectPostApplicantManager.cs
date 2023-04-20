@@ -15,27 +15,29 @@ namespace HireMeBLL
         {
             this._projectPostApplicantRepo = projectPostApplicantRepo;
         }
-        public void CreateProjectPostApplicant(ProjectPostApplicantDetailsDto projectPostApplicant)
+        public bool CreateProjectPostApplicant(ProjectPostApplicantDetailsDto projectPostApplicant)
         {
-            _projectPostApplicantRepo.CreateProjectPostApplicant(new ProjectPostApplicant()
+            if (_projectPostApplicantRepo.CreateProjectPostApplicant(new ProjectPostApplicant()
             {
-                BiddingPrice= projectPostApplicant.BiddingPrice,
-                Proposal= projectPostApplicant.Proposal,
-                PP_ID= projectPostApplicant.PP_ID,
-                FreelancerId= projectPostApplicant.FreelancerId,
-            });
+                BiddingPrice = projectPostApplicant.BiddingPrice,
+                Proposal = projectPostApplicant.Proposal,
+                PP_ID = projectPostApplicant.PP_ID,
+                FreelancerId = projectPostApplicant.FreelancerId,
+            })) return true;
+            return false;
         }
 
-        public ProjectPostApplicantDetailsDto GetProjectPostApplicantById(string projectPostApplicantId)
+        public List<ProjectPostApplicantDetailsDto> GetProjectPostApplicantById(string projectPostApplicantId)
         {
             var applicantDB = _projectPostApplicantRepo.GetProjectPostApplicantById(projectPostApplicantId);
-            return new ProjectPostApplicantDetailsDto()
+            return applicantDB.Select(ppa => new ProjectPostApplicantDetailsDto()
             {
-                PP_ID = applicantDB.PP_ID,
-                Proposal = applicantDB.Proposal,
-                BiddingPrice = applicantDB.BiddingPrice,
-                FreelancerId = applicantDB.FreelancerId,
-            };
+                PP_ID = ppa.PP_ID,
+                BiddingPrice = ppa.BiddingPrice,
+                FreelancerId = ppa.FreelancerId,
+                Proposal = ppa.Proposal,
+            }).ToList();
+
         }
 
         public List<ProjectPostApplicantDetailsDto> GetProjectPostApplicants(int projectPostId)
@@ -49,15 +51,25 @@ namespace HireMeBLL
             }).ToList();
         }
 
-        public void UpdateProjectPostApplicant(string projectPostApplicantId, UpdateProjectPostApplicantDto projectPostApplicant)
+        public bool UpdateProjectPostApplicant(int projectpostId, UpdateProjectPostApplicantDto projectPostApplicant)
         {
-            if (projectPostApplicantId == projectPostApplicant.FreelancerId) 
+            if (projectpostId == projectPostApplicant.PP_Id) 
             {
-                var applicantDB= _projectPostApplicantRepo.GetProjectPostApplicantById(projectPostApplicantId);
-                applicantDB.Proposal = projectPostApplicant.Proposal;
-                applicantDB.BiddingPrice = projectPostApplicant.BiddingPrice;
-                _projectPostApplicantRepo.UpdateProjectPostApplicant(projectPostApplicantId,applicantDB);
-            }
+                ProjectPostApplicant applicantionToBeUpdated = new ProjectPostApplicant()
+                {
+                    PP_ID = projectpostId,
+                    FreelancerId = projectPostApplicant.FreelancerId,
+                    BiddingPrice = projectPostApplicant.BiddingPrice,
+                    Proposal = projectPostApplicant.Proposal
+                };
+                if(_projectPostApplicantRepo.UpdateProjectPostApplicant(projectpostId, applicantionToBeUpdated))
+                {
+                    return true;
+                }
+                return false;
+
+
+            }return false;
         }
     }
 }

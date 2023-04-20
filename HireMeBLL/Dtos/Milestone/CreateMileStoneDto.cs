@@ -7,15 +7,13 @@ using System.Threading.Tasks;
 
 namespace HireMeBLL
 {
-    public record UpdateProjectPostApplicantDto
+    public record CreateMileStoneDto
     {
         [Required]
-        public string Proposal { get; set; }
+        public string Name { get; set; }
         [Required]
-        public decimal BiddingPrice { get; set; }
+        public string Value { get; set; }
         [Required]
-        public string FreelancerId { get; set; }
-        [Required]
-        public int PP_Id { get; set; }
+        public int ProjectPostId { get; set; }
     }
 }

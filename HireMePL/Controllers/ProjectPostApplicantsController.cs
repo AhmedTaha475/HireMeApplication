@@ -16,14 +16,17 @@ namespace HireMePL.Controllers
             this._projectPostApplicantManager = projectPostApplicantManager;
         }
         [HttpGet]
-        [Route("ProjectPostApplicant/{projectPostId}")]
-        public ActionResult<List<ProjectPostApplicantDetailsDto>> GetProjectPostApplicants(int projectPostId) 
+        [Route("GetAllByProjectPostId/{id}")]
+        public ActionResult<List<ProjectPostApplicantDetailsDto>> GetProjectPostApplicants(int id) 
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             try
             {
-                return _projectPostApplicantManager.GetProjectPostApplicants(projectPostId);
+                var PPA_list = _projectPostApplicantManager.GetProjectPostApplicants(id);
+                    if(PPA_list.Count > 0)
+                        return Ok(PPA_list);
+                return NotFound(new { message = "No project post applicants were found" });
             }
             catch(Exception ex)
             {
@@ -31,14 +34,17 @@ namespace HireMePL.Controllers
             }
         }
         [HttpGet]
-        [Route("ProjectPostApplicant/{projectPostApplicantId}")]
-        public ActionResult<ProjectPostApplicantDetailsDto> GetProjectPostApplicantById(string projectPostApplicantId)
+        [Route("GetByProjectPostAppId/{id}")]
+        public ActionResult<List<ProjectPostApplicantDetailsDto>> GetProjectPostApplicantById(string id)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             try
             {
-                return _projectPostApplicantManager.GetProjectPostApplicantById(projectPostApplicantId);
+                   var applicants= _projectPostApplicantManager.GetProjectPostApplicantById(id);
+                if (applicants.Count>0)
+                    return Ok(applicants);
+                return NotFound(new { message = "Applicant not found" });
             }
             catch (Exception ex)
             {
@@ -47,14 +53,24 @@ namespace HireMePL.Controllers
                 
         }
         [HttpPut]
-        [Route("ProjectPostApplicant/{projectPostApplicantId}/Update")]
-        public ActionResult UpdateProjectPostApplicant(string projectPostApplicantId, UpdateProjectPostApplicantDto projectPostApplicant)
+        [Route("Update/{id}")]
+        public ActionResult UpdateProjectPostApplicant(int id, UpdateProjectPostApplicantDto projectPostApplicant)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+            try
+            {
+                if(_projectPostApplicantManager.UpdateProjectPostApplicant(id, projectPostApplicant))
+                    return Ok(new { Message = "Applicant Updated Successfully" });
+                return NotFound(new { message = "Applicant not found" });
+                    
+            }
+            catch (Exception ex)
+            {
 
-            _projectPostApplicantManager.UpdateProjectPostApplicant(projectPostApplicantId, projectPostApplicant);
-            return Ok(new { Message = "Applicant Updated Successfully" });
+                return BadRequest(ex.Message);
+            }
+            
             
         }
         [HttpPost]
@@ -63,8 +79,9 @@ namespace HireMePL.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            _projectPostApplicantManager.CreateProjectPostApplicant(projectPostApplicant);
-            return Ok(new { Message = "Applicant Created Successfully" });
+            if(_projectPostApplicantManager.CreateProjectPostApplicant(projectPostApplicant))
+                return Ok(new { Message = "Applicant Created Successfully" });
+            return BadRequest(new {message="Something went wrong....."});
         }
     }
 }

@@ -38,6 +38,7 @@ namespace HireMeBLL
         public ProjectImageDto GetById(int id)
         {
             var result= _projectImagesRepo.GetById(id);
+            if (result == null) return null;
             return new ProjectImageDto(result.PI_Id, result.ProjectId, result.Image);
         }
 

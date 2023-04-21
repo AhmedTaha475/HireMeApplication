@@ -1,6 +1,7 @@
 ﻿using HireMeBLL;
 using HireMeBLL.Dtos.LookupValuesDtos;
 using HireMeDAL;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,6 +35,7 @@ namespace HireMePL.Controllers
                 return NotFound(new { message = " there are no lookup values !!" });
             return Ok(lookupvaluesdtolist);
         }
+        
         [HttpGet]
         [Route("GetAll")]
         public ActionResult<List<LookupValueDTO>> GetAllLookupValues()
@@ -80,6 +82,7 @@ namespace HireMePL.Controllers
         #region Crud to Create new lookup valiue to specific lookup table
         [HttpPost]
         [Route("CreateLookupValue")]
+        [Authorize(policy:"Admin")]
         public ActionResult CreateLookupValue(CreateLookupValueDto lookvaluedto)
         {
            if(lookupValueManager.CreateLookupValue(lookvaluedto))
@@ -93,7 +96,7 @@ namespace HireMePL.Controllers
 
         [HttpDelete]
         [Route(" DeleteLookupValueById/{id}")]
-
+        [Authorize(policy:"Admin")]
         public ActionResult DeleteLookupValueById(int id)
         {
             try
@@ -111,14 +114,15 @@ namespace HireMePL.Controllers
 
         [HttpPut]
         [Route("UpdateLookupValueById/{id}")]
-        public ActionResult UpdateLookupValueById(LookupValueDTO lookupValueDTO , int id )
+        [Authorize(policy:"Admin")]
+        public ActionResult UpdateLookupValueById([FromBody]string ValueName , int id )
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                if(lookupValueManager.UpdateLookupValueById(lookupValueDTO , id))
+                if(lookupValueManager.UpdateLookupValueById(ValueName, id))
                     return Ok(new { message = $" lookup table with Id = {id} is updated successfully !!" });
                 return BadRequest(new { message = "Something went wrong" });
             }

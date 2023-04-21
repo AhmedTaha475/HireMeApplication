@@ -48,7 +48,7 @@ namespace HireMeDAL
         // ==== thsis function to get lookup value by its id ===== // 
         public LookupValue GetLookupValueById(int id)
         {
-            var lookupValue = Context.lookupValues.FirstOrDefault(l => l.LookupId == id);
+            var lookupValue = Context.lookupValues.FirstOrDefault(l => l.ValueId == id);
             return lookupValue; 
         }
 

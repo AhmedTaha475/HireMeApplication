@@ -1,5 +1,6 @@
 ﻿using HireMeBLL;
 using HireMeBLL.Dtos.Milestone;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +18,7 @@ namespace HireMePL.Controllers
         }
         [HttpGet]
         [Route("ProjectMileStones/{id}")]
+        [Authorize]
         public ActionResult<List<MilestoneDetailsDto>> GetProjectPostsMilestones(int id) 
         {
             if (!ModelState.IsValid)
@@ -29,6 +31,7 @@ namespace HireMePL.Controllers
         }
         [HttpGet]
         [Route("Milestone/{id}")]
+        [Authorize]
         public ActionResult<MilestoneDetailsDto> GetMilestoneById(int id)
         {
             if (!ModelState.IsValid)
@@ -40,6 +43,7 @@ namespace HireMePL.Controllers
         }
         [HttpPost]
         [Route("Create")]
+        [Authorize(policy:"Client")]
         public ActionResult CreateMilestne(CreateMileStoneDto milestone)
         {
             if (!ModelState.IsValid)
@@ -50,6 +54,7 @@ namespace HireMePL.Controllers
         }
         [HttpPut]
         [Route("Update/{id}")]
+        [Authorize(policy:"Client")]
         public ActionResult UpdateMilestne(int id, UpdateMilestoneDto milestone)
         {
             if (!ModelState.IsValid)
@@ -69,6 +74,7 @@ namespace HireMePL.Controllers
         }
         [HttpDelete]
         [Route("Delete/{id}")]
+        [Authorize(policy:"Client")]
         public ActionResult DeleteMilestne(int id)
         {
             if (!ModelState.IsValid)

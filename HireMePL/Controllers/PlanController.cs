@@ -1,5 +1,6 @@
 ﻿using HireMeBLL;
 using HireMeDAL;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Sockets;
@@ -38,6 +39,7 @@ namespace HireMePL
             return plan; 
         }
         [HttpPost]
+        [Authorize(policy:"Admin")]
         public ActionResult AddPlan(CreatePlanDto plan)
         {
             try
@@ -57,6 +59,8 @@ namespace HireMePL
           
         }
         [HttpPut]
+        [Authorize(policy:"Admin")]
+        [Route("{id}")]
         public ActionResult UpdatePlan(int id, PlanReadDto plan)
         {
             try
@@ -77,6 +81,8 @@ namespace HireMePL
             
         }
         [HttpDelete]
+        [Authorize(policy:"Admin")]
+        [Route("{id}")]
         public ActionResult DeletePlan(int id)
         {
             try

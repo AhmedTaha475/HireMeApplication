@@ -1,5 +1,6 @@
 ﻿using HireMeBLL;
 using HireMeBLL.Dtos.ProectImage;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,7 +21,7 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("GetAllImagesByProjectId/{id}")]
-
+        [Authorize]
         public ActionResult<List<ProjectImageDto>> GetProjectImages(int id) 
         {
               
@@ -32,7 +33,7 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("GetById/{id}")]
-
+        [Authorize(policy:"Freelancer")]
         public ActionResult<ProjectImageDto> GetImageById(int id)
         {
 
@@ -46,6 +47,7 @@ namespace HireMePL.Controllers
 
         [HttpPost]
         [Route("AddImage")]
+        [Authorize(policy:"Freelancer")]
         public ActionResult CreateImage([FromForm]  CreateProjectImageDto image) 
         {
             if (!ModelState.IsValid)
@@ -68,7 +70,7 @@ namespace HireMePL.Controllers
 
         [HttpPut]
         [Route("UpdateImage")]
-
+        [Authorize(policy:"Freelancer")]
         public ActionResult updateImage([FromForm]UpdateProjectImageDto updatedimage)
         {
             if(!ModelState.IsValid)
@@ -89,8 +91,8 @@ namespace HireMePL.Controllers
 
 
         [HttpDelete]
-        [Route("DeleteImage")]
-
+        [Route("DeleteImage/{id}")]
+        [Authorize(policy:"Freelancer")]
         public ActionResult DeleteImage(int id)
         {
             try

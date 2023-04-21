@@ -1,5 +1,6 @@
 ﻿using HireMeBLL;
 using HireMeDAL;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -51,7 +52,8 @@ namespace HireMePL.Controllers
         #region Crud to create new look up table to system 
         [HttpPost]
         [Route("CreateNewLookupTable")]
-        public ActionResult CreateNewLookupTable( string lookupname)
+        [Authorize(policy:"Admin")]
+        public ActionResult CreateNewLookupTable([FromBody] string lookupname)
         {
             try
             {
@@ -71,8 +73,8 @@ namespace HireMePL.Controllers
         #region Crud to Update lookup table with its Id 
         [HttpPut]
         [Route("UpdateLookupTableById/{id}")]
-
-        public ActionResult UpdateLookupTableById(string name , int id)
+        [Authorize(policy:"Admin")]
+        public ActionResult UpdateLookupTableById([FromBody] string name , int id)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -102,6 +104,7 @@ namespace HireMePL.Controllers
         #region Crud to delete specific lookup table with its id 
         [HttpDelete]
         [Route("DeleteLookupTableById/{id}")]
+        [Authorize(policy:"Admin")]
         public ActionResult DeleteLookupTableById(int id)
         {
 

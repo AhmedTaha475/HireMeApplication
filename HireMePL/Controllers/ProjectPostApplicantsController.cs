@@ -1,5 +1,6 @@
 ﻿using HireMeBLL;
 using HireMeDAL;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,6 +36,7 @@ namespace HireMePL.Controllers
         }
         [HttpGet]
         [Route("GetByProjectPostAppId/{id}")]
+        
         public ActionResult<List<ProjectPostApplicantDetailsDto>> GetProjectPostApplicantById(string id)
         {
             if (!ModelState.IsValid)
@@ -54,6 +56,7 @@ namespace HireMePL.Controllers
         }
         [HttpPut]
         [Route("Update/{id}")]
+        [Authorize(policy:"Freelancer")]
         public ActionResult UpdateProjectPostApplicant(int id, UpdateProjectPostApplicantDto projectPostApplicant)
         {
             if (!ModelState.IsValid)
@@ -75,6 +78,7 @@ namespace HireMePL.Controllers
         }
         [HttpPost]
         [Route("ProjectPostApplicant/Create")]
+        [Authorize(policy: "Freelancer")]
         public ActionResult CreateProjectPostApplicant(ProjectPostApplicantDetailsDto projectPostApplicant)
         {
             if (!ModelState.IsValid)

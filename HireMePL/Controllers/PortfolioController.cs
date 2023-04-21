@@ -1,5 +1,6 @@
 ﻿using HireMeBLL;
 using HireMeBLL.Dtos.Portfolio;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +16,7 @@ namespace HireMePL
             _portfolioManger = portfolioManager;
         }
         [HttpGet]
+        [Authorize]
         public ActionResult<List<PortfolioReadDto>> GetAll()
         {
             var result= _portfolioManger.GetAll().ToList();
@@ -26,6 +28,7 @@ namespace HireMePL
         }
         [HttpGet]
         [Route("{id}")]
+        [Authorize]
         public ActionResult<PortfolioReadDto> GetAllById(int id)
         {
             PortfolioReadDto? portfolio = _portfolioManger.GetById(id);
@@ -36,6 +39,8 @@ namespace HireMePL
             return portfolio; 
         }
         [HttpPost]
+        [Authorize(policy:"Freelancer")]
+        [Route("{freelancerId}")]
         public ActionResult AddPortfolio(string freelancerId)
         {
             try
@@ -51,6 +56,7 @@ namespace HireMePL
             
         }
         [HttpDelete("{id}")]
+        [Authorize(policy:"Freelancer")]
         public ActionResult DeletePortfolio (int id)
         {
             try

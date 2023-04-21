@@ -1,5 +1,6 @@
 ﻿using HireMeBLL;
 using HireMeBLL.Managers.ProjectComment;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +18,7 @@ namespace HireMePL.Controllers
         }
 
         [HttpPost]
+        [Authorize(policy:"Client")]
         public ActionResult PostComment(CreateProjectCommentDto commentDto)
         {
             if(!ModelState.IsValid)
@@ -36,6 +38,7 @@ namespace HireMePL.Controllers
         }
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(policy: "Client&Admin")]
         public ActionResult Delete(int id)
         {
             try{
@@ -47,6 +50,7 @@ namespace HireMePL.Controllers
             { return BadRequest(ex.Message); }
         }
         [HttpPut]
+        [Authorize(policy:"Client")]
         public ActionResult UpdateComment(UpdateCommentDto updateCommentDto)
         {
             if (!ModelState.IsValid) { return BadRequest(ModelState); }
@@ -60,6 +64,7 @@ namespace HireMePL.Controllers
         }
         [HttpGet]
         [Route("{id}")]
+        [Authorize]
         public ActionResult<List<ProjectCommentReadDto>> GetAllCommentsForProject(int id)
         {
              var list= projectCommentManager.GetAllCommentsWithClientByProjectId(id);

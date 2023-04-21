@@ -23,7 +23,7 @@ namespace HireMePL.Controllers
         }
         [HttpPost]
         [Route("Create")]
-        [Authorize]
+        [Authorize(policy:"Client")]
         public async Task<ActionResult> CreateProjectPost(CreateProjectPostDto createProjectPostDto)
         {
             if (!ModelState.IsValid)
@@ -37,7 +37,7 @@ namespace HireMePL.Controllers
         }
         [HttpPut]
         [Route("Update/{id}")]
-        [Authorize]
+        [Authorize(policy:"Client")]
         public async Task<ActionResult> UpdateProjectPost(int id, UpdateProjectPostDto updateProjectPostDto)
         {
             if (!ModelState.IsValid)
@@ -57,7 +57,7 @@ namespace HireMePL.Controllers
         }
         [HttpDelete]
         [Route("Delete/{id}")]
-
+        [Authorize(policy: "Client")]
         public async Task<ActionResult> DeleteProjectPost(int id)
         {
             if (!ModelState.IsValid)
@@ -77,7 +77,6 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("ProjectPostWithApplicants/{id}")]
-        [AllowAnonymous]
         public ActionResult<ProjectPostWithApplicantsDetailsDto> GetProjectPostWithApplicantsById(int id)
         {
             if (!ModelState.IsValid)
@@ -93,7 +92,6 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("GetAll")]
-
         public ActionResult<List<ProjectPostDto>> GetAll()
         {
             var PPList = _projectPostManager.GetAll();
@@ -104,7 +102,6 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("GetProjectPostById/{id}")]
-
         public ActionResult<ProjectPostDto> GetProjectPostById(int id)
         {
             var ProjectPostDto = _projectPostManager.GetProjectPostById(id);

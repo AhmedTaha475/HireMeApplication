@@ -73,7 +73,7 @@ namespace HireMeBLL
         {
             var value=lookupValuesRepo.GetLookupValueById(id);
             if(value != null)
-                return new LookupValueDTO() { LookupId = id, ValueName = value.ValueName,ValueId=value.LookupId };
+                return new LookupValueDTO() { LookupId = value.LookupId, ValueName = value.ValueName,ValueId=value.ValueId };
             return null;
         }
 
@@ -97,12 +97,12 @@ namespace HireMeBLL
         #endregion
 
         #region All Update Cruds in Lookup Value Manager Class
-        public bool UpdateLookupValueById(LookupValueDTO lookupValue, int id)
+        public bool UpdateLookupValueById(string valuename, int id)
         {
             var lookupvaluefromdb = lookupValuesRepo.GetLookupValueById(id);
-            if (lookupvaluefromdb != null && lookupvaluefromdb.LookupId == id) ;
+            if (lookupvaluefromdb != null ) 
             {
-                lookupvaluefromdb.ValueName = lookupValue.ValueName;
+                lookupvaluefromdb.ValueName = valuename;
                 if(lookupValuesRepo.UpdateLookupValueById(lookupvaluefromdb, id))
                 {
                     return true;

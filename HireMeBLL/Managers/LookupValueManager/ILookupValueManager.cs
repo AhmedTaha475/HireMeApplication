@@ -24,7 +24,7 @@ namespace HireMeBLL
         #endregion
 
         #region Update Crud for Lookup Value Manager (Interface)
-        public bool UpdateLookupValueById(LookupValueDTO lookupValue, int id);
+        public bool UpdateLookupValueById(string valuename, int id);
 
         #endregion
 

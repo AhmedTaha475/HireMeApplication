@@ -83,17 +83,12 @@ namespace HireMeBLL
                 Image = Helper.ConvertFromFileToByteArray(freelancerDto.Image),
                 Age = freelancerDto.Age,
                 SSN = freelancerDto.SSN,
-                Balance = freelancerDto.Balance,
-                PlanId = freelancerDto.PlanId,
                 PaymentMethodId = freelancerDto.PaymentMethodId,
                 CategoryId = freelancerDto.CategoryId,
                 Email = freelancerDto.email,
                 UserName = freelancerDto.Username,
-                Rank = freelancerDto.Rank,
                 JobTitle= freelancerDto.JobTitle,
-                Bids = freelancerDto.Bids,
                 Description = freelancerDto.Description,
-                TotalMoneyEarned=freelancerDto.TotalMoneyEarned,
                 CV = Helper.ConvertFromFileToByteArray(freelancerDto.CV),
                 AverageRate= freelancerDto.AverageRate,
                 PhoneNumber = freelancerDto.PhoneNumber,
@@ -103,6 +98,11 @@ namespace HireMeBLL
                 return true;
             return false;
 
+        }
+
+        public async Task<bool> UpdateFreelancerMoney(Freelancer currentFreelancer)
+        {
+            return await _freelancerRepo.UpdateFreelancer(currentFreelancer);
         }
     }
 }

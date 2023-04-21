@@ -221,6 +221,40 @@ namespace HireMePL.Controllers
 
         }
 
+
+        [HttpPut]
+        [Route("UpdateFreelancerMoney")]
+        [Authorize(policy:"Freelancer")]
+
+        public async Task<ActionResult> UpdateFreelancerMoney(UpdateFreelancerMoneyDto FreelancerMoney)
+        {
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            try
+            {
+                var currentFreelancer = (Freelancer)await _userManager.GetUserAsync(User);
+
+                if (FreelancerMoney.Rank != null) currentFreelancer.Rank = (int)FreelancerMoney.Rank;
+                if (FreelancerMoney.Bids != null) currentFreelancer.Bids = (int)FreelancerMoney.Bids;
+                if (FreelancerMoney.TotalMoneyEarned != null) currentFreelancer.TotalMoneyEarned = (decimal)FreelancerMoney.TotalMoneyEarned;
+                if (FreelancerMoney.PlanId != null) currentFreelancer.PlanId = FreelancerMoney.PlanId;
+                if (FreelancerMoney.Balance != null) currentFreelancer.Balance = FreelancerMoney.Balance;
+
+
+                if (await _freelancerManager.UpdateFreelancerMoney(currentFreelancer))
+                    return Ok(new { message = "Data updated successfully" });
+                return BadRequest(new { message = "Something went wrong" });
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+            
+
+
+        }
         #endregion
 
 
@@ -364,6 +398,44 @@ namespace HireMePL.Controllers
             }
 
         }
+
+
+
+
+
+
+        [HttpPut]
+        [Route("UpdateClientMoney")]
+        [Authorize(policy: "Client")]
+
+        public async Task<ActionResult> UpdateClientMoney(UpdateClientMoneyDto ClientMoney)
+        {
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            try
+            {
+                var CurrentClinet = (Client)await _userManager.GetUserAsync(User);
+
+                if (ClientMoney.TotalMoneySpent != null) CurrentClinet.TotalMoneySpent = (decimal)ClientMoney.TotalMoneySpent;
+                if (ClientMoney.PlanId != null) CurrentClinet.PlanId = ClientMoney.PlanId;
+                if (ClientMoney.Balance != null) CurrentClinet.Balance = ClientMoney.Balance;
+
+
+                if (await _clientManager.UpdateClientMoney(CurrentClinet))
+                    return Ok(new { message = "Data updated successfully" });
+                return BadRequest(new { message = "Something went wrong" });
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+
+
+
+        }
+
 
         #endregion
 

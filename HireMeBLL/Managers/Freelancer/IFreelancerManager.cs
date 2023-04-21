@@ -1,4 +1,5 @@
 ﻿using HireMeBLL.Dtos.Client;
+using HireMeDAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,6 @@ namespace HireMeBLL
         List<FreelancerDto> GetAllFreelancers();
         Task<FreelancerDto> GetFreelancerById(string id);
         Task<bool> UpdateFreelancer(UpdateFreelancerDto clientDto);
+        Task<bool> UpdateFreelancerMoney(Freelancer currentFreelancer);
     }
 }

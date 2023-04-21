@@ -52,7 +52,7 @@ namespace HireMeBLL
         {
            return _clientRepo.GetAllClient().Select(c=> new ClientDto(c.Id,c.FirstName,c.LastName,c.UserName,
                c.Country,c.City,c.Street,c.Image,c.Age,c.SSN,c.Balance,
-               c.PaymentMethodId,c.PlanId,c.TotalMoneySpent,c.Email)).ToList();
+               c.PaymentMethodId,c.PlanId,c.TotalMoneySpent,c.Email,c.PhoneNumber)).ToList();
         }
 
         public async Task<ClientDto> GetClientById(string id)
@@ -63,7 +63,7 @@ namespace HireMeBLL
                     clientToBeReturned.Country, clientToBeReturned.City, clientToBeReturned.Street, clientToBeReturned.Image,
                    clientToBeReturned.Age, clientToBeReturned.SSN,
                    clientToBeReturned.Balance, clientToBeReturned.PaymentMethodId,
-                   clientToBeReturned.PlanId, clientToBeReturned.TotalMoneySpent,clientToBeReturned.Email);
+                   clientToBeReturned.PlanId, clientToBeReturned.TotalMoneySpent,clientToBeReturned.Email,clientToBeReturned.PhoneNumber);
             return null;
         }
 
@@ -98,7 +98,8 @@ namespace HireMeBLL
                 PaymentMethodId = clientDto.PaymentMethodId,
                 CategoryId= clientDto.CategoryId,
                 Email=clientDto.email,
-                UserName=clientDto.Username
+                UserName=clientDto.Username,
+                PhoneNumber=clientDto.PhoneNumber,
                 
             };
             if (await _clientRepo.UpdateClient(client))

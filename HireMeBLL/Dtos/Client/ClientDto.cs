@@ -8,6 +8,6 @@ namespace HireMeBLL
 {
     public record ClientDto (string id,string firstname,string lastname,string username
         ,string? country,string? city,string? street, byte[]? image,
-        int? age,string? ssn,decimal? balance,int? paymentmethodId,int? planId,decimal TotalMoneySpent,string email);
+        int? age,string? ssn,decimal? balance,int? paymentmethodId,int? planId,decimal TotalMoneySpent,string email,string phonenumber);
     
 }

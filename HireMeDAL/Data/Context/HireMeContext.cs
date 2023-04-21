@@ -47,11 +47,11 @@ namespace HireMeDAL
                 .HasOne(s => s.LookupValue)
                 .WithMany(s => s.SystemUsers)
                 .HasForeignKey(s => s.PaymentMethodId);
-
+            //consider this solution on any 1:1 relation
             builder.Entity<Project>()
              .HasOne(p => p.ProjectReview)
              .WithOne(p => p.Project)
-             .HasForeignKey<Project>(p=>p.PR_Id)
+             .HasForeignKey<ProjectReview>(p => p.ProjectId)
              .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<ProjectPost>()

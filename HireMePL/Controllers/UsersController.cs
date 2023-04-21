@@ -87,7 +87,7 @@ namespace HireMePL.Controllers
 
                 if (result)
                 {
-                    return Ok(new { Message = "Client Created Successfully" });
+                    return Ok(new { Message = "Freelancer Created Successfully" });
                 }
                 return BadRequest(new { Message = "Something went wrong.... Please try again " });
             }
@@ -101,7 +101,7 @@ namespace HireMePL.Controllers
 
         [HttpDelete]
         [Route("DeleteCurrentFreelancer")]
-        [Authorize]  
+        [Authorize(policy: "Freelancer")]  
         public async Task<ActionResult> DeleteCurrentFreelancer()
         {
             var FreelancerToBeDeleted = await _userManager.GetUserAsync(User);
@@ -129,7 +129,7 @@ namespace HireMePL.Controllers
 
         [HttpDelete]
         [Route("DeleteFreelancer/{id}")]
-        //[Authorize]  client will delete his account
+        [Authorize(policy: "Freelancer&Admin")]
         public async Task<ActionResult> DeleteFreelancerById(string id)
         {
 
@@ -154,7 +154,7 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("GetAllFreelancer")]
-
+        [Authorize(policy: "Admin")]
         public ActionResult<List<ClientDto>> GetAllFreelancers()
         {
 
@@ -171,20 +171,20 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("GetFreelancerById/{id}")]
-
+        [Authorize]
         public async Task<ActionResult<ClientDto>> GetFreelancerById(string id)
         {
 
             var Freelancer = await _freelancerManager.GetFreelancerById(id);
 
             if (Freelancer != null)
-                return Ok(new { Message = "Here is Your Client", body = Freelancer });
-            return NotFound(new { Message = "No Client was Found" });
+                return Ok(new { Message = "Here is Your Freelancer", body = Freelancer });
+            return NotFound(new { Message = "No Freelancer was Found" });
         }
 
         [HttpGet]
         [Route("GetCurrentFreelancer")]
-        [Authorize]
+        [Authorize(policy: "Freelancer")]
         public async Task<ActionResult<ClientDto>> GetCurrentFreelancer()
         {
 
@@ -193,8 +193,8 @@ namespace HireMePL.Controllers
             var freelancer = await _freelancerManager.GetFreelancerById(CurrentFreelancer.Id);
 
             if (freelancer != null)
-                return Ok(new { Message = "Here is Your Client", body = freelancer });
-            return NotFound(new { Message = "No Client was Found" });
+                return Ok(new { Message = "Here is Your Freelancer", body = freelancer });
+            return NotFound(new { Message = "No Freelancer was Found" });
         }
 
 
@@ -202,7 +202,7 @@ namespace HireMePL.Controllers
 
         [HttpPut]
         [Route("UpdateFreelancer")]
-
+        [Authorize(policy: "Freelancer")]
         public async Task<ActionResult> UpdateFreelancerData([FromForm] UpdateFreelancerDto freelancerDto)
         {
             if (!ModelState.IsValid)
@@ -211,7 +211,7 @@ namespace HireMePL.Controllers
             {
 
                 if (await _freelancerManager.UpdateFreelancer(freelancerDto))
-                    return Ok(new { Message = "Client Updated successfully" });
+                    return Ok(new { Message = "Freelancer Updated successfully" });
                 else return BadRequest(new { Message = "Something Went wrong...." });
             }
             catch (Exception ex)
@@ -256,7 +256,7 @@ namespace HireMePL.Controllers
 
         [HttpDelete]
         [Route("DeleteCurrentClient")]
-        [Authorize] 
+        [Authorize(policy: "Client")] 
         public async Task<ActionResult> DeleteCurrentClient()
         {
             var ClientToBeDeleted = await _userManager.GetUserAsync(User);
@@ -279,7 +279,7 @@ namespace HireMePL.Controllers
         }
         [HttpDelete]
         [Route("DeleteClient/{id}")]
-        //[Authorize]  client will delete his account
+        [Authorize(policy: "Client&Admin")]
         public async Task<ActionResult> DeleteClientById(string id)
         {
 
@@ -303,7 +303,7 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("GetAllClients")]
-
+        [Authorize(policy: "Admin")]
         public ActionResult<List<ClientDto>> GetAllClients()
         {
 
@@ -318,7 +318,7 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("GetClientById/{id}")]
-
+        [Authorize]
         public async Task<ActionResult<ClientDto>> GetClientById(string id)
         {
 
@@ -331,7 +331,7 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("GetCurrentClient")]
-        [Authorize]
+        [Authorize(policy: "Client")]
         public async Task<ActionResult<ClientDto>> GetCurrentClient()
         {
 
@@ -346,7 +346,7 @@ namespace HireMePL.Controllers
 
         [HttpPut]
         [Route("UpdateClient")]
-
+        [Authorize(policy: "Client")]
         public async Task<ActionResult> UpdateClientData([FromForm] UpdateClientDto clientDto)
         {
             if (!ModelState.IsValid)

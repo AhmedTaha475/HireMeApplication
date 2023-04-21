@@ -31,7 +31,7 @@ namespace HireMePL
         [HttpGet]
         [Route("GetAllTranscationsByUserId")]
         [Authorize]
-        public async Task < ActionResult<List<TransactionReadDto>>> GetAllTransactionByUserId()
+        public async Task <ActionResult<List<TransactionReadDto>>> GetAllTransactionByUserId()
         {
             var user = await UserManager.GetUserAsync(User); 
             var transactionreadlist = TrasactionManager.GetAllTransactionByUserId(user.Id);
@@ -47,6 +47,7 @@ namespace HireMePL
         #region crud To Get Specific Transaction By its Id  
         [HttpGet]
         [Route("GetTransactionById/{id}")]
+        [Authorize]
         public ActionResult<TransactionReadDto> GetTransactionById(int id)
         {
             var transactionread = TrasactionManager.GetTransactionById(id);
@@ -63,7 +64,7 @@ namespace HireMePL
         #region crud To Add new Transactio To System 
         [HttpPost]
         [Route("CreateNewTransaction/{id}")]
-        
+        [Authorize]
         public ActionResult CreateNewTransaction(CreateTransactionDto transaction,string id)
         {
             if (transaction == null) {
@@ -81,6 +82,7 @@ namespace HireMePL
         #region Crud to Delete A specific Transaction With its Id 
         [HttpDelete]
         [Route("DeleteTransaction/{id}")]
+        [Authorize]
         public ActionResult DeleteTransaction(int id) 
         {
 

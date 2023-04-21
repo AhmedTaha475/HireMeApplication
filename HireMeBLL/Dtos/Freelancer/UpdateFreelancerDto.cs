@@ -30,26 +30,16 @@ namespace HireMeBLL
             ErrorMessage = "Please enter valid egyption NationalId")]
         public string? SSN { get; set; }
 
-        public decimal? Balance { get; set; }
-
         public int? PaymentMethodId { get; set; }
 
-        public int? PlanId { get; set; }
         public int? CategoryId { get; set; }
         [EmailAddress(ErrorMessage ="Please enter a valid email address")]
         public string email { get; set; }
 
-        [Range(0, 10, ErrorMessage = "Please enter a valid rank")]
-        public int Rank { get; set; }
-
         public string? JobTitle { get; set; }
-        [Range(0, 100, ErrorMessage = "Invalid amount of Bids")]
-        public int Bids { get; set; }
+
 
         public string? Description { get; set; }
-
-        public decimal TotalMoneyEarned { get; set; }
-
         
 
         public decimal AverageRate { get; set; }

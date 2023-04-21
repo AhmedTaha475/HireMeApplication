@@ -32,12 +32,10 @@ namespace HireMeBLL.Dtos.Client
             ErrorMessage ="Please enter valid egyption NationalId")]
         public string? SSN { get; set; }
 
-        public decimal? Balance { get; set; }
 
-        public decimal TotalMoneySpent { get; set; }
         public int? PaymentMethodId { get; set; }
 
-        public int? PlanId { get; set; }
+
         public int? CategoryId { get; set; }
         [EmailAddress(ErrorMessage ="Pleaes enter a valid email address")]
         public string email { get; set; }

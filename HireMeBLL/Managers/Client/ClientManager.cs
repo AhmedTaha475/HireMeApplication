@@ -92,9 +92,6 @@ namespace HireMeBLL
                 Image = Helper.ConvertFromFileToByteArray(clientDto.Image),
                 Age = clientDto.Age,
                 SSN = clientDto.SSN,
-                Balance= clientDto.Balance,
-                TotalMoneySpent = clientDto.TotalMoneySpent,
-                PlanId= clientDto.PlanId,
                 PaymentMethodId = clientDto.PaymentMethodId,
                 CategoryId= clientDto.CategoryId,
                 Email=clientDto.email,
@@ -107,6 +104,11 @@ namespace HireMeBLL
             return false;
 
 
+        }
+
+        public async Task<bool> UpdateClientMoney(Client currentClient)
+        {
+            return await _clientRepo.UpdateClient(currentClient);
         }
     }
 }

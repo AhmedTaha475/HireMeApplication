@@ -1,4 +1,5 @@
 ﻿using HireMeBLL.Dtos.Client;
+using HireMeDAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,6 @@ namespace HireMeBLL
         Task<ClientDto> GetClientById( string id);
         Task<TokenDto> Login(LoginDto loginCred);
         Task<bool> UpdateClient( UpdateClientDto clientDto);
+        Task<bool> UpdateClientMoney(Client currentClient);
     }
 }

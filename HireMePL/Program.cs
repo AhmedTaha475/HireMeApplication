@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using HireMeBLL.Managers.ProjectComment;
+using System.Security.Claims;
 
 namespace HireMePL
 {
@@ -126,7 +127,28 @@ namespace HireMePL
 
             #region Add Authorization
             //Check Later
-            builder.Services.AddAuthorization();
+            builder.Services.AddAuthorization(options=>
+            {
+                options.AddPolicy("Admin", policy =>
+                 policy.RequireClaim(ClaimTypes.NameIdentifier)
+                       .RequireClaim(ClaimTypes.Role, "Admin"));
+
+                options.AddPolicy("Client", policy =>
+                 policy.RequireClaim(ClaimTypes.NameIdentifier)
+                       .RequireClaim(ClaimTypes.Role, "Client"));
+
+                options.AddPolicy("Freelancer", policy =>
+                policy.RequireClaim(ClaimTypes.NameIdentifier)
+                      .RequireClaim(ClaimTypes.Role, "Freelancer"));
+
+                options.AddPolicy("Freelancer&Admin", policy =>
+               policy.RequireClaim(ClaimTypes.NameIdentifier)
+                     .RequireClaim(ClaimTypes.Role, "Freelancer", "Admin"));
+
+                options.AddPolicy("Client&Admin", policy =>
+              policy.RequireClaim(ClaimTypes.NameIdentifier)
+                    .RequireClaim(ClaimTypes.Role, "Client", "Admin"));
+            });
             #endregion
 
             var app = builder.Build();

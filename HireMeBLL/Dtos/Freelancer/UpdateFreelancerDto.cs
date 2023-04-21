@@ -54,7 +54,8 @@ namespace HireMeBLL
 
         public decimal AverageRate { get; set; }
 
-        public int PortfolioId { get; set; }
+        public string? PhoneNumber { get; set; }
+        //public int PortfolioId { get; set; }
         public IFormFile? Image { get; set; }
         public IFormFile? CV { get; set; }
     }

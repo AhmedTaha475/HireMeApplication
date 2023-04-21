@@ -41,6 +41,8 @@ namespace HireMeBLL.Dtos.Client
         public int? CategoryId { get; set; }
         [EmailAddress(ErrorMessage ="Pleaes enter a valid email address")]
         public string email { get; set; }
-       
+
+        public string? PhoneNumber { get; set; }
+
     }
 }

@@ -4,6 +4,7 @@ using HireMeDAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HireMeDAL.Migrations
 {
     [DbContext(typeof(HireMeContext))]
-    partial class HireMeContextModelSnapshot : ModelSnapshot
+    [Migration("20230421003846_v5")]
+    partial class v5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,13 +128,13 @@ namespace HireMeDAL.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PortId"));
 
                     b.Property<string>("FreelancerId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("PortId");
 
                     b.HasIndex("FreelancerId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[FreelancerId] IS NOT NULL");
 
                     b.ToTable("portfolios");
                 });
@@ -154,6 +157,9 @@ namespace HireMeDAL.Migrations
 
                     b.Property<decimal>("MoneyEarned")
                         .HasColumnType("money");
+
+                    b.Property<int?>("PR_Id")
+                        .HasColumnType("int");
 
                     b.Property<int>("PortfolioId")
                         .HasColumnType("int");
@@ -645,6 +651,9 @@ namespace HireMeDAL.Migrations
                     b.Property<int?>("LookupValueValueId")
                         .HasColumnType("int");
 
+                    b.Property<int>("PortfolioId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Rank")
                         .HasColumnType("int");
 
@@ -683,8 +692,7 @@ namespace HireMeDAL.Migrations
                     b.HasOne("HireMeDAL.Freelancer", "Freelancer")
                         .WithOne("Portfolio")
                         .HasForeignKey("HireMeDAL.Portfolio", "FreelancerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Freelancer");
                 });

@@ -184,6 +184,7 @@ namespace HireMeDAL
                     updatedClient.CategoryId = clientDto.CategoryId;
                     updatedClient.Email = clientDto.Email;
                     updatedClient.UserName=clientDto.UserName;
+                    updatedClient.PhoneNumber = clientDto.PhoneNumber;
                 }
                 var result=  await Usermanager.UpdateAsync(updatedClient);
                 if (result.Succeeded)

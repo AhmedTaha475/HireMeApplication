@@ -108,7 +108,8 @@ namespace HireMeDAL
                     updateFreelancer.TotalMoneyEarned= user.TotalMoneyEarned;
                     updateFreelancer.CV = user.CV;
                     updateFreelancer.AverageRate = user.AverageRate;
-                    updateFreelancer.PortfolioId = user.PortfolioId;
+                    updateFreelancer.PhoneNumber = user.PhoneNumber;
+                    //updateFreelancer.PortfolioId = user.PortfolioId;
                 }
                 var result = await Usermanager.UpdateAsync(updateFreelancer);
                 if (result.Succeeded)

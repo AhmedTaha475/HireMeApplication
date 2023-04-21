@@ -49,7 +49,7 @@ namespace HireMeBLL
               c.Country, c.City, c.Street, c.Image, c.Age, c.SSN, c.Balance,
               c.PaymentMethodId, c.PlanId,c.Email,
               c.Rank,c.JobTitle,c.Bids,c.Description,
-              c.TotalMoneyEarned,c.CV,c.AverageRate,c.PortfolioId)).ToList();
+              c.TotalMoneyEarned,c.CV,c.AverageRate,c.PhoneNumber)).ToList();
         }
 
         public async Task<FreelancerDto> GetFreelancerById(string id)
@@ -66,7 +66,7 @@ namespace HireMeBLL
                    freelancerToBeReturned.JobTitle, freelancerToBeReturned.Bids,
                    freelancerToBeReturned.Description, freelancerToBeReturned.TotalMoneyEarned, 
                    freelancerToBeReturned.CV, freelancerToBeReturned.AverageRate,
-                   freelancerToBeReturned.PortfolioId);
+                   freelancerToBeReturned.PhoneNumber);
             return null;
         }
 
@@ -96,7 +96,7 @@ namespace HireMeBLL
                 TotalMoneyEarned=freelancerDto.TotalMoneyEarned,
                 CV = Helper.ConvertFromFileToByteArray(freelancerDto.CV),
                 AverageRate= freelancerDto.AverageRate,
-                PortfolioId= freelancerDto.PortfolioId,
+                PhoneNumber = freelancerDto.PhoneNumber,
 
             };
             if (await _freelancerRepo.UpdateFreelancer(freelancer))

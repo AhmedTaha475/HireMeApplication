@@ -1,6 +1,7 @@
 ﻿using HireMeBLL.Dtos;
 using HireMeBLL.Dtos.Project;
 using HireMeBLL.Managers.ProjectsManager;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +18,7 @@ namespace HireMePL.Controllers
             this.projectsManager = projectsManager;
         }
         [HttpPost]
+        [Authorize(policy: "Freelancer")]
         public ActionResult CreateProject([FromForm]CreateProjectDto projectDto)
         {
             if(!ModelState.IsValid)
@@ -36,6 +38,8 @@ namespace HireMePL.Controllers
          
         }
         [HttpDelete]
+        [Route("Delete/{id}")]
+        [Authorize(policy: "Freelancer")]
         public ActionResult DeleteProject(int id)
         {
             try
@@ -53,6 +57,7 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("Project/{id}")]
+        [Authorize]
         public ActionResult<ProjectDetailsReadDto> GetById(int id)
         {
                var projectdetail= projectsManager.GetById(id);
@@ -62,6 +67,7 @@ namespace HireMePL.Controllers
         }
         [HttpGet]
         [Route("ProjectByPortfolioId/{id}")]
+        [Authorize]
         public ActionResult<List<ProjectDetailsReadDto>> GetByPortfolioId(int id)
         {
                var projectList= projectsManager.GetAllProjectsByPortfolioId(id);
@@ -72,6 +78,7 @@ namespace HireMePL.Controllers
 
         [HttpPut]
         [Route("UpdateProjectById/{id}")]
+        [Authorize(policy:"Freelancer")]
         public ActionResult UpdateProjectByID(UpdateProjectByIdDto updatedProject,int id)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);

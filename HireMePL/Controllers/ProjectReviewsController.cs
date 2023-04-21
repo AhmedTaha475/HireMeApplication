@@ -2,6 +2,7 @@
 using HireMeBLL.Dtos.ProjectReview;
 using HireMeBLL.Managers.ProjectComment;
 using HireMeDAL;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,7 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("FreelancerReviews/{id}")]
+        [Authorize(policy:"Freelancer")]
         public ActionResult<List<UserPojectReviewReadDto>> GetAllByFreeLancerId(string id)
         {
             var ReviewList= projectReviewManager.GetReviewsByFreeLancerId(id);
@@ -35,6 +37,7 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("ClientReviews/{id}")]
+        [Authorize(policy:"Client")]
         public ActionResult<List<UserPojectReviewReadDto>> GetAllByClientrId(string id)
         {
               var ReviewList =projectReviewManager.GetReviewsByClientId(id);
@@ -46,6 +49,7 @@ namespace HireMePL.Controllers
         }
         [HttpGet]
         [Route("ProjectReview/{Id}")]
+        [Authorize]
         public ActionResult<PojectReviewReadDto> GetReviewByProjectId(int Id)
         {
               var Review=  projectReviewManager.GetReviewByProjectId(Id);
@@ -55,6 +59,7 @@ namespace HireMePL.Controllers
         }
         [HttpPost]
         [Route("AddClientReview")]
+        [Authorize(policy:"Client")]
         public ActionResult AddClientReview(CreateClientProjectReviewDto createClientReviewdto)
         {
             if (!ModelState.IsValid)
@@ -72,6 +77,7 @@ namespace HireMePL.Controllers
 
         [HttpPut]
         [Route("AddFreelancerReview/{PR_Id}")]
+        [Authorize(policy:"Freelancer")]
         public ActionResult AddFreeLancerReview(CreateFreeLancerProjectReviewDto createFreeLancerReviewdto,int PR_Id)
         {
             if (!ModelState.IsValid)

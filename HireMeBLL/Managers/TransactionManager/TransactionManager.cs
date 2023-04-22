@@ -50,11 +50,8 @@ namespace HireMeBLL
         public bool CreateNewTransaction(CreateTransactionDto transactiondto,string userId)
         {
             var transactionread = new Transaction(transactiondto.DateOfTransaction, transactiondto.Amount, transactiondto.Description,userId);
-            if (TransactionRepo.AddNewTranscation(transactionread))
-            {
-                return true;
-            }
-            return false;
+            return TransactionRepo.AddNewTranscation(transactionread);
+            
         }
 
         #endregion
@@ -64,11 +61,9 @@ namespace HireMeBLL
         // ==== this function use transaction repo methods to delete a specific transaction ===== //
         public bool DeleteTransaction(int id)
         {
-            if (TransactionRepo.DeleteTransaction(id))
-            {
-                return true;            
-            }
-            return false;
+            return TransactionRepo.DeleteTransaction(id);
+            
+           
         }
 
         #endregion

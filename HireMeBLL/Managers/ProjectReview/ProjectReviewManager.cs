@@ -112,27 +112,24 @@ namespace HireMeBLL
 
         public bool AddClientReview(CreateClientProjectReviewDto createClientReviewdto)
         {
-            if (reviewRepo.Add(new HireMeDAL.ProjectReview()
+            return reviewRepo.Add(new HireMeDAL.ProjectReview()
             {
                 ClientId = createClientReviewdto.Client_Id,
                 ClientReview = createClientReviewdto.Client_Review,
                 ClientStars = createClientReviewdto.Client_Stars,
                 ProjectId = createClientReviewdto.P_Id
-            })) return true;
-            return false;
+            });
         }
 
         public bool AddFreeLancerReview(CreateFreeLancerProjectReviewDto createFreeLancerReviewdto, int PR_Id)
         {
             var review = reviewRepo.GetByProjectId(createFreeLancerReviewdto.Project_Id);
-            if (reviewRepo.Update(new HireMeDAL.ProjectReview()
+            return reviewRepo.Update(new HireMeDAL.ProjectReview()
             {
                 FreeLancerId = createFreeLancerReviewdto.FreeLancer_Id,
                 FreelancerReview = createFreeLancerReviewdto.Freelncer_Review,
-                FreelancerStars = createFreeLancerReviewdto.Freelancer_Stars,               
-            }, PR_Id)) 
-             return true;
-            return false;
+                FreelancerStars = createFreeLancerReviewdto.Freelancer_Stars,
+            }, PR_Id);
         }
     }
 }

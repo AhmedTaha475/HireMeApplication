@@ -25,18 +25,14 @@ namespace HireMeBLL
         public bool AddPlan(CreatePlanDto plan)
         {
             var planDto = new Plan() { Name= plan.Name, Price= plan.Price, Description= plan.Description, Bids= plan.Bids };
-           if( _planRepo.AddPlan(planDto))
-                return true;
-           return false;
+           return  _planRepo.AddPlan(planDto)
         }
 
 
 
         public bool DeleteById(int id)
         {
-            if(_planRepo.DeletePlan(id)) 
-                return true;
-            return false;
+            return _planRepo.DeletePlan(id);
         }
 
         public IEnumerable<PlanReadDto> GetAll()
@@ -59,9 +55,7 @@ namespace HireMeBLL
         public bool UpdatePlan(PlanReadDto plan)
         {
             var planDto = new Plan() { id = plan.id, Name = plan.Name, Price = plan.Price, Description = plan.Description, Bids = plan.Bids };
-            if(_planRepo.UpdatePlan(planDto))
-                return true;
-            return false;
+            return _planRepo.UpdatePlan(planDto);
 
         }
     }

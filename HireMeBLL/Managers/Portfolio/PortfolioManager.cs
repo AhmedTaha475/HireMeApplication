@@ -23,17 +23,13 @@ namespace HireMeBLL
         public bool AddPortfolio(string freelancerId)
         {
             var portfolioDto = new Portfolio() {  FreelancerId = freelancerId };
-            if(_portfolioRepo.AddPortfolio(portfolioDto))
-                return true;
-            return false;
+            return _portfolioRepo.AddPortfolio(portfolioDto);
         }
 
 
         public bool DeleteById(int id)
         {
-            if(_portfolioRepo.DeletePortfolio(id))                    
-                 return true;
-            return false;
+            return _portfolioRepo.DeletePortfolio(id);
         }
 
         public IEnumerable<PortfolioReadDto> GetAll()

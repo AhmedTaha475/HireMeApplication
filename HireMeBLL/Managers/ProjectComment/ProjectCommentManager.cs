@@ -37,14 +37,12 @@ namespace HireMeBLL
 
         public bool PostComment(CreateProjectCommentDto commentDto)
         {
-            if (projectCommentsRepo.Add(new ProjectComment()
+            return projectCommentsRepo.Add(new ProjectComment()
             {
                 Comment = commentDto.Comment,
                 ProjectId = commentDto.ProjectId,
                 ClientId = commentDto.ClientId,
-           }))
-                return true;
-            else return false;
+            });
         }
 
         public bool UpdateComment(UpdateCommentDto updateCommentDto)

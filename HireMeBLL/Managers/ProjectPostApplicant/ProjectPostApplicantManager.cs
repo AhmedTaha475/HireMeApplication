@@ -17,14 +17,13 @@ namespace HireMeBLL
         }
         public bool CreateProjectPostApplicant(ProjectPostApplicantDetailsDto projectPostApplicant)
         {
-            if (_projectPostApplicantRepo.CreateProjectPostApplicant(new ProjectPostApplicant()
+            return _projectPostApplicantRepo.CreateProjectPostApplicant(new ProjectPostApplicant()
             {
                 BiddingPrice = projectPostApplicant.BiddingPrice,
                 Proposal = projectPostApplicant.Proposal,
                 PP_ID = projectPostApplicant.PP_ID,
                 FreelancerId = projectPostApplicant.FreelancerId,
-            })) return true;
-            return false;
+            });
         }
 
         public List<ProjectPostApplicantDetailsDto> GetProjectPostApplicantById(string projectPostApplicantId)
@@ -62,11 +61,8 @@ namespace HireMeBLL
                     BiddingPrice = projectPostApplicant.BiddingPrice,
                     Proposal = projectPostApplicant.Proposal
                 };
-                if(_projectPostApplicantRepo.UpdateProjectPostApplicant(projectpostId, applicantionToBeUpdated))
-                {
-                    return true;
-                }
-                return false;
+                return _projectPostApplicantRepo.UpdateProjectPostApplicant(projectpostId, applicantionToBeUpdated);
+                
 
 
             }return false;

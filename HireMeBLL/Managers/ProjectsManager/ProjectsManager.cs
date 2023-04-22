@@ -20,27 +20,24 @@ namespace HireMeBLL.Managers.ProjectsManager
         }
         public bool CreateProject(CreateProjectDto projectDto)
         {
-            
-               if( projectsRepo.Add(new Project() {
-                Description = projectDto.Description ,
-                ProjectTitle= projectDto.Title ,
-                ProjectDate= projectDto.Date ,
-                MoneyEarned= projectDto.MoneyEarned ,
-                SystemProject= projectDto.SystemProject ,
-                PortfolioId=projectDto.portfolioId,
+
+            return projectsRepo.Add(new Project() {
+                Description = projectDto.Description,
+                ProjectTitle = projectDto.Title,
+                ProjectDate = projectDto.Date,
+                MoneyEarned = projectDto.MoneyEarned,
+                SystemProject = projectDto.SystemProject,
+                PortfolioId = projectDto.portfolioId,
                 //ProjectImages = projectDto.projectImgs.Select(s=>new ProjectImage() {Image=Helper.ConvertFromFileToByteArray(s.Image) }).ToHashSet<ProjectImage>()
-                ProjectImages=projectDto.projectImgs.Select(c=> new ProjectImage() { Image=Helper.ConvertFromFileToByteArray(c) }).ToHashSet()
-                }))
-                    return true;
-               else return false;
+                ProjectImages = projectDto.projectImgs.Select(c => new ProjectImage() { Image = Helper.ConvertFromFileToByteArray(c) }).ToHashSet()
+            });
            
         }
 
         public bool DeleteProject(int id)
         {
-             if(projectsRepo.Delete(id))
-                return true;
-            return false;
+            return projectsRepo.Delete(id);
+                
         }
 
         public List<ProjectDetailsReadDto> GetAllProjectsByPortfolioId(int PortFolio_Id)
@@ -90,9 +87,8 @@ namespace HireMeBLL.Managers.ProjectsManager
                 MoneyEarned=updateProjectByIdDto.MoneyEarned,
                 
             };
-          if(projectsRepo.Update(project, id))
-                return true;
-          return false;
+            return projectsRepo.Update(project, id);
+                
         }
     }
 }

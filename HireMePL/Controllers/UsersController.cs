@@ -235,11 +235,11 @@ namespace HireMePL.Controllers
             {
                 var currentFreelancer = (Freelancer)await _userManager.GetUserAsync(User);
 
-                if (FreelancerMoney.Rank != null) currentFreelancer.Rank = (int)FreelancerMoney.Rank;
-                if (FreelancerMoney.Bids != null) currentFreelancer.Bids = (int)FreelancerMoney.Bids;
-                if (FreelancerMoney.TotalMoneyEarned != null) currentFreelancer.TotalMoneyEarned = (decimal)FreelancerMoney.TotalMoneyEarned;
+                if (FreelancerMoney.Rank != null) currentFreelancer.Rank += (int)FreelancerMoney.Rank;
+                if (FreelancerMoney.Bids != null) currentFreelancer.Bids += (int)FreelancerMoney.Bids;
+                if (FreelancerMoney.TotalMoneyEarned != null) currentFreelancer.TotalMoneyEarned += (decimal)FreelancerMoney.TotalMoneyEarned;
                 if (FreelancerMoney.PlanId != null) currentFreelancer.PlanId = FreelancerMoney.PlanId;
-                if (FreelancerMoney.Balance != null) currentFreelancer.Balance = FreelancerMoney.Balance;
+                if (FreelancerMoney.Balance != null) currentFreelancer.Balance += FreelancerMoney.Balance;
 
 
                 if (await _freelancerManager.UpdateFreelancerMoney(currentFreelancer))
@@ -417,9 +417,9 @@ namespace HireMePL.Controllers
             {
                 var CurrentClinet = (Client)await _userManager.GetUserAsync(User);
 
-                if (ClientMoney.TotalMoneySpent != null) CurrentClinet.TotalMoneySpent = (decimal)ClientMoney.TotalMoneySpent;
+                if (ClientMoney.TotalMoneySpent != null) CurrentClinet.TotalMoneySpent += (decimal)ClientMoney.TotalMoneySpent;
                 if (ClientMoney.PlanId != null) CurrentClinet.PlanId = ClientMoney.PlanId;
-                if (ClientMoney.Balance != null) CurrentClinet.Balance = ClientMoney.Balance;
+                if (ClientMoney.Balance != null) CurrentClinet.Balance += ClientMoney.Balance;
 
 
                 if (await _clientManager.UpdateClientMoney(CurrentClinet))

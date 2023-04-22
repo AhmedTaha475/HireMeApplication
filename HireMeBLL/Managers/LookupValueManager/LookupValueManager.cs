@@ -103,10 +103,7 @@ namespace HireMeBLL
             if (lookupvaluefromdb != null ) 
             {
                 lookupvaluefromdb.ValueName = valuename;
-                if(lookupValuesRepo.UpdateLookupValueById(lookupvaluefromdb, id))
-                {
-                    return true;
-                }return false;
+                return lookupValuesRepo.UpdateLookupValueById(lookupvaluefromdb, id); ;
             }
             return false;
         }
@@ -118,9 +115,7 @@ namespace HireMeBLL
         // ===== this function to delete lookup value by its Id =====  //
         public bool DeleteLookupValueById(int id)
         {
-            if (lookupValuesRepo.DeleteLookupValueById(id))
-                return true;
-            return false;
+            return lookupValuesRepo.DeleteLookupValueById(id);
         }
         #endregion
 

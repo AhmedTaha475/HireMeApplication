@@ -30,17 +30,12 @@ namespace HireMeBLL
             };
             var CreateResult = await _freelancerRepo.CreateFreelancer(Freelancer, FreelancerData.Password);
 
-            if (CreateResult)
-                return true;
-            else return false;
+            return CreateResult;
         }
 
         public async Task<bool> deleteFreelancer(string id)
         {
-            if (await _freelancerRepo.DeleteFreelancer(id))
-                return true;
-            else 
-                return false;
+            return await _freelancerRepo.DeleteFreelancer(id);
         }
 
         public List<FreelancerDto> GetAllFreelancers()
@@ -94,9 +89,7 @@ namespace HireMeBLL
                 PhoneNumber = freelancerDto.PhoneNumber,
 
             };
-            if (await _freelancerRepo.UpdateFreelancer(freelancer))
-                return true;
-            return false;
+            return await _freelancerRepo.UpdateFreelancer(freelancer);
 
         }
 

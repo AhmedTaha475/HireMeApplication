@@ -58,11 +58,7 @@ namespace HireMeBLL
             LookupName = name
             };
 
-            if (lookupTableRepo.CreateNewLookup(lookuptoDb)) 
-            { 
-                return true;
-            }
-            return false;
+            return lookupTableRepo.CreateNewLookup(lookuptoDb);
         }
         #endregion
        
@@ -76,9 +72,7 @@ namespace HireMeBLL
             if(lookuptablefromdb !=null && lookuptablefromdb.LookupId ==id )
             {
                 lookuptablefromdb.LookupName = name;
-               if( lookupTableRepo.UpdateLookupById(name, id))
-                { return true; }
-               return false;
+                return lookupTableRepo.UpdateLookupById(name, id);
             }
             return false;
         }
@@ -90,9 +84,7 @@ namespace HireMeBLL
             if (lookuptablefromdb != null && lookuptablefromdb.LookupName== name)
             {
                 lookuptablefromdb.LookupName = lookupTableDto.LookupName;
-                if(lookupTableRepo.UpdateLookupByName(lookuptablefromdb, name))
-                { return true; }
-                return false;
+                return lookupTableRepo.UpdateLookupByName(lookuptablefromdb, name);
             }
             return false;
 
@@ -105,18 +97,13 @@ namespace HireMeBLL
         // ===== Delete Lookup Table By Id ===== //
         public bool DeleteLookupTableById(int id)
         {
-            if(lookupTableRepo.DeleteLookupById(id))
-            { return true; }
-            return false;
+            return lookupTableRepo.DeleteLookupById(id);
         }
 
         // ===== Delete Lookup Table By Name ===== //
         public bool DeleteLookupTableByName(string name)
         {
-            if(lookupTableRepo.DeleteLookupByName(name))
-            {
-                return true;
-            }return false;
+             return lookupTableRepo.DeleteLookupByName(name);
         }
         #endregion
 

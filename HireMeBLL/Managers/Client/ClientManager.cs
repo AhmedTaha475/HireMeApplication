@@ -33,19 +33,14 @@ namespace HireMeBLL
             };
           var CreateResult= await _clientRepo.CreateClient(client, clientData.Password);
 
-            if(CreateResult)
-                return true;
-            else return false;
+            return CreateResult;
 
 
         }
 
         public async Task<bool> deleteClient(string id)
         {
-            if (await _clientRepo.DeleteClient(id))
-            {
-                return true;
-            }else return false;
+           return await _clientRepo.DeleteClient(id);
         }
 
         public List<ClientDto> GetAllClients()
@@ -99,9 +94,7 @@ namespace HireMeBLL
                 PhoneNumber=clientDto.PhoneNumber,
                 
             };
-            if (await _clientRepo.UpdateClient(client))
-                return true;
-            return false;
+            return await _clientRepo.UpdateClient(client);
 
 
         }

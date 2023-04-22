@@ -27,16 +27,12 @@ namespace HireMeBLL
                 CategoryId= createProjectPostDto.CategoryId,
                 ClientId= clientId,
             };
-            if (_projectPostRepo.CreateProjectPost(projectPost))
-                return true;
-            return false;
+            return _projectPostRepo.CreateProjectPost(projectPost);
         }
 
         public bool DeleteProjectPost(int projectPostId)
         {
-            if(_projectPostRepo.DeleteProjectPost(projectPostId))
-                return true;
-            return false;
+            return _projectPostRepo.DeleteProjectPost(projectPostId);
         }
 
         public List<ProjectPostDto> GetAll()
@@ -97,9 +93,7 @@ namespace HireMeBLL
                 projectPost.AveragePrice = updateProjectPostDto.AveragePrice;
                 projectPost.CategoryId = updateProjectPostDto.CategoryId;
 
-                if(_projectPostRepo.UpdateProjectPost(projectPostId, projectPost))
-                    return true;
-                return false;
+                return _projectPostRepo.UpdateProjectPost(projectPostId, projectPost);
             }return false;
         }
 

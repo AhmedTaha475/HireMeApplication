@@ -92,7 +92,7 @@ namespace HireMeDAL
                     updateFreelancer.Country = user.Country;
                     updateFreelancer.City = user.City;
                     updateFreelancer.Street = user.Street;
-                    updateFreelancer.Image = user.Image;
+
                     updateFreelancer.Age = user.Age;
                     updateFreelancer.SSN = user.SSN;
                     updateFreelancer.Balance = user.Balance;
@@ -106,21 +106,16 @@ namespace HireMeDAL
                     updateFreelancer.Bids = user.Bids;
                     updateFreelancer.Description = user.Description;
                     updateFreelancer.TotalMoneyEarned= user.TotalMoneyEarned;
-                    updateFreelancer.CV = user.CV;
+                    
                     updateFreelancer.AverageRate = user.AverageRate;
                     updateFreelancer.PhoneNumber = user.PhoneNumber;
-                    //updateFreelancer.PortfolioId = user.PortfolioId;
+                    if(user.Image != null)
+                        updateFreelancer.Image = user.Image;
+                    if(user.CV != null)
+                        updateFreelancer.CV = user.CV;
                 }
                 var result = await Usermanager.UpdateAsync(updateFreelancer);
-                if (result.Succeeded)
-                {
-                    return true;
-
-                }
-                else
-                {
-                    return false;
-                }
+               return  result.Succeeded;
             }
             catch
             {
@@ -134,10 +129,7 @@ namespace HireMeDAL
             if (deletedUser != null)
             {
                 var deleteresult = await Usermanager.DeleteAsync(deletedUser);
-                if (deleteresult.Succeeded)
-                {
-                    return true;
-                }
+                return deleteresult.Succeeded;
             }
             return false;
         }

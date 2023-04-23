@@ -25,7 +25,7 @@ namespace HireMeBLL
         public bool AddPlan(CreatePlanDto plan)
         {
             var planDto = new Plan() { Name= plan.Name, Price= plan.Price, Description= plan.Description, Bids= plan.Bids };
-           return  _planRepo.AddPlan(planDto)
+            return _planRepo.AddPlan(planDto);
         }
 
 

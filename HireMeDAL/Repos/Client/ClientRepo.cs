@@ -141,10 +141,7 @@ namespace HireMeDAL
             if (deletedUser !=null)
             {
                 var deleteresult = await Usermanager.DeleteAsync(deletedUser);
-                if (deleteresult.Succeeded)
-                {
-                    return true;
-                }
+                return deleteresult.Succeeded;
             }
             return false;
         }
@@ -163,8 +160,7 @@ namespace HireMeDAL
         {
             try
             {
-                //context.Entry(user).State = EntityState.Modified;
-                //context.SaveChanges();
+                
                 var updatedClient = (Client)await Usermanager.FindByIdAsync(clientDto.Id);
                 if (updatedClient != null)
                 {
@@ -174,7 +170,6 @@ namespace HireMeDAL
                     updatedClient.Country = clientDto.Country;
                     updatedClient.City = clientDto.City;
                     updatedClient.Street = clientDto.Street;
-                    updatedClient.Image = clientDto.Image;
                     updatedClient.Age = clientDto.Age;
                     updatedClient.SSN = clientDto.SSN;
                     updatedClient.Balance = clientDto.Balance;
@@ -185,17 +180,14 @@ namespace HireMeDAL
                     updatedClient.Email = clientDto.Email;
                     updatedClient.UserName=clientDto.UserName;
                     updatedClient.PhoneNumber = clientDto.PhoneNumber;
+                    if(clientDto.Image != null)
+                    {
+                        updatedClient.Image = clientDto.Image;
+                    }
                 }
                 var result=  await Usermanager.UpdateAsync(updatedClient);
-                if (result.Succeeded)
-                {
-                return true;
-
-                }
-                else
-                {
-                    return false;
-                }
+                return result.Succeeded;
+               
             }
             catch
             {

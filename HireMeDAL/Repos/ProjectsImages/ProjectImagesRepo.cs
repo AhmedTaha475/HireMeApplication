@@ -56,10 +56,15 @@ namespace HireMeDAL.Repos.ProjectsImages
                 var projectimage = context.projectImages.Find(image.PI_Id);
                 if (projectimage != null)
                 {
+                     if(image.Image != null) 
+                     {
                     projectimage.Image = image.Image;
                     context.projectImages.Update(projectimage);
                     context.SaveChanges();
                     return true;
+                     }
+                return false;
+                    
                 }
                 return false;
         }

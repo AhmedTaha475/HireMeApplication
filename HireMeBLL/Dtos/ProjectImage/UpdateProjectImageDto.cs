@@ -15,7 +15,7 @@ namespace HireMeBLL.Dtos.ProectImage
 
         [Required(ErrorMessage = "please enter your image")]
 
-        public IFormFile image { get; set; }
+        public IFormFile? image { get; set; }
 
     }
 }

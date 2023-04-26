@@ -12,6 +12,6 @@ namespace HireMeBLL
         int? age, string? ssn, decimal? balance, int? paymentmethodId,
         int? planId, string email,int rank,
         string jobtitle, int bids,string description,
-        decimal totalmoneyearned, byte[] CV ,decimal averagerate,string phonenumber,int categoryId);
+        decimal totalmoneyearned, byte[] CV ,decimal averagerate,string phonenumber,int? categoryId);
 
 }

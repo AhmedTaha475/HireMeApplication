@@ -155,7 +155,7 @@ namespace HireMePL.Controllers
         [HttpGet]
         [Route("GetAllFreelancer")]
         [Authorize(policy: "Admin")]
-        public ActionResult<List<ClientDto>> GetAllFreelancers()
+        public ActionResult<List<FreelancerDto>> GetAllFreelancers()
         {
 
 
@@ -172,7 +172,7 @@ namespace HireMePL.Controllers
         [HttpGet]
         [Route("GetFreelancerById/{id}")]
         [Authorize]
-        public async Task<ActionResult<ClientDto>> GetFreelancerById(string id)
+        public async Task<ActionResult<FreelancerDto>> GetFreelancerById(string id)
         {
 
             var Freelancer = await _freelancerManager.GetFreelancerById(id);
@@ -185,7 +185,7 @@ namespace HireMePL.Controllers
         [HttpGet]
         [Route("GetCurrentFreelancer")]
         [Authorize(policy: "Freelancer")]
-        public async Task<ActionResult<ClientDto>> GetCurrentFreelancer()
+        public async Task<ActionResult<FreelancerDto>> GetCurrentFreelancer()
         {
 
             var CurrentFreelancer = await _userManager.GetUserAsync(User);

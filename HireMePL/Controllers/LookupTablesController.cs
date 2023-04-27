@@ -53,7 +53,7 @@ namespace HireMePL.Controllers
         [HttpPost]
         [Route("CreateNewLookupTable")]
         [Authorize(policy:"Admin")]
-        public ActionResult CreateNewLookupTable([FromBody] string lookupname)
+        public ActionResult CreateNewLookupTable( string lookupname)
         {
             try
             {

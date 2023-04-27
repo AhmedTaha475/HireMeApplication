@@ -115,7 +115,7 @@ namespace HireMePL.Controllers
         [HttpPut]
         [Route("UpdateLookupValueById/{id}")]
         [Authorize(policy:"Admin")]
-        public ActionResult UpdateLookupValueById([FromBody]string ValueName , int id )
+        public ActionResult UpdateLookupValueById(string ValueName , int id )
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

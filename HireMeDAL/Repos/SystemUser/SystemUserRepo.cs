@@ -89,6 +89,12 @@ namespace HireMeDAL
                     if(findAdminRole)
                     {
                         await usermanager.AddToRoleAsync(AdminAccount, "Admin");
+                        var claims2 = new List<Claim>()
+                    {
+                        new Claim(ClaimTypes.NameIdentifier,AdminAccount.Id),
+                        new Claim(ClaimTypes.Role,"Admin"),
+                    };
+                        await usermanager.AddClaimsAsync(AdminAccount, claims2);
                         return await CreateToken(AdminAccount);
 
                     }

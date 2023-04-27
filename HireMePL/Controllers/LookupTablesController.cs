@@ -53,7 +53,7 @@ namespace HireMePL.Controllers
         [HttpPost]
         [Route("CreateNewLookupTable")]
         [Authorize(policy:"Admin")]
-        public ActionResult CreateNewLookupTable([FromBody] string lookupname)
+        public ActionResult CreateNewLookupTable( string lookupname)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace HireMePL.Controllers
         [HttpPut]
         [Route("UpdateLookupTableById/{id}")]
         [Authorize(policy:"Admin")]
-        public ActionResult UpdateLookupTableById([FromBody] string name , int id)
+        public ActionResult UpdateLookupTableById( string name , int id)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

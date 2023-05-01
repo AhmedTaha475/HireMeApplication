@@ -87,5 +87,15 @@ namespace HireMePL.Controllers
                 return Ok(new { Message = "Applicant Created Successfully" });
             return BadRequest(new {message="Something went wrong....."});
         }
+
+        [HttpGet]
+        [Route("GetAll")]
+        public ActionResult<List<ProjectPostApplicantDetailsDto>>  GetAllApplicants()
+        {
+            var resultList= this._projectPostApplicantManager.GetAll();
+            if (resultList == null)
+                return NotFound(new { message = "No Applicants Found" });
+            return Ok(resultList);
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace HireMeBLL
         public string Description { get; set; } = string.Empty;
         [Required]
         public decimal AveragePrice { get; set; }
+        public DateTime? ProjectPostDate { get; set; }
         [Required] 
         public int CategoryId { get; set; }
 

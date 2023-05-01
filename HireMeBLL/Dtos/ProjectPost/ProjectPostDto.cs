@@ -16,7 +16,8 @@ namespace HireMeBLL.Dtos.ProjectPost
         public string Description { get; set; } = string.Empty;
         
         public decimal AveragePrice { get; set; }
-        
+        public DateTime? ProjectPostDate { get; set; }
+
         public int CategoryId { get; set; }
         
        

@@ -74,6 +74,7 @@ namespace HireMeDAL
                 currentProjectPost.PostTitle = projectPost.PostTitle;
                 currentProjectPost.ClientId = projectPost.ClientId;
                 currentProjectPost.CategoryId = projectPost.CategoryId;
+                currentProjectPost.ProjectPostDate= projectPost.ProjectPostDate;
                 currentProjectPost.Milestones = projectPost.Milestones;
                 SaveChanges();
                 return true;

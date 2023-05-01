@@ -18,6 +18,8 @@ namespace HireMeDAL
         [Required]
         public string PostTitle { get; set; } = string.Empty;
 
+        public DateTime? ProjectPostDate { get; set; }
+
         [Required]
         [Column(TypeName = "money")]
         public decimal AveragePrice { get; set; }

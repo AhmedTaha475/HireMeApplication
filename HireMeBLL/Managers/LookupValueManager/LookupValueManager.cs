@@ -59,12 +59,13 @@ namespace HireMeBLL
 
         public List<LookupValueDTO> GetAllLookupValues()
         {
-            var list=lookupValuesRepo.GetAllLookupValues()
-                .Select(v=>new LookupValueDTO() { ValueId=v.ValueId,ValueName=v.ValueName,LookupId=v.LookupId}).ToList();
+            var list = lookupValuesRepo.GetAllLookupValues();
+
+              
 
             if (list!= null)
             {
-                return list;
+                return list.Select(v => new LookupValueDTO() { ValueId = v.ValueId, ValueName = v.ValueName, LookupId = v.LookupId }).ToList();
             }
             else return null;
         }

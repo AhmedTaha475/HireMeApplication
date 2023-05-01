@@ -87,12 +87,12 @@ namespace HireMePL
         {
             try
             {
-                PlanReadDto? plan = _planManager.GetById(id);
+                //PlanReadDto? plan = _planManager.GetById(id);
 
-                if (plan is null)
-                {
-                    return NotFound();
-                }
+                //if (plan is null)
+                //{
+                //    return NotFound();
+                //}
                 if (_planManager.DeleteById(id))
                     return Ok(new { message = "Plan deleted successfully" });
                 return BadRequest(new { messagea = "Something went wrong" });

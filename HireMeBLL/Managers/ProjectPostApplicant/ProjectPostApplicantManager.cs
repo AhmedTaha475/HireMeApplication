@@ -26,6 +26,20 @@ namespace HireMeBLL
             });
         }
 
+        public List<ProjectPostApplicantDetailsDto> GetAll()
+        {
+            var list= this._projectPostApplicantRepo.GetAll();
+            if (list.Count==0) 
+                return null;
+            return list.Select(ppa => new ProjectPostApplicantDetailsDto()
+            {
+                PP_ID = ppa.PP_ID,
+                BiddingPrice = ppa.BiddingPrice,
+                FreelancerId = ppa.FreelancerId,
+                Proposal = ppa.Proposal,
+            }).ToList();
+        }
+
         public List<ProjectPostApplicantDetailsDto> GetProjectPostApplicantById(string projectPostApplicantId)
         {
             var applicantDB = _projectPostApplicantRepo.GetProjectPostApplicantById(projectPostApplicantId);

@@ -10,12 +10,16 @@ namespace HireMeDAL
     {
         List<ProjectPostApplicant> GetProjectPostApplicants(int projectPostId);
         List<ProjectPostApplicant> GetProjectPostApplicantById(string id);
+        List<ProjectPostApplicant> GetAll();
+
 
         bool CreateProjectPostApplicant(ProjectPostApplicant projectPostApplicant);
 
         bool UpdateProjectPostApplicant(int id, ProjectPostApplicant projectPostApplicant);
 
         bool DeleteProjectPostApplicant(string id);
+
+
         int SaveChanges();
     }
 }

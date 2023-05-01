@@ -57,14 +57,7 @@ namespace HireMeDAL
 
         public bool UpdateProjectPostApplicant(int id, ProjectPostApplicant projectPostApplicant)
         {
-            //var currentprojectPostApplicant = GetProjectPostApplicantById(id);
-            //if (currentprojectPostApplicant != null)
-            //{
-            //    currentprojectPostApplicant.BiddingPrice = projectPostApplicant.BiddingPrice;
-            //    currentprojectPostApplicant.Proposal = projectPostApplicant.Proposal;
-            //    SaveChanges();
-            //    return true;
-            //}return true;
+            
 
             var currentApplication = _hireMeContext.projectPostApplicants
                 .FirstOrDefault(p => p.PP_ID == id && p.FreelancerId == projectPostApplicant.FreelancerId);
@@ -79,5 +72,9 @@ namespace HireMeDAL
 
         }
 
+        public List<ProjectPostApplicant> GetAll()
+        {
+            return _hireMeContext.projectPostApplicants.ToList();
+        }
     }
 }

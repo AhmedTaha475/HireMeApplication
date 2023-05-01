@@ -13,5 +13,8 @@ namespace HireMeBLL
         List<ProjectPostApplicantDetailsDto> GetProjectPostApplicantById(string projectPostApplicantId);
         bool CreateProjectPostApplicant(ProjectPostApplicantDetailsDto projectPostApplicant);
         bool UpdateProjectPostApplicant(int projectPostId, UpdateProjectPostApplicantDto projectPostApplicant);
+        List<ProjectPostApplicantDetailsDto> GetAll();
+
+
     }
 }

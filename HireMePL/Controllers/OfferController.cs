@@ -1,4 +1,5 @@
 ﻿using HireMeBLL;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +18,7 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("GetAll")]
+        [Authorize]
         public ActionResult<OfferDto> GetAllOffers() 
         {
             var OfferLst=_offerManager.GetAllOffers();
@@ -31,6 +33,7 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("GetAllByFreelancerId/{id}")]
+        [Authorize(policy:"Freelancer")]
         public ActionResult<OfferDto> GetAllOffersByFreelancerId(string id)
         {
             var OfferLst = _offerManager.GetAllOffersByFreelancerId(id);
@@ -43,6 +46,7 @@ namespace HireMePL.Controllers
         }
         [HttpGet]
         [Route("GetAllByClientId/{id}")]
+        [Authorize(policy:"Client")]
         public ActionResult<OfferDto> GetAllOffersByClientId(string id)
         {
             var OfferLst = _offerManager.GetAllOffersByClientId(id);
@@ -56,6 +60,7 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("GetOfferById/{id}")]
+        [Authorize]
         public ActionResult<OfferDto> GetofferById(int id)
         {
             var Offer = _offerManager.GetOfferById(id);
@@ -71,6 +76,7 @@ namespace HireMePL.Controllers
 
         [HttpPost]
         [Route("CreateOffer")]
+        [Authorize(policy:"Client")]
         public ActionResult CreateOffer(CreateOfferDto createOffer)
         {
             if (!ModelState.IsValid)
@@ -92,6 +98,7 @@ namespace HireMePL.Controllers
 
         [HttpPut]
         [Route("UpdateOffer")]
+        [Authorize(policy:"Client")]
         public ActionResult UpdateOffer(UpdateOfferDto updateOffer)
         {
             if (!ModelState.IsValid)
@@ -113,6 +120,7 @@ namespace HireMePL.Controllers
 
         [HttpDelete]
         [Route("DeleteOffer/{id}")]
+        [Authorize(policy:"Client")]
         public ActionResult DeleteOffer(int id)
         {
 

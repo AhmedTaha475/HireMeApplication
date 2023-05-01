@@ -95,7 +95,7 @@ namespace HireMePL.Controllers
         #region Crud to Delete Lookup Value by its Id
 
         [HttpDelete]
-        [Route(" DeleteLookupValueById/{id}")]
+        [Route("DeleteLookupValueById/{id}")]
         [Authorize(policy:"Admin")]
         public ActionResult DeleteLookupValueById(int id)
         {

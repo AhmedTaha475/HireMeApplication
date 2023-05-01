@@ -31,6 +31,7 @@ namespace HireMeDAL
         public DbSet<Milestone> milestones { get; set; }
         public DbSet<ProjectPostApplicant> projectPostApplicants { get; set; }
         public DbSet<ProjectComment> projectComments { get; set; }
+        public DbSet<Offer> offers { get; set; }
 
         public DbSet<Plan> plans { get; set; }
 

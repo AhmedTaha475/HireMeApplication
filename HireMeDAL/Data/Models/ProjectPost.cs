@@ -20,6 +20,10 @@ namespace HireMeDAL
 
         public DateTime? ProjectPostDate { get; set; }
 
+        public bool? Done { get; set; }
+
+        public string? location { get; set; }
+
         [Required]
         [Column(TypeName = "money")]
         public decimal AveragePrice { get; set; }

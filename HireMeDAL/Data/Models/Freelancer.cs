@@ -26,14 +26,12 @@ namespace HireMeDAL
         [Column(TypeName = "money")]
         public decimal AverageRate { get; set; }
 
-        //public int PortfolioId { get; set; }
-
-        //[ForeignKey("PortfolioId")]
         public virtual Portfolio? Portfolio { get; set; }
 
         public virtual HashSet<ProjectPostApplicant> ProjectPostApplicants { get; set; } = new HashSet<ProjectPostApplicant>();
         public virtual HashSet<ProjectReview> ProjectReviews { get; set; } = new HashSet<ProjectReview>();
 
+        public virtual HashSet<Offer> Offers { get; set; } = new HashSet<Offer>();
 
 
     }

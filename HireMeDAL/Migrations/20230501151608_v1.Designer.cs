@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HireMeDAL.Migrations
 {
     [DbContext(typeof(HireMeContext))]
-    [Migration("20230501082407_v8")]
-    partial class v8
+    [Migration("20230501151608_v1")]
+    partial class v1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -90,6 +90,47 @@ namespace HireMeDAL.Migrations
                     b.HasIndex("ProjectPostId");
 
                     b.ToTable("milestones");
+                });
+
+            modelBuilder.Entity("HireMeDAL.Offer", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<bool?>("Accepted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ClientId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FreelancerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Fullname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("OfferDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("FreelancerId");
+
+                    b.ToTable("offers");
                 });
 
             modelBuilder.Entity("HireMeDAL.Plan", b =>
@@ -254,12 +295,18 @@ namespace HireMeDAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool?>("Done")
+                        .HasColumnType("bit");
+
                     b.Property<string>("PostTitle")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ProjectPostDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("location")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Pp_Id");
 
@@ -684,6 +731,17 @@ namespace HireMeDAL.Migrations
                     b.Navigation("ProjectPost");
                 });
 
+            modelBuilder.Entity("HireMeDAL.Offer", b =>
+                {
+                    b.HasOne("HireMeDAL.Freelancer", "Freelancer")
+                        .WithMany("Offers")
+                        .HasForeignKey("FreelancerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Freelancer");
+                });
+
             modelBuilder.Entity("HireMeDAL.Portfolio", b =>
                 {
                     b.HasOne("HireMeDAL.Freelancer", "Freelancer")
@@ -948,6 +1006,8 @@ namespace HireMeDAL.Migrations
 
             modelBuilder.Entity("HireMeDAL.Freelancer", b =>
                 {
+                    b.Navigation("Offers");
+
                     b.Navigation("Portfolio");
 
                     b.Navigation("ProjectPostApplicants");

@@ -25,6 +25,7 @@ namespace HireMeBLL
                 Description= createProjectPostDto.Description,
                 AveragePrice= createProjectPostDto.AveragePrice,
                 CategoryId= createProjectPostDto.CategoryId,
+                ProjectPostDate= createProjectPostDto.ProjectPostDate,
                 ClientId= clientId,
             };
             return _projectPostRepo.CreateProjectPost(projectPost);
@@ -39,7 +40,7 @@ namespace HireMeBLL
         {
            var projectpostList= _projectPostRepo.GetALl();
             if(projectpostList.Count>0)
-                return projectpostList.Select(p=>new ProjectPostDto() { Id=p.Pp_Id, PostTitle=p.PostTitle,AveragePrice=p.AveragePrice, CategoryId=p.CategoryId,Description=p.Description}).ToList();
+                return projectpostList.Select(p=>new ProjectPostDto() { Id=p.Pp_Id, PostTitle=p.PostTitle,AveragePrice=p.AveragePrice, CategoryId=p.CategoryId,Description=p.Description,ProjectPostDate=p.ProjectPostDate}).ToList();
             return null;
         }
 
@@ -48,7 +49,7 @@ namespace HireMeBLL
             var projectpost=_projectPostRepo.GetProjectPostById(id);
             if (projectpost == null)
                 return null;
-            return new ProjectPostDto() { Id=id, PostTitle=projectpost.PostTitle,AveragePrice = projectpost.AveragePrice,CategoryId=projectpost.CategoryId, Description=projectpost.Description };
+            return new ProjectPostDto() { Id=id, PostTitle=projectpost.PostTitle,AveragePrice = projectpost.AveragePrice,CategoryId=projectpost.CategoryId, Description=projectpost.Description ,ProjectPostDate = projectpost.ProjectPostDate };
         }
 
         public ProjectPostWithApplicantsDetailsDto GetProjectPostWithApplicantsById(int projectId)
@@ -66,6 +67,7 @@ namespace HireMeBLL
                         Proposal = applicantDB.Proposal,
                         BiddingPrice = applicantDB.BiddingPrice,
                         FreelancerId = applicantDB.FreelancerId,
+                        
                     });
                 }
                 return new ProjectPostWithApplicantsDetailsDto()
@@ -74,6 +76,7 @@ namespace HireMeBLL
                     AveragePrice = projectPostDB.AveragePrice,
                     CategoryId = projectPostDB.CategoryId,
                     Description = projectPostDB.Description,
+                    ProjectPostDate= projectPostDB.ProjectPostDate,
                     ProjectPostApplicants = applicantsDto,
                     id  = projectId
                 };

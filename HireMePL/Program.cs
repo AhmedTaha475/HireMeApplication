@@ -69,6 +69,11 @@ namespace HireMePL
 
             builder.Services.AddScoped<ILookupTableRepo,LookupTableRepo>();
             builder.Services.AddScoped<ILookupTableManager,LookupTableManager>();
+
+            builder.Services.AddScoped<IOfferManager, OfferManager>();
+            builder.Services.AddScoped<IOfferRepo, OfferRepo>();
+
+
             #endregion
 
             #region defaults

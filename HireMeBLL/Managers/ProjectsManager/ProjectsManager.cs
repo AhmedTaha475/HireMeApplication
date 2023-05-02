@@ -40,6 +40,24 @@ namespace HireMeBLL.Managers.ProjectsManager
                 
         }
 
+        public List<ProjectDetailsReadDto> getAll()
+        {
+            var projectlist = projectsRepo.GetAll();
+            if(projectlist !=null)
+            {
+                return projectlist.Select(p => new ProjectDetailsReadDto()
+                {
+                    P_Id = p.ProjectID,
+                    Date = p.ProjectDate,
+                    Description = p.Description,
+                    MoneyEarned = p.MoneyEarned,
+                    SystemProject = p.SystemProject,
+                    Title = p.ProjectTitle,
+                }).ToList();
+            }return null;
+        
+        }
+
         public List<ProjectDetailsReadDto> GetAllProjectsByPortfolioId(int PortFolio_Id)
         {
             List<Project>? projects = projectsRepo.GetAllByPortfolioId(PortFolio_Id);

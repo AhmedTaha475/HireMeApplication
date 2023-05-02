@@ -93,5 +93,16 @@ namespace HireMePL.Controllers
             }
             
         }
+
+        [HttpGet]
+        [Route("GetAll")]
+        [Authorize]
+        public ActionResult<ProjectDetailsReadDto> GetAll()
+        {
+            var list= projectsManager.getAll();
+            if(list !=null)
+               return Ok(list);
+            return NotFound();
+        }
     }
 }

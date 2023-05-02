@@ -48,25 +48,13 @@ namespace HireMeDAL.Repos.Projects
 
         public List<Project>? GetAll()
         {
-            //return context.projects
-            //    .Include(p => p.ProjectComments).ThenInclude(C => C.Client)
-            //    .Include(p=>p.ProjectImages)
-            //    .Include(p=>p.ProjectReview)
-            //    .Include(p => p.Client)
-            //    .ToList();
+
             var list=context.projects.ToList();
             if(list.Count == 0) return null;
             return list;
         }
         public List<Project>? GetAllByPortfolioId(int Portfolio_Id)
         {
-            //var list= context.projects
-            //    .Include(p => p.ProjectComments).ThenInclude(C => C.Client)
-            //    .Include(p => p.ProjectImages)
-            //    .Include(p => p.ProjectReview).ThenInclude(r => r.Client)
-            //    .Include(p => p.Portfolio).ThenInclude(p => p.Freelancer)
-            //    .Include(p => p.Client).Where(p => p.PortfolioId == Portfolio_Id)
-            //    .ToList();
             var list=context.projects.Where(p=>p.PortfolioId == Portfolio_Id).ToList();
             if (list.Count > 0)
                 return list;

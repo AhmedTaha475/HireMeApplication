@@ -19,7 +19,12 @@ namespace HireMeBLL.Dtos.ProjectPost
         public DateTime? ProjectPostDate { get; set; }
 
         public int CategoryId { get; set; }
-        
-       
+
+
+        public bool? Done { get; set; }
+
+        public string? location { get; set; }
+
+
     }
 }

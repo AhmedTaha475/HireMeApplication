@@ -16,6 +16,9 @@ namespace HireMeBLL
         public string Description { get; set; } = string.Empty;
         public DateTime? ProjectPostDate { get; set; }
 
+        public bool? Done { get; set; }
+
+        public string? location { get; set; }
         public decimal AveragePrice { get; set; }
         public int CategoryId { get; set; }
         public List<ProjectPostApplicantDetailsDto> ProjectPostApplicants { get; set; }

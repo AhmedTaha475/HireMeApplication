@@ -154,7 +154,7 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("GetAllFreelancer")]
-        [Authorize(policy: "Admin")]
+        
         public ActionResult<List<FreelancerDto>> GetAllFreelancers()
         {
 
@@ -337,7 +337,6 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("GetAllClients")]
-        [Authorize(policy: "Admin")]
         public ActionResult<List<ClientDto>> GetAllClients()
         {
 

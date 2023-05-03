@@ -18,6 +18,9 @@ namespace HireMeBLL
 
         public decimal AveragePrice { get; set; }
         public int CategoryId { get; set; }
+        public bool? Done { get; set; }
+
+        public string? location { get; set; }
         public List<ProjectPostApplicantDetailsDto> ProjectPostApplicants { get; set; }
     }
 }

@@ -18,6 +18,9 @@ namespace HireMeBLL
         public DateTime? ProjectPostDate { get; set; }
         [Required] 
         public int CategoryId { get; set; }
+        public bool? Done { get; set; }
+
+        public string? location { get; set; }
 
     }
 }

@@ -15,7 +15,7 @@ namespace HireMePL.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IProjectPostManager _projectPostManager;
-
+        //Just Normal Commit
         public ProjectPostsController(UserManager<IdentityUser> userManager, IProjectPostManager projectPostManager)
         {
             this._userManager = userManager;

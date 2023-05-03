@@ -1,5 +1,6 @@
 ﻿using HireMeBLL.Dtos.Client;
 using HireMeDAL;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,6 +61,13 @@ namespace HireMeBLL
                    clientToBeReturned.Balance, clientToBeReturned.PaymentMethodId,
                    clientToBeReturned.PlanId, clientToBeReturned.TotalMoneySpent,clientToBeReturned.Email,clientToBeReturned.PhoneNumber);
             return null;
+        }
+
+        public ClientCountDto GetClientsCount()
+        {
+            ClientCountDto countDto= new ClientCountDto();
+            countDto.ClientCount = _clientRepo.GetAllClient().Count();
+            return countDto;
         }
 
         public async Task<TokenDto> Login(LoginDto loginCred)

@@ -154,7 +154,7 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("GetAllFreelancer")]
-        [Authorize(policy: "Admin")]
+        //[Authorize(policy: "Admin")]
         public ActionResult<List<FreelancerDto>> GetAllFreelancers()
         {
 
@@ -171,7 +171,7 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("GetFreelancerById/{id}")]
-        [Authorize]
+        //[Authorize]
         public async Task<ActionResult<FreelancerDto>> GetFreelancerById(string id)
         {
 
@@ -202,7 +202,7 @@ namespace HireMePL.Controllers
 
         [HttpPut]
         [Route("UpdateFreelancer")]
-        [Authorize(policy: "Freelancer")]
+        //[Authorize(policy: "Freelancer")]
         public async Task<ActionResult> UpdateFreelancerData([FromForm] UpdateFreelancerDto freelancerDto)
         {
             if (!ModelState.IsValid)
@@ -337,7 +337,7 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("GetAllClients")]
-        [Authorize(policy: "Admin")]
+        //[Authorize(policy: "Admin")]
         public ActionResult<List<ClientDto>> GetAllClients()
         {
 
@@ -352,7 +352,7 @@ namespace HireMePL.Controllers
 
         [HttpGet]
         [Route("GetClientById/{id}")]
-        [Authorize]
+        //[Authorize]
         public async Task<ActionResult<ClientDto>> GetClientById(string id)
         {
 
@@ -435,7 +435,12 @@ namespace HireMePL.Controllers
 
 
         }
-
+        [HttpGet]
+        [Route("ClientCount")]
+        public ActionResult<ClientCountDto> GetAllClientCount()
+        {
+            return _clientManager.GetClientsCount();
+        }
 
         #endregion
 

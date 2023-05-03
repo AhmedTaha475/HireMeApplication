@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HireMeDAL.Migrations
 {
     [DbContext(typeof(HireMeContext))]
-    [Migration("20230501151608_v1")]
-    partial class v1
+    [Migration("20230502131450_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

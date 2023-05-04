@@ -1,5 +1,6 @@
 ﻿using HireMeBLL;
 using HireMeBLL.Dtos.Client;
+using HireMeBLL.Dtos.Freelancer;
 using HireMeDAL;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -18,8 +19,8 @@ namespace HireMePL.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IFreelancerManager _freelancerManager;
 
-        public UsersController(IClientManager clientManager,ISystemUserManager systemUserManager,
-            UserManager<IdentityUser> userManager,IFreelancerManager freelancerManager)
+        public UsersController(IClientManager clientManager, ISystemUserManager systemUserManager,
+            UserManager<IdentityUser> userManager, IFreelancerManager freelancerManager)
         {
             this._clientManager = clientManager;
             this._systemUserManager = systemUserManager;
@@ -45,7 +46,7 @@ namespace HireMePL.Controllers
             if (token != null)
                 return Ok(token);
             else
-                return NotFound(new {Message="Login failed please check your email and password"});
+                return NotFound(new { Message = "Login failed please check your email and password" });
 
         }
 
@@ -59,13 +60,13 @@ namespace HireMePL.Controllers
             if (!ModelState.IsValid)
             { return BadRequest(ModelState); }
 
-            var CurrentUser=await _userManager.GetUserAsync(User);
+            var CurrentUser = await _userManager.GetUserAsync(User);
 
-           var result= await _systemUserManager.changeUserPassword(CurrentUser, passwordData.oldPassword,passwordData.NewPassword);
+            var result = await _systemUserManager.changeUserPassword(CurrentUser, passwordData.oldPassword, passwordData.NewPassword);
 
-            if(result)
-                return Ok(new {Message="Password Changed Successfully"});
-            return BadRequest(new {Message="Couldn't change the password"});
+            if (result)
+                return Ok(new { Message = "Password Changed Successfully" });
+            return BadRequest(new { Message = "Couldn't change the password" });
         }
         #endregion
 
@@ -101,7 +102,7 @@ namespace HireMePL.Controllers
 
         [HttpDelete]
         [Route("DeleteCurrentFreelancer")]
-        [Authorize(policy: "Freelancer")]  
+        [Authorize(policy: "Freelancer")]
         public async Task<ActionResult> DeleteCurrentFreelancer()
         {
             var FreelancerToBeDeleted = await _userManager.GetUserAsync(User);
@@ -224,7 +225,7 @@ namespace HireMePL.Controllers
 
         [HttpPut]
         [Route("UpdateFreelancerMoney")]
-        [Authorize(policy:"Freelancer")]
+        [Authorize(policy: "Freelancer")]
 
         public async Task<ActionResult> UpdateFreelancerMoney(UpdateFreelancerMoneyDto FreelancerMoney)
         {
@@ -251,10 +252,25 @@ namespace HireMePL.Controllers
 
                 return BadRequest(ex.Message);
             }
-            
+
 
 
         }
+
+        [HttpGet]
+        [Route("GetFreelancersByCatId/{CatId}")]
+        public ActionResult<List<FreelancerDto>> GetFreelancersByCatId(int CatId)
+        {
+            return _freelancerManager.GetByCatId(CatId);
+        }
+
+        [HttpPost]
+        [Route("GetFreelancersCountsByCatIds")]
+        public ActionResult<FreelancersCountsDto> GetFreelancersCountsByCatId(CatIdsDto catIds)
+        {
+            return _freelancerManager.GetCountsByCatIds(catIds);
+        }
+
         #endregion
 
 

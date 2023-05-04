@@ -9,9 +9,7 @@ namespace HireMeBLL
 {
     public record UpdateFreelancerMoneyDto
     {
-        [Range(0, 10, ErrorMessage = "Please enter a valid rank")]
         public int? Rank { get; set; }
-        [Range(0, 100, ErrorMessage = "Invalid amount of Bids")]
         public int? Bids { get; set; }
 
         public decimal? TotalMoneyEarned { get; set; }

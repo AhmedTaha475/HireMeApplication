@@ -1,4 +1,5 @@
-﻿using HireMeDAL;
+﻿using HireMeBLL.Dtos.Freelancer;
+using HireMeDAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,27 @@ namespace HireMeBLL
               c.PaymentMethodId, c.PlanId,c.Email,
               c.Rank,c.JobTitle,c.Bids,c.Description,
               c.TotalMoneyEarned,c.CV,c.AverageRate,c.PhoneNumber,c.CategoryId)).ToList();
+        }
+
+        public List<FreelancerDto> GetByCatId(int id)
+        {
+            return _freelancerRepo.GetAllFreeLancersByCategoryId(id).Select(c => new FreelancerDto(c.Id, c.FirstName, c.LastName, c.UserName,
+              c.Country, c.City, c.Street, c.Image, c.Age, c.SSN, c.Balance,
+              c.PaymentMethodId, c.PlanId, c.Email,
+              c.Rank, c.JobTitle, c.Bids, c.Description,
+              c.TotalMoneyEarned, c.CV, c.AverageRate, c.PhoneNumber, c.CategoryId)).ToList();
+        }
+
+        public FreelancersCountsDto GetCountsByCatIds(CatIdsDto catIds)
+        {
+            List<int> list=new List<int>();
+           for(int i = 0; i < catIds.CatIds.Length; i++)
+            {
+                list.Add(_freelancerRepo.GetAllFreeLancersByCategoryId(catIds.CatIds[i]).Count());       
+            }
+           FreelancersCountsDto freelancersCounts = new FreelancersCountsDto();
+            freelancersCounts.counts = list.ToArray();
+            return freelancersCounts;
         }
 
         public async Task<FreelancerDto> GetFreelancerById(string id)

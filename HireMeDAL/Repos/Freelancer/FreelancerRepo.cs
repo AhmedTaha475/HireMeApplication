@@ -134,6 +134,11 @@ namespace HireMeDAL
             return false;
         }
 
+        public List<Freelancer> GetAllFreeLancersByCategoryId(int categoryId)
+        {
+          var list =  context.freelancers.Where(f=>f.CategoryId == categoryId).ToList();
+            return list;
+        }
 
     }
 }

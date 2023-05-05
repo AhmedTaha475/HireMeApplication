@@ -19,5 +19,6 @@ namespace HireMeBLL
         public int PP_ID { get; set; }
         
         public string FreelancerId { get; set; }
+        public bool? Approved { get; set; }
     }
 }

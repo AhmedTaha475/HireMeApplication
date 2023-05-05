@@ -65,6 +65,7 @@ namespace HireMeDAL
             {
                 currentApplication.BiddingPrice = projectPostApplicant.BiddingPrice;
                 currentApplication.Proposal=projectPostApplicant.Proposal;
+                currentApplication.Approved=projectPostApplicant.Approved;
                 SaveChanges();
                 return true;
             }return false;

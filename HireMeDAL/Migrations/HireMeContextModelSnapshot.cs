@@ -322,6 +322,9 @@ namespace HireMeDAL.Migrations
                     b.Property<string>("FreelancerId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<bool?>("Approved")
+                        .HasColumnType("bit");
+
                     b.Property<decimal>("BiddingPrice")
                         .HasColumnType("money");
 

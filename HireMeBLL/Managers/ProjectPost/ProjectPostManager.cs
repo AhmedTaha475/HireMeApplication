@@ -69,6 +69,7 @@ namespace HireMeBLL
                         Proposal = applicantDB.Proposal,
                         BiddingPrice = applicantDB.BiddingPrice,
                         FreelancerId = applicantDB.FreelancerId,
+                        Approved=applicantDB.Approved,
                         
                     });
                 }

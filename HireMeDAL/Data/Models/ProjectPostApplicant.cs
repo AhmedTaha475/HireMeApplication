@@ -18,10 +18,12 @@ namespace HireMeDAL
 
         public int PP_ID { get; set; }
 
+        public bool? Approved { get; set; }
 
         [ForeignKey("PP_ID")]
         public virtual ProjectPost? ProjectPost { get; set; }
 
+        
         public string FreelancerId { get; set; }
 
         [ForeignKey("FreelancerId")]

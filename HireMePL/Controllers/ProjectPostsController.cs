@@ -101,6 +101,17 @@ namespace HireMePL.Controllers
         }
 
         [HttpGet]
+        [Route("GetAllByClientId/{id}")]
+        public ActionResult<List<ProjectPostDto>> GetAllByClientId(string id)
+        {
+            var PPList = _projectPostManager.GetProjectPostsByClientId(id);
+            if (PPList != null)
+                return Ok(PPList);
+            else return BadRequest(new { message = "No Project posts found" });
+        }
+
+
+        [HttpGet]
         [Route("GetProjectPostById/{id}")]
         public ActionResult<ProjectPostDto> GetProjectPostById(int id)
         {

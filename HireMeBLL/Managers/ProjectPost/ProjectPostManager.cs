@@ -42,7 +42,14 @@ namespace HireMeBLL
         {
            var projectpostList= _projectPostRepo.GetALl();
             if(projectpostList.Count>0)
-                return projectpostList.Select(p=>new ProjectPostDto() { Id=p.Pp_Id, PostTitle=p.PostTitle,AveragePrice=p.AveragePrice, CategoryId=p.CategoryId,Description=p.Description,ProjectPostDate=p.ProjectPostDate,Done=p.Done,location=p.location}).ToList();
+                return projectpostList.Select(p=>new ProjectPostDto() 
+                { Id=p.Pp_Id,
+                    PostTitle=p.PostTitle,
+                    AveragePrice=p.AveragePrice,
+                    CategoryId=p.CategoryId,
+                    Description=p.Description,
+                    ProjectPostDate=p.ProjectPostDate,
+                    Done=p.Done,location=p.location}).ToList();
             return null;
         }
 
@@ -52,6 +59,28 @@ namespace HireMeBLL
             if (projectpost == null)
                 return null;
             return new ProjectPostDto() { Id=id, PostTitle=projectpost.PostTitle,AveragePrice = projectpost.AveragePrice,CategoryId=projectpost.CategoryId, Description=projectpost.Description ,ProjectPostDate = projectpost.ProjectPostDate,Done=projectpost.Done,location=projectpost.location };
+        }
+
+        public List<ProjectPostDto> GetProjectPostsByClientId(string clientId)
+        {
+            var projectList = _projectPostRepo.GetALl().Where(c => c.ClientId == clientId).ToList();
+
+            if(projectList.Count != 0)
+            {
+                return projectList.Select(c => new ProjectPostDto()
+                {
+
+                    Id = c.Pp_Id,
+                    PostTitle = c.PostTitle,
+                    AveragePrice = c.AveragePrice,
+                    CategoryId = c.CategoryId,
+                    Description = c.Description,
+                    ProjectPostDate = c.ProjectPostDate,
+                    Done = c.Done,
+                    location = c.location
+                }).ToList();
+            }
+            return null;
         }
 
         public ProjectPostWithApplicantsDetailsDto GetProjectPostWithApplicantsById(int projectId)

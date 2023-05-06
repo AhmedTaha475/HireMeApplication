@@ -1,4 +1,5 @@
-﻿using HireMeBLL.Dtos;
+﻿using HireMeBLL;
+using HireMeBLL.Dtos;
 using HireMeBLL.Dtos.Project;
 using HireMeBLL.Managers.ProjectsManager;
 using Microsoft.AspNetCore.Authorization;
@@ -104,5 +105,18 @@ namespace HireMePL.Controllers
                return Ok(list);
             return NotFound();
         }
+        [HttpGet]
+        [Route("GetProjectWithImage/{id}")]
+        [Authorize]
+        public ActionResult<GetProjectWithImagesDto> GetProjectWithImage(int id)
+        {
+            var projectWithImage = projectsManager.GetProjectWithImages(id);
+            if (projectWithImage != null)
+                return Ok(projectWithImage);
+            return NotFound();
+        }
+
+
+
     }
 }

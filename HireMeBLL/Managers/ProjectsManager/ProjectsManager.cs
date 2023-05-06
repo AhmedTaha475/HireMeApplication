@@ -92,6 +92,25 @@ namespace HireMeBLL.Managers.ProjectsManager
             return null;
         }
 
+        public GetProjectWithImagesDto GetProjectWithImages(int id)
+        {
+           var project=  projectsRepo.GetProjectWithImages(id);
+            if(project != null)
+            {
+                return new GetProjectWithImagesDto()
+                {
+                    P_Id= project.ProjectID,
+                    Description = project.Description,
+                    Title = project.ProjectTitle,
+                    Date= project.ProjectDate,
+                    MoneyEarned= project.MoneyEarned,
+                    SystemProject= project.SystemProject,
+                    Images= project.ProjectImages.Select(i=>new ProjectImageDto(i.PI_Id,i.ProjectId,i.Image)).ToList(),
+                };
+            }
+            return null;
+        }
+
         public bool UpdateByProjectId(UpdateProjectByIdDto updateProjectByIdDto,int id)
         {
             var project = new Project()

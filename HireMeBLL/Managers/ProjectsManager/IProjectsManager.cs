@@ -11,5 +11,7 @@ namespace HireMeBLL.Managers.ProjectsManager
         public List<ProjectDetailsReadDto> GetAllProjectsByPortfolioId(int PortFolio_Id);
         public ProjectDetailsReadDto GetById(int id);
         public List<ProjectDetailsReadDto> getAll();
+
+        public GetProjectWithImagesDto GetProjectWithImages(int id);
     }
 }

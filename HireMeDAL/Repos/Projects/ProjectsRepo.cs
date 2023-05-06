@@ -77,6 +77,12 @@ namespace HireMeDAL.Repos.Projects
             return project;
         }
 
+        public Project? GetProjectWithImages(int id)
+        {
+            return context.projects.Include(p=>p.ProjectImages).FirstOrDefault(p=>p.ProjectID==id);
+            
+        }
+
         public bool Update(Project project, int id)
         {
             var P = context.projects.Find(id);

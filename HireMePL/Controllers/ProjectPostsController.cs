@@ -114,6 +114,7 @@ namespace HireMePL.Controllers
         [Route("GetAllByCurrentClient")]
         [Authorize(policy:"Client")]
         public async Task<ActionResult<List<ProjectPostDto>>> GetAllByCurrentClientId()
+        
         {
             var user = await _userManager.GetUserAsync(User);
             var PPList = _projectPostManager.GetProjectPostsByClientId(user.Id);

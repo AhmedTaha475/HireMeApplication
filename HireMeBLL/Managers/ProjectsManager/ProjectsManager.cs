@@ -20,7 +20,7 @@ namespace HireMeBLL.Managers.ProjectsManager
         }
         public bool CreateProject(CreateProjectDto projectDto)
         {
-
+            
             return projectsRepo.Add(new Project() {
                 Description = projectDto.Description,
                 ProjectTitle = projectDto.Title,
@@ -28,8 +28,7 @@ namespace HireMeBLL.Managers.ProjectsManager
                 MoneyEarned = projectDto.MoneyEarned,
                 SystemProject = projectDto.SystemProject,
                 PortfolioId = projectDto.portfolioId,
-                //ProjectImages = projectDto.projectImgs.Select(s=>new ProjectImage() {Image=Helper.ConvertFromFileToByteArray(s.Image) }).ToHashSet<ProjectImage>()
-                ProjectImages = projectDto.projectImgs.Select(c => new ProjectImage() { Image = Helper.ConvertFromFileToByteArray(c) }).ToHashSet()
+                ProjectImages = projectDto.projectImgs?.Select(c => new ProjectImage() { Image = Helper.ConvertFromFileToByteArray(c) }).ToHashSet()?? new HashSet<ProjectImage>()
             });
            
         }

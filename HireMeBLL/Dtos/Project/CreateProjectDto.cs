@@ -24,7 +24,7 @@ namespace HireMeBLL.Dtos.Project
         public string? ClientId { get; init; }
         [Required]
         public int portfolioId { get; set; }
-        public List<IFormFile> projectImgs { get; init; }   
+        public List<IFormFile>? projectImgs { get; init; }   
 
     }
 }

@@ -62,7 +62,8 @@ namespace HireMeDAL
 
             };
             //4-attach this claim for tis user
-            await Usermanager.AddClaimsAsync(suser, Claims);
+            await Usermanager.AddClaimsAsync(addedUser, Claims);
+            context.portfolios.Add(new Portfolio() { FreelancerId = addedUser.Id });
             return true;
         }
 

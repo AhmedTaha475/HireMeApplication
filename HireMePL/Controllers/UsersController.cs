@@ -220,7 +220,7 @@ namespace HireMePL.Controllers
                 return BadRequest(ex.Message);
             }
 
-        }
+            }
 
 
         [HttpPut]

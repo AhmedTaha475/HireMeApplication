@@ -15,6 +15,8 @@ namespace HireMeDAL.Repos.Projects
         public Project? GetById(int id);
         public Project? GetByName(string Name);
         public bool Update(Project project, int id);
+
+        public Project? GetProjectWithImages(int id);
         public List<Project>? GetAllByPortfolioId(int Portfolio_Id);
     }
 }

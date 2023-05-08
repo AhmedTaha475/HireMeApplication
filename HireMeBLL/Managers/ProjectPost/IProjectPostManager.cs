@@ -19,5 +19,6 @@ namespace HireMeBLL
         ProjectPostDto GetProjectPostById(int id);
 
         List<ProjectPostDto> GetProjectPostsByClientId(string clientId);
+
     }
 }

@@ -17,5 +17,7 @@ namespace HireMeBLL.Dtos.Milestone
         public string Value { get; set; }
         [Required]
         public int ProjectPostId { get; set; }
+
+        public bool? released { get; set; }
     }
 }

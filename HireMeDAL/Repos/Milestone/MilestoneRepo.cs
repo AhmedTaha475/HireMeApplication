@@ -70,6 +70,7 @@ namespace HireMeDAL
                 currentMilestone.Name = milestone.Name;
                 currentMilestone.Value = milestone.Value;
                 currentMilestone.Id = milestone.Id;
+                currentMilestone.released = milestone.released;
                 SaveChanges();
                 return true;
             }

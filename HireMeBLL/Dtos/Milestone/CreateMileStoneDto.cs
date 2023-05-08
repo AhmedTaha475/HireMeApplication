@@ -15,5 +15,6 @@ namespace HireMeBLL
         public string Value { get; set; }
         [Required]
         public int ProjectPostId { get; set; }
+
     }
 }

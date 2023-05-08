@@ -28,7 +28,8 @@ namespace HireMeBLL
                 ProjectPostDate= createProjectPostDto.ProjectPostDate,
                 ClientId= clientId,
                 Done=createProjectPostDto.Done,
-                location=createProjectPostDto.location
+                location=createProjectPostDto.location,
+                approved=createProjectPostDto.approved,
             };
             return _projectPostRepo.CreateProjectPost(projectPost);
         }
@@ -49,7 +50,7 @@ namespace HireMeBLL
                     CategoryId=p.CategoryId,
                     Description=p.Description,
                     ProjectPostDate=p.ProjectPostDate,
-                    Done=p.Done,location=p.location}).ToList();
+                    Done=p.Done,location=p.location,approved=p.approved}).ToList();
             return null;
         }
 
@@ -58,7 +59,7 @@ namespace HireMeBLL
             var projectpost=_projectPostRepo.GetProjectPostById(id);
             if (projectpost == null)
                 return null;
-            return new ProjectPostDto() { Id=id, PostTitle=projectpost.PostTitle,AveragePrice = projectpost.AveragePrice,CategoryId=projectpost.CategoryId, Description=projectpost.Description ,ProjectPostDate = projectpost.ProjectPostDate,Done=projectpost.Done,location=projectpost.location };
+            return new ProjectPostDto() { Id=id, PostTitle=projectpost.PostTitle,AveragePrice = projectpost.AveragePrice,CategoryId=projectpost.CategoryId, Description=projectpost.Description ,ProjectPostDate = projectpost.ProjectPostDate,Done=projectpost.Done,location=projectpost.location,approved=projectpost.approved };
         }
 
         public List<ProjectPostDto> GetProjectPostsByClientId(string clientId)
@@ -77,7 +78,8 @@ namespace HireMeBLL
                     Description = c.Description,
                     ProjectPostDate = c.ProjectPostDate,
                     Done = c.Done,
-                    location = c.location
+                    location = c.location,
+                    approved=c.approved
                 }).ToList();
             }
             return null;
@@ -113,6 +115,7 @@ namespace HireMeBLL
                     id  = projectId,
                     location=projectPostDB.location,
                     Done= projectPostDB.Done,
+                    approved=projectPostDB.approved
                 };
             }return null;
           
@@ -132,6 +135,7 @@ namespace HireMeBLL
                projectPost.ProjectPostDate = updateProjectPostDto.ProjectPostDate;
                 projectPost.location = updateProjectPostDto.location;
                 projectPost.Done=updateProjectPostDto.Done;
+                projectPost.approved=updateProjectPostDto.approved;
 
                 return _projectPostRepo.UpdateProjectPost(projectPostId, projectPost);
             }return false;

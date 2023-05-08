@@ -22,6 +22,7 @@ namespace HireMeDAL
 
         public bool? Done { get; set; }
 
+        public bool? approved { get; set; }
         public string? location { get; set; }
 
         [Required]

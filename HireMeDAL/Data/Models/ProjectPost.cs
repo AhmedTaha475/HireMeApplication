@@ -38,7 +38,7 @@ namespace HireMeDAL
         [ForeignKey("ClientId")]
         public virtual Client? Client { get; set; }
 
-
+        public virtual ProjectReview? ProjectReview { get; set; }
         public virtual HashSet<Milestone> Milestones { get; set; } = new HashSet<Milestone>();
         public virtual HashSet<ProjectPostApplicant> ProjectPostApplicants { get; set; } = new HashSet<ProjectPostApplicant>();
 

@@ -22,7 +22,7 @@ namespace HireMeDAL
         public int? FreelancerStars { get; set; }
         public int ProjectId { get; set; }
         [ForeignKey("ProjectId")]
-        public virtual Project? Project { get; set; }
+        public virtual ProjectPost? Project { get; set; }
         public string? FreeLancerId { get; set; }
         [ForeignKey("FreeLancerId")]
         public virtual Freelancer? Freelancer { get; set; }

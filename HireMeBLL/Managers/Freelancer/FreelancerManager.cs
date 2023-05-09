@@ -28,6 +28,7 @@ namespace HireMeBLL
                 Rank=1,
                 TotalMoneyEarned=0,
                 AverageRate=0,
+                Balance=0,
             };
             var CreateResult = await _freelancerRepo.CreateFreelancer(Freelancer, FreelancerData.Password);
 

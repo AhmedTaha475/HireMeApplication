@@ -66,6 +66,7 @@ namespace HireMeBLL
                 BiddingPrice=ppa.BiddingPrice,
                 FreelancerId= ppa.FreelancerId,
                 Proposal= ppa.Proposal,
+                Approved= ppa.Approved
             }).ToList();
         }
 

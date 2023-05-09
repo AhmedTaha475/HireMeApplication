@@ -257,6 +257,43 @@ namespace HireMePL.Controllers
 
         }
 
+
+        [HttpPut]
+        [Route("UpdateFreelancerMoneyByFreelancerId/{id}")]
+        [Authorize]
+
+        public async Task<ActionResult> UpdateFreelancerMoneyById(UpdateFreelancerMoneyDto FreelancerMoney,string id)
+        {
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            try
+            {
+                var currentFreelancer = (Freelancer)await _userManager.FindByIdAsync(id);
+
+                if (FreelancerMoney.Rank != null) currentFreelancer.Rank += (int)FreelancerMoney.Rank;
+                if (FreelancerMoney.Bids != null) currentFreelancer.Bids += (int)FreelancerMoney.Bids;
+                if (FreelancerMoney.TotalMoneyEarned != null) currentFreelancer.TotalMoneyEarned += (decimal)FreelancerMoney.TotalMoneyEarned;
+                if (FreelancerMoney.PlanId != null) currentFreelancer.PlanId = FreelancerMoney.PlanId;
+                if (FreelancerMoney.Balance != null) currentFreelancer.Balance += FreelancerMoney.Balance;
+
+
+                if (await _freelancerManager.UpdateFreelancerMoney(currentFreelancer))
+                    return Ok(new { message = "Data updated successfully" });
+                return BadRequest(new { message = "Something went wrong" });
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+
+
+
+        }
+
+
+
         [HttpGet]
         [Route("GetFreelancersByCatId/{CatId}")]
         public ActionResult<List<FreelancerDto>> GetFreelancersByCatId(int CatId)

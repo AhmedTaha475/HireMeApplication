@@ -1,4 +1,5 @@
-﻿using HireMeBLL.Dtos.LookupValuesDtos;
+﻿using HireMeBLL.Dtos.LookupValueDtos;
+using HireMeBLL.Dtos.LookupValuesDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace HireMeBLL
 
         List<LookupValueDTO> GetAllLookupValues();
         LookupValueDTO GetLookupValueById(int id);
+        public LookupValueIdDto GetLookupId(string name);
         #endregion
 
         #region Create Crud for Lookup Value Manager (Interface)

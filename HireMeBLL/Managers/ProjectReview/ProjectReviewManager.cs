@@ -40,9 +40,9 @@ namespace HireMeBLL
                    FreeLancer = new UserChildReadDto()
                    {
                        Id = r.FreeLancerId,
-                       FName = r.Freelancer.FirstName,
-                       LName = r.Freelancer.LastName,
-                       img = r.Freelancer.Image
+                       FName = r.Freelancer?.FirstName ?? null,
+                       LName = r.Freelancer?.LastName??null,
+                       img = r.Freelancer?.Image??null
                    }
                }).ToList();
             }return null;
@@ -70,9 +70,9 @@ namespace HireMeBLL
                      FreeLancer = new UserChildReadDto()
                      {
                          Id = r.FreeLancerId,
-                         FName = r.Freelancer.FirstName,
-                         LName = r.Freelancer.LastName,
-                         img = r.Freelancer.Image
+                         FName = r.Freelancer?.FirstName ?? null,
+                         LName = r.Freelancer?.LastName ?? null,
+                         img = r.Freelancer?.Image ?? null
                      }
                  }).ToList();
             }

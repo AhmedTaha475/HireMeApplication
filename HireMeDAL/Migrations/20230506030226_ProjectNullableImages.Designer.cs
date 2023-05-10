@@ -4,6 +4,7 @@ using HireMeDAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HireMeDAL.Migrations
 {
     [DbContext(typeof(HireMeContext))]
-    partial class HireMeContextModelSnapshot : ModelSnapshot
+    [Migration("20230506030226_ProjectNullableImages")]
+    partial class ProjectNullableImages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,9 +84,6 @@ namespace HireMeDAL.Migrations
                     b.Property<string>("Value")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("released")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -304,9 +304,6 @@ namespace HireMeDAL.Migrations
 
                     b.Property<DateTime?>("ProjectPostDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool?>("approved")
-                        .HasColumnType("bit");
 
                     b.Property<string>("location")
                         .HasColumnType("nvarchar(max)");
@@ -857,7 +854,7 @@ namespace HireMeDAL.Migrations
                         .HasForeignKey("FreeLancerId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("HireMeDAL.ProjectPost", "Project")
+                    b.HasOne("HireMeDAL.Project", "Project")
                         .WithOne("ProjectReview")
                         .HasForeignKey("HireMeDAL.ProjectReview", "ProjectId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -983,6 +980,8 @@ namespace HireMeDAL.Migrations
                     b.Navigation("ProjectComments");
 
                     b.Navigation("ProjectImages");
+
+                    b.Navigation("ProjectReview");
                 });
 
             modelBuilder.Entity("HireMeDAL.ProjectPost", b =>
@@ -990,8 +989,6 @@ namespace HireMeDAL.Migrations
                     b.Navigation("Milestones");
 
                     b.Navigation("ProjectPostApplicants");
-
-                    b.Navigation("ProjectReview");
                 });
 
             modelBuilder.Entity("HireMeDAL.SystemUser", b =>

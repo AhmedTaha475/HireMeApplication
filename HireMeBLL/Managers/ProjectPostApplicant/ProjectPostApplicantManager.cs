@@ -15,6 +15,9 @@ namespace HireMeBLL
         {
             this._projectPostApplicantRepo = projectPostApplicantRepo;
         }
+
+
+
         public bool CreateProjectPostApplicant(ProjectPostApplicantDetailsDto projectPostApplicant)
         {
             return _projectPostApplicantRepo.CreateProjectPostApplicant(new ProjectPostApplicant()
@@ -37,6 +40,7 @@ namespace HireMeBLL
                 BiddingPrice = ppa.BiddingPrice,
                 FreelancerId = ppa.FreelancerId,
                 Proposal = ppa.Proposal,
+                Approved=ppa.Approved
             }).ToList();
         }
 
@@ -49,6 +53,7 @@ namespace HireMeBLL
                 BiddingPrice = ppa.BiddingPrice,
                 FreelancerId = ppa.FreelancerId,
                 Proposal = ppa.Proposal,
+                Approved = ppa.Approved
             }).ToList();
 
         }
@@ -61,6 +66,7 @@ namespace HireMeBLL
                 BiddingPrice=ppa.BiddingPrice,
                 FreelancerId= ppa.FreelancerId,
                 Proposal= ppa.Proposal,
+                Approved= ppa.Approved
             }).ToList();
         }
 
@@ -73,7 +79,8 @@ namespace HireMeBLL
                     PP_ID = projectpostId,
                     FreelancerId = projectPostApplicant.FreelancerId,
                     BiddingPrice = projectPostApplicant.BiddingPrice,
-                    Proposal = projectPostApplicant.Proposal
+                    Proposal = projectPostApplicant.Proposal,
+                    Approved=projectPostApplicant.Approved
                 };
                 return _projectPostApplicantRepo.UpdateProjectPostApplicant(projectpostId, applicantionToBeUpdated);
                 

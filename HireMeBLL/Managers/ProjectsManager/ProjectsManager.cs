@@ -20,7 +20,7 @@ namespace HireMeBLL.Managers.ProjectsManager
         }
         public bool CreateProject(CreateProjectDto projectDto)
         {
-
+            
             return projectsRepo.Add(new Project() {
                 Description = projectDto.Description,
                 ProjectTitle = projectDto.Title,
@@ -28,8 +28,7 @@ namespace HireMeBLL.Managers.ProjectsManager
                 MoneyEarned = projectDto.MoneyEarned,
                 SystemProject = projectDto.SystemProject,
                 PortfolioId = projectDto.portfolioId,
-                //ProjectImages = projectDto.projectImgs.Select(s=>new ProjectImage() {Image=Helper.ConvertFromFileToByteArray(s.Image) }).ToHashSet<ProjectImage>()
-                ProjectImages = projectDto.projectImgs.Select(c => new ProjectImage() { Image = Helper.ConvertFromFileToByteArray(c) }).ToHashSet()
+                ProjectImages = projectDto.projectImgs?.Select(c => new ProjectImage() { Image = Helper.ConvertFromFileToByteArray(c) }).ToHashSet()?? new HashSet<ProjectImage>()
             });
            
         }
@@ -90,6 +89,25 @@ namespace HireMeBLL.Managers.ProjectsManager
                     MoneyEarned = p.MoneyEarned,
                    
                 };
+            return null;
+        }
+
+        public GetProjectWithImagesDto GetProjectWithImages(int id)
+        {
+           var project=  projectsRepo.GetProjectWithImages(id);
+            if(project != null)
+            {
+                return new GetProjectWithImagesDto()
+                {
+                    P_Id= project.ProjectID,
+                    Description = project.Description,
+                    Title = project.ProjectTitle,
+                    Date= project.ProjectDate,
+                    MoneyEarned= project.MoneyEarned,
+                    SystemProject= project.SystemProject,
+                    Images= project.ProjectImages.Select(i=>new ProjectImageDto(i.PI_Id,i.ProjectId,i.Image)).ToList(),
+                };
+            }
             return null;
         }
 

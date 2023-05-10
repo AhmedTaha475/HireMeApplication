@@ -56,7 +56,7 @@ namespace HireMePL.Controllers
         }
         [HttpPut]
         [Route("Update/{id}")]
-        [Authorize(policy:"Freelancer")]
+        [Authorize]
         public ActionResult UpdateProjectPostApplicant(int id, UpdateProjectPostApplicantDto projectPostApplicant)
         {
             if (!ModelState.IsValid)

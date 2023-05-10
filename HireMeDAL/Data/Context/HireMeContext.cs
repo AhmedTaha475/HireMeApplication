@@ -49,7 +49,7 @@ namespace HireMeDAL
                 .WithMany(s => s.SystemUsers)
                 .HasForeignKey(s => s.PaymentMethodId);
             //consider this solution on any 1:1 relation
-            builder.Entity<Project>()
+            builder.Entity<ProjectPost>()
              .HasOne(p => p.ProjectReview)
              .WithOne(p => p.Project)
              .HasForeignKey<ProjectReview>(p => p.ProjectId)

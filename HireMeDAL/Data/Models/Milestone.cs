@@ -17,6 +17,7 @@ namespace HireMeDAL
 
         public string Value { get; set; }
 
+        public bool? released { get; set; } = false;
         public int ProjectPostId { get; set; }
         [ForeignKey("ProjectPostId")]
         public virtual ProjectPost? ProjectPost { get; set; }

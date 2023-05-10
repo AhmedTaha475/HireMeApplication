@@ -19,11 +19,13 @@ namespace HireMeBLL
 
         public bool CreateMilestone(CreateMileStoneDto milestone)
         {
-            return _milestoneRepo.CreateMilestone(new Milestone() {
+            return _milestoneRepo.CreateMilestone(new Milestone()
+            {
                 Name = milestone.Name,
                 ProjectPostId = milestone.ProjectPostId,
                 Value = milestone.Value,
-            });
+                released = false
+            }) ;
         }
 
         public bool DeleteMilestone(int milestoneId)
@@ -41,7 +43,9 @@ namespace HireMeBLL
                     Id = milestoneDB.Id,
                     Name = milestoneDB.Name,
                     ProjectPostId = milestoneDB.ProjectPostId,
-                    Value = milestoneDB.Value
+                    Value = milestoneDB.Value,
+                    released = milestoneDB.released
+                    
                 };
             }return null;
             
@@ -54,7 +58,8 @@ namespace HireMeBLL
                 Id = m.Id, 
                 Name= m.Name,
                 Value= m.Value,
-                ProjectPostId= m.ProjectPostId
+                ProjectPostId= m.ProjectPostId,
+                released=m.released
             }).ToList();
         }
 
@@ -65,6 +70,7 @@ namespace HireMeBLL
             {
                 milestone.Name = updatedMilestone.Name;
                 milestone.Value = updatedMilestone.Value;
+                milestone.released=updatedMilestone.released;
                 return _milestoneRepo.UpdateMilestone(milestoneId, milestone);
             }
             return false;

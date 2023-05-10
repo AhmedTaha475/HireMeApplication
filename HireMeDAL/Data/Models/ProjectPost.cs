@@ -22,6 +22,7 @@ namespace HireMeDAL
 
         public bool? Done { get; set; }
 
+        public bool? approved { get; set; }
         public string? location { get; set; }
 
         [Required]
@@ -37,7 +38,7 @@ namespace HireMeDAL
         [ForeignKey("ClientId")]
         public virtual Client? Client { get; set; }
 
-
+        public virtual ProjectReview? ProjectReview { get; set; }
         public virtual HashSet<Milestone> Milestones { get; set; } = new HashSet<Milestone>();
         public virtual HashSet<ProjectPostApplicant> ProjectPostApplicants { get; set; } = new HashSet<ProjectPostApplicant>();
 

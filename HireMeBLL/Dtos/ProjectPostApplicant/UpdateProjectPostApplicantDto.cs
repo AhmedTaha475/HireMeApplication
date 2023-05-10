@@ -15,6 +15,7 @@ namespace HireMeBLL
         public decimal BiddingPrice { get; set; }
         [Required]
         public string FreelancerId { get; set; }
+        public bool? Approved { get; set; }
         [Required]
         public int PP_Id { get; set; }
     }

@@ -23,13 +23,13 @@ namespace HireMePL.Controllers
         }
         [HttpPost]
         [Route("Create")]
-        [Authorize(policy:"Client")]
+        [Authorize]
         public async Task<ActionResult> CreateProjectPost(CreateProjectPostDto createProjectPostDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            Client user = (Client)await _userManager.GetUserAsync(User);
+           SystemUser user = (SystemUser)await _userManager.GetUserAsync(User);
            if(_projectPostManager.CreateProjectPost(createProjectPostDto,user.Id))
                 return Ok(new { Message = "Project Post Created Successfully" });
            return BadRequest(new {Message="Somethign went wrong...."});
@@ -99,6 +99,30 @@ namespace HireMePL.Controllers
                 return Ok(PPList);
             else return BadRequest(new {message="No Project posts found"});
         }
+
+        [HttpGet]
+        [Route("GetAllByClientId/{id}")]
+        public ActionResult<List<ProjectPostDto>> GetAllByClientId(string id)
+        {
+            var PPList = _projectPostManager.GetProjectPostsByClientId(id);
+            if (PPList != null)
+                return Ok(PPList);
+            else return BadRequest(new { message = "No Project posts found" });
+        }
+
+        [HttpGet]
+        [Route("GetAllByCurrentClient")]
+        [Authorize(policy:"Client")]
+        public async Task<ActionResult<List<ProjectPostDto>>> GetAllByCurrentClientId()
+        
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var PPList = _projectPostManager.GetProjectPostsByClientId(user.Id);
+            if (PPList != null)
+                return Ok(PPList);
+            else return BadRequest(new { message = "No Project posts found" });
+        }
+
 
         [HttpGet]
         [Route("GetProjectPostById/{id}")]

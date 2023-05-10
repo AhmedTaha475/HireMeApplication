@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HireMeDAL.Migrations
 {
     [DbContext(typeof(HireMeContext))]
-    [Migration("20230502131450_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230505151323_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -324,6 +324,9 @@ namespace HireMeDAL.Migrations
 
                     b.Property<string>("FreelancerId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool?>("Approved")
+                        .HasColumnType("bit");
 
                     b.Property<decimal>("BiddingPrice")
                         .HasColumnType("money");

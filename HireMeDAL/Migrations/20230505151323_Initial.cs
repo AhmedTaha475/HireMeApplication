@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HireMeDAL.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -398,7 +398,8 @@ namespace HireMeDAL.Migrations
                     PP_ID = table.Column<int>(type: "int", nullable: false),
                     FreelancerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Proposal = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BiddingPrice = table.Column<decimal>(type: "money", nullable: false)
+                    BiddingPrice = table.Column<decimal>(type: "money", nullable: false),
+                    Approved = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {

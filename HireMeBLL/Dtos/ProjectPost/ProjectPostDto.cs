@@ -20,6 +20,7 @@ namespace HireMeBLL.Dtos.ProjectPost
 
         public int CategoryId { get; set; }
         public bool? Done { get; set; }
+        public bool? approved { get; set; }
 
         public string? location { get; set; }
 

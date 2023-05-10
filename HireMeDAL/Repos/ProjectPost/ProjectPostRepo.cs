@@ -78,6 +78,7 @@ namespace HireMeDAL
                 currentProjectPost.Milestones = projectPost.Milestones;
                 currentProjectPost.Done= projectPost.Done;
                 currentProjectPost.location = projectPost.location;
+                currentProjectPost.approved = projectPost.approved;
                 SaveChanges();
                 return true;
             }return false;

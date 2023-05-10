@@ -64,12 +64,7 @@ namespace HireMeDAL.Repos.Projects
 
         public Project? GetById(int id)
         {
-            //Project? project = context.projects
-            //    .Include(p => p.ProjectComments).ThenInclude(C => C.Client)
-            //    .Include(p => p.ProjectImages)
-            //    .Include(p => p.ProjectReview).ThenInclude(r => r.Client)
-            //    .Include(p => p.Portfolio).ThenInclude(p => p.Freelancer)
-            //    .Include(p => p.Client).FirstOrDefault(p => p.ProjectID == id);
+
             var project=context.projects.FirstOrDefault(p=>p.ProjectID == id);
             if (project == null) return null;
             return project;
@@ -77,14 +72,15 @@ namespace HireMeDAL.Repos.Projects
 
         public Project? GetByName(string Name)
         {
-            //Project? project = context.projects
-            //     .Include(p => p.ProjectComments).ThenInclude(C => C.Client)
-            //    .Include(p => p.ProjectImages)
-            //    .Include(p => p.ProjectReview).
-            //    Include(p => p.Client)
-            //    .FirstOrDefault(p => p.ProjectTitle == Name);
+
             var project=context.projects.FirstOrDefault(p=>p.ProjectTitle == Name);
             return project;
+        }
+
+        public Project? GetProjectWithImages(int id)
+        {
+            return context.projects.Include(p=>p.ProjectImages).FirstOrDefault(p=>p.ProjectID==id);
+            
         }
 
         public bool Update(Project project, int id)
@@ -100,9 +96,6 @@ namespace HireMeDAL.Repos.Projects
             P.SystemProject = project.SystemProject;
             P.MoneyEarned = project.MoneyEarned;
             P.ClientId = project.ClientId;
-            //P.ProjectImages = project.ProjectImages;
-            //P.ProjectReview = project.ProjectReview;
-            //P.ProjectComments = project.ProjectComments;
             context.SaveChanges();
             return true;
 

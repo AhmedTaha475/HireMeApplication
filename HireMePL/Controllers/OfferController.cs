@@ -98,7 +98,7 @@ namespace HireMePL.Controllers
 
         [HttpPut]
         [Route("UpdateOffer")]
-        [Authorize(policy:"Client")]
+        [Authorize]
         public ActionResult UpdateOffer(UpdateOfferDto updateOffer)
         {
             if (!ModelState.IsValid)

@@ -13,5 +13,7 @@ namespace HireMeBLL
         public string Name { get; set; }
         [Required]
         public string Value { get; set; }
+
+        public bool? released { get; set; }
     }
 }

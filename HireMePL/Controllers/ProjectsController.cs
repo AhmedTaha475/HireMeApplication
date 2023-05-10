@@ -1,4 +1,5 @@
 ﻿using HireMeBLL.Dtos;
+using HireMeBLL.Dtos.LookupValueDtos;
 using HireMeBLL.Dtos.Project;
 using HireMeBLL.Managers.ProjectsManager;
 using Microsoft.AspNetCore.Authorization;

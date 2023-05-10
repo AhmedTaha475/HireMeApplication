@@ -96,19 +96,19 @@ namespace HireMeDAL
 
                     updateFreelancer.Age = user.Age;
                     updateFreelancer.SSN = user.SSN;
-                    updateFreelancer.Balance = user.Balance;
+                    
                     updateFreelancer.PaymentMethodId = user.PaymentMethodId;
-                    updateFreelancer.PlanId = user.PlanId;
+                    
                     updateFreelancer.CategoryId = user.CategoryId;
                     updateFreelancer.Email = user.Email;
                     updateFreelancer.UserName = user.UserName;
                     updateFreelancer.Rank= user.Rank;
                     updateFreelancer.JobTitle = user.JobTitle;
-                    updateFreelancer.Bids = user.Bids;
-                    updateFreelancer.Description = user.Description;
-                    updateFreelancer.TotalMoneyEarned= user.TotalMoneyEarned;
                     
-                    updateFreelancer.AverageRate = user.AverageRate;
+                    updateFreelancer.Description = user.Description;
+                    
+                    
+                    
                     updateFreelancer.PhoneNumber = user.PhoneNumber;
                     if(user.Image != null)
                         updateFreelancer.Image = user.Image;

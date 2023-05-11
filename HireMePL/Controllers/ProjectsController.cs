@@ -1,4 +1,6 @@
-﻿using HireMeBLL;
+
+using HireMeBLL.Dtos.LookupValueDtos;
+using HireMeBLL;
 using HireMeBLL.Dtos;
 using HireMeBLL.Dtos.Project;
 using HireMeBLL.Managers.ProjectsManager;

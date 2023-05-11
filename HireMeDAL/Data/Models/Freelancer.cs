@@ -16,11 +16,11 @@ namespace HireMeDAL
         
         public string ?JobTitle { get; set; }
 
-        public int Bids { get; set; }
+        public int Bids { get; set; } = 0;
 
         public string ? Description { get; set; }
         [Column(TypeName = "money")]
-        public decimal TotalMoneyEarned { get; set; }
+        public decimal TotalMoneyEarned { get; set; } = 0;
 
         public byte[] ?CV { get; set; }
         [Column(TypeName = "money")]

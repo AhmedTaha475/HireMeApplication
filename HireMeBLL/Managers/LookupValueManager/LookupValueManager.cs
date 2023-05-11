@@ -1,4 +1,5 @@
-﻿using HireMeBLL.Dtos.LookupValuesDtos;
+﻿using HireMeBLL.Dtos.LookupValueDtos;
+using HireMeBLL.Dtos.LookupValuesDtos;
 using HireMeDAL;
 using System;
 using System.Collections.Generic;
@@ -117,6 +118,13 @@ namespace HireMeBLL
         public bool DeleteLookupValueById(int id)
         {
             return lookupValuesRepo.DeleteLookupValueById(id);
+        }
+
+        public LookupValueIdDto GetLookupId(string name)
+        {
+            LookupValueIdDto valueIdDto= new();
+            valueIdDto.Id = lookupValuesRepo.GetAllLookupValues().FirstOrDefault(l => l.ValueName == name).ValueId;
+            return valueIdDto;
         }
         #endregion
 

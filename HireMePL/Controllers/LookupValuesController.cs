@@ -1,9 +1,11 @@
 ﻿using HireMeBLL;
+using HireMeBLL.Dtos.LookupValueDtos;
 using HireMeBLL.Dtos.LookupValuesDtos;
 using HireMeDAL;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace HireMePL.Controllers
 {
@@ -138,5 +140,12 @@ namespace HireMePL.Controllers
 
 
         #endregion
+
+        [HttpGet]
+        [Route("GetValueIdByName/{name}")]
+        public ActionResult<LookupValueIdDto> GetIdByName(string name)
+        {
+            return lookupValueManager.GetLookupId(name);
+        }
     }
 }

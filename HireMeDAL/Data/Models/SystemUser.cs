@@ -34,7 +34,7 @@ namespace HireMeDAL
 
         public string ?SSN { get; set; }
         [Column(TypeName = "money")]
-        public decimal ?Balance { get; set; }
+        public decimal? Balance { get; set; } = 0;
 
 
         public int ?PaymentMethodId { get; set; }

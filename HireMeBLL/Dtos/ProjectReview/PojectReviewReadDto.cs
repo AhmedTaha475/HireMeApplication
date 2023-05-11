@@ -10,6 +10,7 @@ namespace HireMeBLL
     public record PojectReviewReadDto
     {
         public int PR_Id { get; init; }
+        public int projectpostId { get; set; }
         public string? ClientReview { get; init; } = string.Empty;
         public string? FreelancerReview { get; init; } = string.Empty;
         public int? ClientStars { get; init; }

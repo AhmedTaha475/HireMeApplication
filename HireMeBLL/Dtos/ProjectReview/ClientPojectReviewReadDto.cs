@@ -11,7 +11,7 @@ namespace HireMeBLL.Dtos.ProjectReview
     public record UserPojectReviewReadDto
     {
 
-        
+        public int projectId { get; set; }
         public string? FreeLancerReview { get; init; } = string.Empty;
         public string? ClientReview { get; init; } = string.Empty;
         public int? FreeLancerStars { get; init; }

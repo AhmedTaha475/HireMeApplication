@@ -23,7 +23,7 @@ namespace HireMePL.Controllers
         [HttpPost]
         [Authorize(policy: "Freelancer")]
         public ActionResult CreateProject([FromForm]CreateProjectDto projectDto)
-        {
+            {
             if(!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

@@ -1,4 +1,5 @@
 ﻿using HireMeBLL.Dtos.ProjectReview;
+using HireMeDAL;
 using HireMeDAL.Repos.ProjectsReview;
 using NHibernate.Transform;
 using System;
@@ -26,6 +27,7 @@ namespace HireMeBLL
                 return R.Select(r =>
                new UserPojectReviewReadDto()
                {
+                   projectId=r.ProjectId,
                    ClientReview = r.ClientReview,
                    ClientStars = r.ClientStars,
                    FreeLancerReview = r.FreelancerReview,
@@ -56,6 +58,7 @@ namespace HireMeBLL
                 return R.Select(r =>
                  new UserPojectReviewReadDto()
                  {
+                     projectId=r.ProjectId,
                      ClientReview = r.ClientReview,
                      ClientStars = r.ClientStars,
                      FreeLancerReview = r.FreelancerReview,

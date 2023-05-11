@@ -35,6 +35,20 @@ namespace HireMePL.Controllers
            return BadRequest(new {Message="Somethign went wrong...."});
                 
         }
+        [HttpPost]
+        [Route("Create/{Id}")]
+        [Authorize]
+        public async Task<ActionResult> CreateProjectPostForFreelancer(string Id,CreateProjectPostDto createProjectPostDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            //SystemUser user = (SystemUser)await _userManager.GetUserAsync(User);
+            if (_projectPostManager.CreateProjectPost(createProjectPostDto, Id))
+                return Ok(new { Message = "Project Post Created Successfully" });
+            return BadRequest(new { Message = "Somethign went wrong...." });
+
+        }
         [HttpPut]
         [Route("Update/{id}")]
         [Authorize(policy:"Client")]
